@@ -1,0 +1,38 @@
+[Unit]
+Description=server-indie Game Server
+After=network.target mariadb.service
+Wants=mariadb.service
+
+[Service]
+Type=simple
+User=gameserver
+Group=gameserver
+WorkingDirectory=/home/gameserver/server-indie
+
+ExecStart=/home/gameserver/server-indie/deploy/start.sh
+ExecStop=/bin/kill -SIGTERM $MAINPID
+
+# Restart tự động khi crash
+Restart=on-failure
+RestartSec=10
+StartLimitBurst=5
+StartLimitIntervalSec=300
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=dragonserver
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/gameserver/server-indie
+PrivateTmp=true
+
+# Resource limits
+LimitNOFILE=65535
+LimitNPROC=4096
+
+[Install]
+WantedBy=multi-user.target
