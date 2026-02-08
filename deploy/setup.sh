@@ -162,9 +162,17 @@ log_ok "Đã tạo database ${DB_NAME}, ${DB_NAME_DATA} và user ${DB_USER}"
 # Import SQL
 if [ -f "$PROJECT_DIR/sql/whis_1.sql" ]; then
     log_info "Import whis_1.sql..."
-    # Fix line endings trước khi import
-    sed -i 's/\r$//' "$PROJECT_DIR/sql/whis_1.sql" 2>/dev/null || true
-    mysql -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" < "$PROJECT_DIR/sql/whis_1.sql"
+    # Fix line endings với tr (tốt hơn sed)
+    tr -d '\r' < "$PROJECT_DIR/sql/whis_1.sql" > "$PROJECT_DIR/sql/whis_1.sql.tmp" 2>/dev/null || true
+    if [ -f "$PROJECT_DIR/sql/whis_1.sql.tmp" ]; then
+        mv "$PROJECT_DIR/sql/whis_1.sql.tmp" "$PROJECT_DIR/sql/whis_1.sql"
+    fi
+    
+    mysql -u "$DB_USER" -p"$DB_PASS" \
+        --default-character-set=utf8mb4 \
+        --comments --force \
+        "$DB_NAME" < "$PROJECT_DIR/sql/whis_1.sql" 2>&1 | grep -v "^Warning:" || true
+    
     log_ok "Đã import whis_1.sql"
 else
     log_warn "Không tìm thấy sql/whis_1.sql"
@@ -172,9 +180,17 @@ fi
 
 if [ -f "$PROJECT_DIR/sql/whis_2.sql" ]; then
     log_info "Import whis_2.sql..."
-    # Fix line endings trước khi import
-    sed -i 's/\r$//' "$PROJECT_DIR/sql/whis_2.sql" 2>/dev/null || true
-    mysql -u "$DB_USER" -p"$DB_PASS" "$DB_NAME_DATA" < "$PROJECT_DIR/sql/whis_2.sql"
+    # Fix line endings với tr (tốt hơn sed)
+    tr -d '\r' < "$PROJECT_DIR/sql/whis_2.sql" > "$PROJECT_DIR/sql/whis_2.sql.tmp" 2>/dev/null || true
+    if [ -f "$PROJECT_DIR/sql/whis_2.sql.tmp" ]; then
+        mv "$PROJECT_DIR/sql/whis_2.sql.tmp" "$PROJECT_DIR/sql/whis_2.sql"
+    fi
+    
+    mysql -u "$DB_USER" -p"$DB_PASS" \
+        --default-character-set=utf8mb4 \
+        --comments --force \
+        "$DB_NAME_DATA" < "$PROJECT_DIR/sql/whis_2.sql" 2>&1 | grep -v "^Warning:" || true
+    
     log_ok "Đã import whis_2.sql"
 else
     log_warn "Không tìm thấy sql/whis_2.sql"
