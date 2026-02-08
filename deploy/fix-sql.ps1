@@ -19,7 +19,11 @@ foreach ($file in $sqlFiles) {
         # 1. Fix CRLF → LF
         $content = $content -replace "`r`n", "`n"
         
-        # 2. Fix escape quotes trong description
+        # 2. Fix newlines INSIDE string literals (MySQL doesn't allow this)
+        # Pattern: 'text\r\nmore text' → 'text more text'
+        $content = $content -replace "([^']*)\\r\\n([^']*)", "`$1 `$2"
+        
+        # 3. Fix escape quotes trong description
         # Tìm pattern: 'text \'escaped\' more text'' và fix thành 'text \'escaped\' more text\'
         $content = $content -replace "(\\'[^']*?)''(?=,\s*\d)", "`$1\'"
         

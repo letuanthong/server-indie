@@ -23,6 +23,7 @@ Write-Host "[2/3] Fixing line endings (CRLF → LF)..." -ForegroundColor Yellow
 $files = @(
     "README.md",
     ".env.example",
+    "gradlew",
     "deploy\setup.sh",
     "deploy\start.sh",
     "deploy\stop.sh",
@@ -30,6 +31,7 @@ $files = @(
     "deploy\rebuild.sh",
     "deploy\install-service.sh",
     "deploy\fix-encoding.sh",
+    "deploy\import-sql.sh",
     "sql\whis_1.sql",
     "sql\whis_2.sql"
 )
