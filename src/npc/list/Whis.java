@@ -1,9 +1,9 @@
 package npc.list;
 
 /*
- * @Author: NgocRongWhis
- * @Description: Ngọc Rồng Whis - Máy Chủ Chuẩn Teamobi 2024
- * @Group Zalo: https://zalo.me/g/qabzvn331
+ * @Author: dev1sme
+ * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
+ * @Collab: ???
  */
 import java.io.IOException;
 
@@ -249,7 +249,7 @@ public class Whis extends Npc {
                                         msgg = new Message(-81);
                                         msgg.writer().writeByte(0);
                                         msgg.writer().writeUTF("Skill 9");
-                                        msgg.writer().writeUTF("NgocRongWhis");
+                                        msgg.writer().writeUTF("NgocRongKing");
                                         msgg.writer().writeShort(tempId);
                                         player.sendMessage(msgg);
                                         msgg.cleanup();
@@ -302,7 +302,7 @@ public class Whis extends Npc {
                                             msgg = new Message(-81);
                                             msgg.writer().writeByte(0);
                                             msgg.writer().writeUTF("Skill 9");
-                                            msgg.writer().writeUTF("NgocRongWhis");
+                                            msgg.writer().writeUTF("NgocRongKing");
                                             msgg.writer().writeShort(tempId);
                                             player.sendMessage(msgg);
                                             msgg.cleanup();

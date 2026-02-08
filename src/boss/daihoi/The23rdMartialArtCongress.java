@@ -1,9 +1,9 @@
 package boss.daihoi;
 
 /*
- * @Author: NgocRongWhis
- * @Description: Ngọc Rồng Whis - Máy Chủ Chuẩn Teamobi 2024
- * @Group Zalo: https://zalo.me/g/qabzvn331
+ * @Author: dev1sme
+ * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
+ * @Collab: ???
  */
 
 
@@ -25,8 +25,8 @@ public abstract class The23rdMartialArtCongress extends Boss {
     protected Player playerAtt;
     protected long timeJoinMap;
 
-    public The23rdMartialArtCongress(BossType NgocRongWhis, int id, BossData data) throws Exception {
-        super(NgocRongWhis, id, data);
+    public The23rdMartialArtCongress(BossType NgocRongKing, int id, BossData data) throws Exception {
+        super(NgocRongKing, id, data);
         this.bossStatus = BossStatus.RESPAWN;
     }
 

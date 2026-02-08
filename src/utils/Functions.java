@@ -12,7 +12,7 @@ public class Functions {
     private static final Pattern pattern = Pattern.compile(REGEX, Pattern.CASE_INSENSITIVE);
 
     public static boolean isSpam(Player player, String text) {
-        return pattern.matcher(text.toLowerCase()).find() && (!player.name.equals("NgocRongWhis"));
+        return pattern.matcher(text.toLowerCase()).find() && (!player.name.equals("NgocRongKing"));
     }
 
     public static int maxint(long n) {

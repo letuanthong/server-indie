@@ -16,9 +16,9 @@ import services.player.InventoryService;
 import utils.Util;
 
 /*
- * @Author: NgocRongWhis
- * @Description: Ngọc Rồng Whis - Máy Chủ Chuẩn Teamobi 2024
- * @Group Zalo: https://zalo.me/g/qabzvn331
+ * @Author: dev1sme
+ * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
+ * @Collab: ???
  */
 public class CheTaoTrangBiThienSu {
       public static void showInfoCombine(Player player) {
