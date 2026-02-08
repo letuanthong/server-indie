@@ -1,9 +1,9 @@
 package boss.vodai;
 
 /*
- * @Author: NgocRongWhis
- * @Description: Ngọc Rồng Whis - Máy Chủ Chuẩn Teamobi 2024
- * @Group Zalo: https://zalo.me/g/qabzvn331
+ * @Author: dev1sme
+ * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
+ * @Collab: ???
  */
 
 
@@ -26,8 +26,8 @@ public abstract class DeathOrAliveArena extends Boss {
     protected Player playerAtt;
     protected long timeJoinMap;
 
-    public DeathOrAliveArena(BossType NgocRongWhis, int id, BossData data) throws Exception {
-        super(NgocRongWhis, id, data);
+    public DeathOrAliveArena(BossType NgocRongKing, int id, BossData data) throws Exception {
+        super(NgocRongKing, id, data);
         this.bossStatus = BossStatus.RESPAWN;
     }
 
