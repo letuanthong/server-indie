@@ -1,7 +1,6 @@
 package consts;
-/*
-@Author: GwenDev
-@Zalo: 0334371905
+/**
+ * @Author: dev1sme
 */
 public class ConstEvent {
     public static final byte KHONG_CO_SU_KIEN = 0;

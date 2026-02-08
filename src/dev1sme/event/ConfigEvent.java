@@ -1,4 +1,4 @@
-package gwendev.event;
+package dev1sme.event;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +10,7 @@ import java.util.Properties;
 // import static server.Manager.EVENT_SEVER;
 
 /**
- * @author outcast c-cute hột me 😳
+ * @author dev1sme
  */
 @Setter
 @Getter

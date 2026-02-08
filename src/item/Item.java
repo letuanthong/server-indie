@@ -129,7 +129,7 @@ public class Item {
         }
         return false;
     }
-   // @Author: GwenDev > Zalo: 0334371905
+   // @Author: Dev1sme 
 public boolean isVaiTho() {
         return this.template.id >= 0 && this.template.id <= 65;
     }

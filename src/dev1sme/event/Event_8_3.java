@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package gwendev.event;
+package dev1sme.event;
 
 // import boss.BossData;
 // import consts.ConstItem;
-// import gwendev.event.Event;
+// import dev1sme.event.Event;
 // import player.Inventory;
 // import utils.Logger;
 // import utils.Util;
