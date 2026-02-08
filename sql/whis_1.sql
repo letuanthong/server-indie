@@ -419,7 +419,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `uid`, `fullname`, `coins`, `ban`, `last_daily_claim`) VALUES
-(1, '140755075297616678', 'Dev', 0, 0, NULL),
+(1, '140755075297616678', 'Dev', 0, 0, NULL);
 
 --
 -- Indexes for dumped tables
