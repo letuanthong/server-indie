@@ -95,7 +95,7 @@ task copyDependencies(type: Copy) {
     into "${buildDir}/libs/lib"
 }
 
-// Task chạy server với memory settings tương tự WhisRun.bat
+// Task chạy server với memory settings và encoding UTF-8
 task runServer(type: JavaExec) {
     mainClass = 'server.ServerManager'
     classpath = sourceSets.main.runtimeClasspath

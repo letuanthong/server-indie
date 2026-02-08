@@ -1,9 +1,9 @@
 package boss.superrank;
 
 /*
- * @Author: NgocRongWhis
- * @Description: Ngọc Rồng Whis - Máy Chủ Chuẩn Teamobi 2024
- * @Group Zalo: https://zalo.me/g/qabzvn331
+ * @Author: dev1sme
+ * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
+ * @Collab: ???
  */
 
 
@@ -32,8 +32,8 @@ public abstract class SuperRank extends Boss {
     protected long timeJoinMap;
     private long lastTimeEatPea;
 
-    public SuperRank(BossType NgocRongWhis, int id, BossData data) throws Exception {
-        super(NgocRongWhis, id, data);
+    public SuperRank(BossType NgocRongKing, int id, BossData data) throws Exception {
+        super(NgocRongKing, id, data);
         this.bossStatus = BossStatus.RESPAWN;
     }
 

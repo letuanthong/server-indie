@@ -1,9 +1,9 @@
 package event.shenron;
 
 /*
- * @Author: NgocRongWhis
- * @Description: Ngọc Rồng Whis - Máy Chủ Chuẩn Teamobi 2024
- * @Group Zalo: https://zalo.me/g/qabzvn331
+ * @Author: dev1sme
+ * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
+ * @Collab: ???
  */
 
 // thonk
@@ -118,7 +118,7 @@ public class Shenron_Event {
                 msg.writer().writeShort(player.zone.map.bgId);
                 msg.writer().writeByte(player.zone.zoneId);
                 msg.writer().writeInt((int) player.id);
-                msg.writer().writeUTF("NgocRongWhis");
+                msg.writer().writeUTF("NgocRongKing");
                 msg.writer().writeShort(player.location.x);
                 msg.writer().writeShort(player.location.y);
                 msg.writer().writeByte(type);

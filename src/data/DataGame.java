@@ -1,9 +1,9 @@
 package data;
 
 /*
- * @Author: NgocRongWhis
- * @Description: Ngọc Rồng Whis - Máy Chủ Chuẩn Teamobi 2024
- * @Group Zalo: https://zalo.me/g/qabzvn331
+ * @Author: dev1sme
+ * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
+ * @Collab: ???
  */
 
 
@@ -157,7 +157,7 @@ public class DataGame {
                     msg.writer().writeByte(skillTemp.type);
                     msg.writer().writeShort(skillTemp.iconId);
                     msg.writer().writeUTF(skillTemp.damInfo);
-                    msg.writer().writeUTF("NgocRongWhis");
+                    msg.writer().writeUTF("NgocRongKing");
                     if (skillTemp.id != 0) {
                         msg.writer().writeByte(skillTemp.skillss.size());
                         for (Skill skill : skillTemp.skillss) {

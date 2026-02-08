@@ -1,9 +1,9 @@
 package npc.list;
 
 /*
- * @Author: NgọcRồngWhis
- * @Description: Ngọc Rồng Whis - Máy Chủ Chuẩn Teamobi 2024
- * @Group Zalo: https://zalo.me/g/qabzvn331
+ * @Author: dev1sme
+ * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
+ * @Collab: ???
  */
 import database.daos.PlayerDAO;
 import npc.Npc;

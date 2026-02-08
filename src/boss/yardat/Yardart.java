@@ -1,9 +1,9 @@
 package boss.yardat;
 
 /*
- * @Author: NgocRongWhis
- * @Description: Ngọc Rồng Whis - Máy Chủ Chuẩn Teamobi 2024
- * @Group Zalo: https://zalo.me/g/qabzvn331
+ * @Author: dev1sme
+ * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
+ * @Collab: ???
  */
 
 
@@ -39,8 +39,8 @@ public abstract class Yardart extends Boss {
 
     protected int rewardRatio;
 
-    public Yardart(BossType NgocRongWhis, int id, BossData... data) throws Exception {
-        super(NgocRongWhis, id, data);
+    public Yardart(BossType NgocRongKing, int id, BossData... data) throws Exception {
+        super(NgocRongKing, id, data);
     }
 
     @Override
