@@ -1063,14 +1063,14 @@ public class Player implements Runnable {
             }
         }
          int mapid = this.zone.map.mapId;
-     double GwenDev_PhanTramSucManhBiTru = 0.0;
+     double DEV1SME_PhanTramSucManhBiTru = 0.0;
     if (MapService.gI().isMapUpPorata(mapid)) { // mappp
-        GwenDev_PhanTramSucManhBiTru = 0.004;  // 4%
+        DEV1SME_PhanTramSucManhBiTru = 0.004;  // 4%
     } else if (MapService.gI().isMap3Planets(mapid)) { // mapp
-        GwenDev_PhanTramSucManhBiTru = 0.002;  // 2%
+        DEV1SME_PhanTramSucManhBiTru = 0.002;  // 2%
     }
-    if (GwenDev_PhanTramSucManhBiTru > 0) {
-        int dieukien = (int)(this.nPoint.power * GwenDev_PhanTramSucManhBiTru);
+    if (DEV1SME_PhanTramSucManhBiTru > 0) {
+        int dieukien = (int)(this.nPoint.power * DEV1SME_PhanTramSucManhBiTru);
         dieukien = dieukien < 1 ? 1 : dieukien;  // dam bao ko trung lap
         if (this.nPoint.power >= dieukien) {
             this.nPoint.power -= dieukien;
