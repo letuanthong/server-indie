@@ -1,0 +1,37 @@
+# Git attributes to ensure consistent line endings and encoding
+
+# All text files should use LF (Unix) line endings
+* text=auto eol=lf
+
+# Shell scripts must have LF
+*.sh text eol=lf
+
+# Markdown files
+*.md text eol=lf
+
+# Config files
+*.properties text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+.env* text eol=lf
+
+# Java source files
+*.java text eol=lf
+*.gradle text eol=lf
+
+# SQL files
+*.sql text eol=lf
+
+# Log files (runtime logs should be in .gitignore, but if committed)
+*.log text eol=lf
+
+# Data files (treat as binary to preserve exact format)
+data/** binary
+
+# Binary files (explicit)
+*.jar binary
+*.class binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
