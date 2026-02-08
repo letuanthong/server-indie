@@ -38,5 +38,11 @@ logs/
 *~
 *.orig
 
+# Environment (chứa password)
+.env
+
+# Backups
+backups/
+
 # Docs
 /docs
