@@ -29,7 +29,9 @@ $files = @(
     "deploy\backup.sh",
     "deploy\rebuild.sh",
     "deploy\install-service.sh",
-    "deploy\fix-encoding.sh"
+    "deploy\fix-encoding.sh",
+    "sql\whis_1.sql",
+    "sql\whis_2.sql"
 )
 
 foreach ($file in $files) {
