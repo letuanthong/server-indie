@@ -1,0 +1,32 @@
+package boss.yardat;
+
+/*
+ * @Author: NgocRongWhis
+ * @Description: Ngọc Rồng Whis - Máy Chủ Chuẩn Teamobi 2024
+ * @Group Zalo: https://zalo.me/g/qabzvn331
+ */
+
+
+import consts.BossID;
+import boss.BossesData;
+import static consts.BossType.YARDART;
+
+public class TANBINH2 extends Yardart {
+
+    public TANBINH2() throws Exception {
+        super(YARDART, BossID.TAN_BINH_2, BossesData.TAN_BINH_2);
+    }
+
+    @Override
+    protected void init() {
+        x = 582;
+        x2 = 652;
+        y = 432;
+        y2 = 432;
+        range = 1000;
+        range2 = 150;
+        timeHoiHP = 25000;
+        rewardRatio = 4;
+    }
+}
+

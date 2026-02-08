@@ -1,0 +1,62 @@
+package boss.nappa;
+
+/*
+ * @Author: NgocRongWhis
+ * @Description: Ngọc Rồng Whis - Máy Chủ Chuẩn Teamobi 2024
+ * @Group Zalo: https://zalo.me/g/qabzvn331
+ */
+import boss.Boss;
+import consts.BossID;
+import consts.BossStatus;
+import boss.BossesData;
+import item.Item;
+import java.util.Random;
+import map.ItemMap;
+import player.Player;
+import services.ItemService;
+import services.Service;
+import services.TaskService;
+import utils.Util;
+
+public class Kuku extends Boss {
+
+    private long st;
+
+    public Kuku() throws Exception {
+        super(BossID.KUKU, true, true, BossesData.KUKU);
+    }
+
+    @Override
+    public void joinMap() {
+        super.joinMap();
+        st = System.currentTimeMillis();
+    }
+
+    @Override
+    public void reward(Player plKill) {
+        TaskService.gI().checkDoneTaskKillBoss(plKill, this);
+
+        // Rơi vàng (ID 190)
+        Service.gI().dropItemMap(this.zone, ItemMap.create(this.zone, 190, Util.nextInt(20000, 30001),
+                this.location.x, this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24), plKill.id));
+
+        // 50% xác suất rơi thêm vật phẩm
+        if (Util.isTrue(80, 100)) {
+            int[] items = Util.isTrue(50, 100) ? new int[]{18, 19, 20} : new int[]{1066, 1067, 1068, 1069, 1070, 1229};
+            int randomItem = items[new Random().nextInt(items.length)];
+            Service.gI().dropItemMap(this.zone, ItemMap.create(this.zone, randomItem, 1,
+                    this.location.x, this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24), plKill.id));
+        }
+    }
+
+    @Override
+    public void autoLeaveMap() {
+        if (Util.canDoWithTime(st, 900000)) {
+            this.changeStatus(BossStatus.LEAVE_MAP);
+        }
+//        if (this.zone != null && this.zone.getNumOfPlayers() > 0) {
+//            st = System.currentTimeMillis();
+//        }
+    }
+}
+

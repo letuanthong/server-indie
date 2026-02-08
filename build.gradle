@@ -1,0 +1,113 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.dragon'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+// Cấu hình source directory giống như project Ant cũ
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+        resources {
+            srcDirs = ['src']
+            exclude '**/*.java'
+        }
+    }
+    test {
+        java {
+            srcDirs = ['test']
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Database
+    implementation 'com.zaxxer:HikariCP:5.1.0'
+    implementation 'mysql:mysql-connector-java:5.1.23'
+    
+    // MongoDB
+    implementation 'org.mongodb:mongodb-driver-sync:5.1.3'
+    implementation 'org.mongodb:mongodb-driver-core:5.1.3'
+    implementation 'org.mongodb:bson:5.1.3'
+    
+    // JSON
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.googlecode.json-simple:json-simple:1.1'
+    implementation 'org.json:json:20231013'
+    
+    // Logging
+    implementation 'log4j:log4j:1.2.17'
+    implementation 'org.slf4j:slf4j-api:2.0.0-alpha1'
+    implementation 'org.slf4j:slf4j-simple:2.0.0-alpha1'
+    
+    // Utils
+    implementation 'commons-lang:commons-lang:2.6'
+    
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.42'
+    annotationProcessor 'org.projectlombok:lombok:1.18.42'
+    
+    // Nếu có JAR local nào không tìm được trên Maven, uncomment dòng dưới:
+    // implementation fileTree(dir: 'lib', include: ['*.jar'])
+}
+
+application {
+    mainClass = 'server.ServerManager'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+// Tạo fat JAR (bao gồm tất cả dependencies)
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'server.ServerManager',
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version
+        )
+    }
+    
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+// Task để copy dependencies vào thư mục lib (nếu muốn chạy kiểu cũ)
+task copyDependencies(type: Copy) {
+    from configurations.runtimeClasspath
+    into "${buildDir}/libs/lib"
+}
+
+// Task chạy server với memory settings tương tự WhisRun.bat
+task runServer(type: JavaExec) {
+    mainClass = 'server.ServerManager'
+    classpath = sourceSets.main.runtimeClasspath
+    jvmArgs = [
+        '-Xms512m', 
+        '-Xmx2g',
+        '-Dfile.encoding=UTF-8',
+        '-Dconsole.encoding=UTF-8',
+        '-Dsun.jnu.encoding=UTF-8'
+    ]
+    systemProperty 'file.encoding', 'UTF-8'
+    // Đảm bảo console output hiển thị đúng tiếng Việt
+    standardOutput = System.out
+    errorOutput = System.err
+}

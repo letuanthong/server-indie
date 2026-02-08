@@ -1,0 +1,89 @@
+package matches;
+
+/*
+ * @Author: NgocRongWhis
+ * @Description: Ngọc Rồng Whis - Máy Chủ Chuẩn Teamobi 2024
+ * @Group Zalo: https://zalo.me/g/qabzvn331
+ */
+
+
+// import matches.PVP;
+// import matches.TYPE_LOSE_PVP;
+// import matches.TYPE_PVP;
+import consts.ConstAchievement;
+import player.Player;
+import server.Client;
+import services.AchievementService;
+import services.Service;
+import utils.Util;
+
+public class ThachDau extends PVP {
+
+    private final int goldThachDau;
+    private final long goldReward;
+
+    private ThachDau(Player p1, Player p2, int goldThachDau) {
+        super(TYPE_PVP.THACH_DAU, p1, p2);
+        this.goldThachDau = goldThachDau;
+        this.goldReward = goldThachDau / 100 * 80;
+    }
+
+    public static ThachDau create(Player p1, Player p2, int goldThachDau) {
+        ThachDau pvp = new ThachDau(p1, p2, goldThachDau);
+        pvp.init();
+        return pvp;
+    }
+
+    @Override
+    public void start() {
+        this.p1.inventory.gold -= this.goldThachDau;
+        this.p2.inventory.gold -= this.goldThachDau;
+        Service.gI().sendMoney(this.p1);
+        Service.gI().sendMoney(this.p2);
+        super.start();
+    }
+
+    @Override
+    public void finish() {
+
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+    }
+
+    @Override
+    public void update() {
+    }
+
+    @Override
+    public void reward(Player plWin) {
+        plWin.inventory.gold += this.goldReward;
+        Service.gI().sendMoney(plWin);
+    }
+
+    @Override
+    public void sendResult(Player plLose, TYPE_LOSE_PVP typeLose) {
+        if (typeLose == TYPE_LOSE_PVP.RUNS_AWAY) {
+            Player plL = Client.gI().getPlayer(plLose.id);
+            if (plL == null) {
+                Service.gI().sendThongBao(p1.equals(plLose) ? p2 : p1, "Đối thủ rời game, bạn thắng được " + Util.numberToMoney(this.goldReward) + " vàng");
+            } else {
+                Service.gI().sendThongBao(p1.equals(plLose) ? p2 : p1, "Đối thủ sợ quá bỏ chạy, bạn thắng được " + Util.numberToMoney(this.goldReward) + " vàng");
+            }
+            Service.gI().sendThongBao(p1.equals(plLose) ? p1 : p2, "Bạn bị xử thua vì đã bỏ chạy");
+            (p1.equals(plLose) ? p1 : p2).inventory.gold -= this.goldThachDau;
+        } else if (typeLose == TYPE_LOSE_PVP.DEAD) {
+            Service.gI().sendThongBao(p1.equals(plLose) ? p2 : p1, "Đối thủ đã kiệt sức, bạn thắng được " + Util.numberToMoney(this.goldReward) + " vàng");
+            Service.gI().sendThongBao(p1.equals(plLose) ? p1 : p2, "Bạn đã thua vì đã kiệt sức");
+            (p1.equals(plLose) ? p1 : p2).inventory.gold -= this.goldThachDau;
+        }
+        Service.gI().sendMoney(p1.equals(plLose) ? p1 : p2);
+        if (!p1.equals(plLose)) {
+            AchievementService.gI().checkDoneTask(p1, ConstAchievement.TRAM_TRAN_TRAM_THANG);
+        }
+    }
+
+}
+
