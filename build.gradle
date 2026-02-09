@@ -36,7 +36,7 @@ repositories {
 dependencies {
     // Database
     implementation 'com.zaxxer:HikariCP:5.1.0'
-    implementation 'mysql:mysql-connector-java:5.1.23'
+    implementation 'mysql:mysql-connector-java:5.1.49'
     
     // MongoDB
     implementation 'org.mongodb:mongodb-driver-sync:5.1.3'

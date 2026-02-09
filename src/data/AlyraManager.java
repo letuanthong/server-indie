@@ -33,6 +33,16 @@ public class AlyraManager {
 
     static {
         loadProperties();
+        // Validate required config trước khi tạo connection pool
+        if (DRIVER == null || DB_HOST == null || DB_PORT == null || DB_USER == null || DB_NAME == null || DB_NAME_DATA == null) {
+            Logger.log(Logger.RED, "[ERROR] Thiếu config database! Kiểm tra config/server.properties\n");
+            Logger.log(Logger.RED, String.format("  driver=%s host=%s port=%s user=%s name=%s name_data=%s\n",
+                    DRIVER, DB_HOST, DB_PORT, DB_USER, DB_NAME, DB_NAME_DATA));
+            throw new ExceptionInInitializerError("Thiếu config database trong config/server.properties");
+        }
+        if (DB_PASSWORD == null) {
+            DB_PASSWORD = "";
+        }
         String dbName = AlyraManager.DB_NAME;
         String dbNameData = AlyraManager.DB_NAME_DATA;
         ds = new HikariDataSource(createConfig("User Management", dbName));
