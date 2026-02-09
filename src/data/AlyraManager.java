@@ -43,10 +43,20 @@ public class AlyraManager {
         if (DB_PASSWORD == null) {
             DB_PASSWORD = "";
         }
-        String dbName = AlyraManager.DB_NAME;
-        String dbNameData = AlyraManager.DB_NAME_DATA;
-        ds = new HikariDataSource(createConfig("User Management", dbName));
-        ds_data = new HikariDataSource(createConfig("Game Assets", dbNameData));
+        try {
+            String dbName = AlyraManager.DB_NAME;
+            String dbNameData = AlyraManager.DB_NAME_DATA;
+            ds = new HikariDataSource(createConfig("User Management", dbName));
+            Logger.log(Logger.GREEN, "[DB] User Management pool - OK\n");
+            ds_data = new HikariDataSource(createConfig("Game Assets", dbNameData));
+            Logger.log(Logger.GREEN, "[DB] Game Assets pool - OK\n");
+        } catch (Exception e) {
+            Logger.log(Logger.RED, "[ERROR] Không thể kết nối database!\n");
+            Logger.log(Logger.RED, "[ERROR] " + e.getMessage() + "\n");
+            Logger.log(Logger.RED, String.format("[ERROR] driver=%s host=%s port=%s user=%s db=%s db_data=%s\n",
+                    DRIVER, DB_HOST, DB_PORT, DB_USER, DB_NAME, DB_NAME_DATA));
+            throw e;
+        }
     }
 
     public static Connection getConnection() throws SQLException {
@@ -188,15 +198,19 @@ public class AlyraManager {
     }
 
     private static HikariConfig createConfig(String poolName, String databaseName) {
+        String jdbcUrl = String.format("jdbc:mariadb://%s:%s/%s?useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true",
+                DB_HOST, DB_PORT, databaseName);
+        Logger.log(Logger.GREEN, String.format("[DB] Pool=%s URL=%s User=%s\n", poolName, jdbcUrl, DB_USER));
         HikariConfig config = new HikariConfig();
         config.setDriverClassName(DRIVER);
-        config.setJdbcUrl(String.format("jdbc:mysql://%s:%s/%s?useUnicode=yes&characterEncoding=UTF-8",
-                DB_HOST, DB_PORT, databaseName));
+        config.setJdbcUrl(jdbcUrl);
         config.setUsername(DB_USER);
         config.setPassword(DB_PASSWORD);
         config.setMinimumIdle(MIN_CONN);
         config.setMaximumPoolSize(MAX_CONN);
         config.setMaxLifetime(MAX_LIFE_TIME);
+        config.setIdleTimeout(MAX_LIFE_TIME / 2);
+        config.setConnectionTimeout(30000);
         config.setPoolName(poolName);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
@@ -204,10 +218,6 @@ public class AlyraManager {
         config.addDataSourceProperty("useServerPrepStmts", "true");
         config.addDataSourceProperty("useLocalSessionState", "true");
         config.addDataSourceProperty("rewriteBatchedStatements", "true");
-        config.addDataSourceProperty("cacheResultSetMetadata", "true");
-        config.addDataSourceProperty("cacheServerConfiguration", "true");
-        config.addDataSourceProperty("elideSetAutoCommits", "true");
-        config.addDataSourceProperty("maintainTimeStats", "true");
         return config;
     }
 }
