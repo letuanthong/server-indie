@@ -5,21 +5,23 @@ package services.map;
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import consts.ConstMap;
 import map.Map;
 import map.WayPoint;
 import map.Zone;
 import mob.Mob;
+import network.Message;
 import player.Player;
 import server.Manager;
-import network.Message;
 import services.Service;
 import utils.Logger;
 import utils.Util;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MapService {
 
@@ -51,24 +53,24 @@ public class MapService {
             DataInputStream dis = new DataInputStream(new FileInputStream("data/map/tile_set_info"));
             int numTileMap = dis.readByte();
             tileIndexTileType = new int[numTileMap][];
-            for (int i = 0; i < numTileMap; i++) {
+            for (int idex = 0; idex < numTileMap; idex++) {
                 int numTileOfMap = dis.readByte();
                 for (int j = 0; j < numTileOfMap; j++) {
                     int tileType = dis.readInt();
                     int numIndex = dis.readByte();
                     if (tileType == tileTypeFocus) {
-                        tileIndexTileType[i] = new int[numIndex];
+                        tileIndexTileType[idex] = new int[numIndex];
                     }
                     for (int k = 0; k < numIndex; k++) {
                         int typeIndex = dis.readByte();
                         if (tileType == tileTypeFocus) {
-                            tileIndexTileType[i][k] = typeIndex;
+                            tileIndexTileType[idex][k] = typeIndex;
                         }
                     }
                 }
             }
-        } catch (Exception e) {
-            Logger.logException(MapService.class, e);
+        } catch (IOException e) {
+            Logger.logException(MapService.class, e , "readTileIndexTileType");
         }
         return tileIndexTileType;
     }
@@ -82,13 +84,14 @@ public class MapService {
             int w = dis.readByte();
             int h = dis.readByte();
             tileMap = new int[h][w];
-            for (int i = 0; i < tileMap.length; i++) {
-                for (int j = 0; j < tileMap[i].length; j++) {
-                    tileMap[i][j] = dis.readByte();
+            for (int[] tileMap1 : tileMap) {
+                for (int j = 0; j < tileMap1.length; j++) {
+                    tileMap1[j] = dis.readByte();
                 }
             }
             dis.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            Logger.logException(MapService.class, e , "readTileMap");
         }
         return tileMap;
     }
@@ -346,22 +349,18 @@ public class MapService {
                 zone = map.zones.get(Util.nextInt(map.zones.size()));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.logException(MapService.class, e, "getMapWithRandZone");
         }
         return zone;
     }
 
     public String getPlanetName(byte planetId) {
-        switch (planetId) {
-            case 0:
-                return "Trái đất";
-            case 1:
-                return "Namếc";
-            case 2:
-                return "Xayda";
-            default:
-                return "";
-        }
+        return switch (planetId) {
+            case 0 -> "Trái đất";
+            case 1 -> "Namếc";
+            case 2 -> "Xayda";
+            default -> "";
+        };
     }
 
     /**
@@ -400,16 +399,16 @@ public class MapService {
 
     public List<Zone> getMapBlackBall() {
         List<Zone> list = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            list.add(getMapById(85 + i).zones.get(0));
+        for (int idex = 0; idex < 7; idex++) {
+            list.add(getMapById(85 + idex).zones.get(0));
         }
         return list;
     }
 
     public List<Zone> getMapMaBu() {
         List<Zone> list = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            list.add(getMapById(114 + i).zones.get(0));
+        for (int idex = 0; idex < 7; idex++) {
+            list.add(getMapById(114 + idex).zones.get(0));
         }
         return list;
     }
@@ -434,8 +433,8 @@ public class MapService {
             msg.writer().writeShort(player.location.y);
             Service.gI().sendMessAnotherNotMeInMap(player, msg);
             msg.cleanup();
-        } catch (Exception e) {
-            Logger.logException(MapService.class, e);
+        } catch (IOException e) {
+            Logger.logException(MapService.class, e, "sendPlayerMove");
         }
     }
 
@@ -560,7 +559,8 @@ public boolean isskh(int mapId) {
     public boolean isMapEventHalloween(int mapId) {
         return mapId == 174 || mapId == 179 || mapId == 180 || mapId == 181 || mapId == 168;
     }
- public boolean isMapEvent1(int mapId) {
+ 
+    public boolean isMapEvent1(int mapId) {
         return mapId == 0 || mapId == 7 || mapId == 14;
     }
     public boolean isMap3Planets(int mapId) {

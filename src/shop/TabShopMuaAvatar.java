@@ -1,8 +1,8 @@
 package shop;
 
-import player.Player;
 import java.util.ArrayList;
-import java.util.List;
+
+import player.Player;
 import services.player.InventoryService;
 
 public class TabShopMuaAvatar extends TabShop {
@@ -23,8 +23,8 @@ public class TabShopMuaAvatar extends TabShop {
         for (ItemShop itemShop : tabShop.itemShops) {
             if (itemShop.temp.gender == player.gender || itemShop.temp.gender == 3) {
                 boolean isInListDauThan = false;
-                for (int id : listDauThan) {
-                    if (itemShop.temp.id == id) {
+                for (int idex : listDauThan) {
+                    if (itemShop.temp.id == idex) {
                         isInListDauThan = true;
                         break;
                     }

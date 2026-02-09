@@ -5,25 +5,24 @@ package services.player;
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import item.Item;
 import item.Item.ItemOption;
+import network.Message;
 import npc.MabuEgg;
 import player.Inventory;
 import player.Pet;
 import player.Player;
-import network.Message;
 import services.ItemService;
 import services.Service;
+import services.dungeon.BlackBallWarService;
 import services.dungeon.NgocRongNamecService;
 import services.map.ChangeMapService;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import services.dungeon.BlackBallWarService;
 import services.map.ItemMapService;
+import utils.Logger;
 
 public class InventoryService {
 
@@ -36,10 +35,9 @@ public class InventoryService {
         return InventoryService.I;
     }
 
-    private void __________________Tìm_kiếm_item_____________________________() {
-        //**********************************************************************
-    }
-
+    /**
+     * __________________Tìm_kiếm_item_____________________________
+     */
     public Item findItem(List<Item> list, int tempId) {
         try {
             for (Item item : list) {
@@ -84,9 +82,9 @@ public class InventoryService {
         return this.isExistItem(player.inventory.itemsBox, tempId);
     }
 
-    private void __________________Sao_chép_danh_sách_item__________________() {
-        //**********************************************************************
-    }
+    /**
+     * __________________Sao_chép_danh_sách_item_____________________________
+     */
 
     public List<Item> copyList(List<Item> items) {
         List<Item> list = new ArrayList<>();
@@ -108,10 +106,10 @@ public class InventoryService {
         return copyList(player.inventory.itemsBox);
     }
 
-    private void __________________Vứt_bỏ_item______________________________() {
-        //**********************************************************************
-    }
-
+    /**
+     * __________________Vứt_bỏ_item_____________________________
+     */
+    @SuppressWarnings("UnnecessaryReturnStatement")
     public void throwItem(Player player, int where, int index) {
         Item itemThrow = null;
         if (where == 0) {
@@ -138,10 +136,9 @@ public class InventoryService {
         }
     }
 
-    private void __________________Xoá_bỏ_item______________________________() {
-        //**********************************************************************
-    }
-
+    /**
+     * __________________Xoá_bỏ_item_____________________________
+     */
     public void removeItem(List<Item> items, int index) {
         Item item = ItemService.gI().createItemNull();
         items.set(index, item);
@@ -181,10 +178,9 @@ public class InventoryService {
         this.removeItem(player.inventory.itemsBox, index);
     }
 
-    private void __________________Giảm_số_lượng_item_______________________() {
-        //**********************************************************************
-    }
-
+    /**
+     * __________________Giảm_số_lượng_item_____________________________
+     */
     public void subQuantityItemsBag(Player player, Item item, int quantity) {
         subQuantityItem(player.inventory.itemsBag, item, quantity);
     }
@@ -211,9 +207,9 @@ public class InventoryService {
         }
     }
 
-    private void __________________Sắp_xếp_danh_sách_item___________________() {
-        //**********************************************************************
-    }
+    /**
+     * __________________Sắp_xếp_danh_sách_item___________________
+     */
 
     public void sortItems(List<Item> list) {
         for (int i = 0; i < list.size() - 1; i++) {
@@ -257,9 +253,9 @@ public class InventoryService {
         }
     }
 
-    private void __________________Thao_tác_tháo_mặc_item___________________() {
-        //**********************************************************************
-    }
+    /**
+     * __________________Thao_tác_tháo_mặc_item___________________
+     */
     private Item putItemBag(Player player, Item item) {
         for (int i = 0; i < player.inventory.itemsBag.size(); i++) {
             if (!player.inventory.itemsBag.get(i).isNotNullItem()) {
@@ -291,25 +287,12 @@ public class InventoryService {
 
         // Kiểm tra các loại item hợp lệ
         switch (item.template.type) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 32:
-            case 23:
-            case 24:
-            case 11:
-            case 75:
-            case 72:
-            case 27:
-            case 98:
-            case 99:
-                break;
-            default:
+            case 0, 1, 2, 3, 4, 5, 32, 23, 24, 11, 75, 72, 27, 98, 99 -> {
+            }
+            default -> {
                 Service.gI().sendThongBaoOK(player.isPet ? ((Pet) player).master : player, "Trang bị không phù hợp!");
                 return sItem;
+            }
         }
 
         // Kiểm tra giới tính của vật phẩm
@@ -349,27 +332,11 @@ public class InventoryService {
         checkOption231(item);
         int index = -1;
         switch (item.template.type) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-                index = item.template.type;
-                break;
-            case 32:
-                index = 6;
-                break;
-            case 23:
-            case 24:
-                index = 9;
-                break;
-            case 11:
-                index = 8;
-                break;
-            case 27:
-                index = 7;
-                break;
+            case 0, 1, 2, 3, 4, 5 -> index = item.template.type;
+            case 32 -> index = 6;
+            case 23, 24 -> index = 9;
+            case 11 -> index = 8;
+            case 27 -> index = 7;
         }
 
         sItem = player.inventory.itemsBody.get(index);
@@ -542,9 +509,9 @@ public class InventoryService {
         }
     }
 
-    private void __________________Gửi_danh_sách_item_cho_người_chơi________() {
-        //**********************************************************************
-    }
+    /**
+     * __________________Gửi_danh_sách_item_cho_người_chơi________
+     */
 
     public void sendItemBags(Player player) {
         sortItems(player.inventory.itemsBag);
@@ -585,7 +552,8 @@ public class InventoryService {
 
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            Logger.logException(InventoryService.class, e, "sendItemBags");
         }
     }
 
@@ -628,7 +596,8 @@ public class InventoryService {
             }
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            Logger.logException(InventoryService.class, e, "sendItemBody");
         }
         Service.gI().Send_Caitrang(player);
     }
@@ -668,7 +637,8 @@ public class InventoryService {
             }
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            Logger.logException(InventoryService.class, e, "sendItemBox");
         }
         this.openBox(player);
     }
@@ -680,26 +650,26 @@ public class InventoryService {
             msg.writer().writeByte(1);
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            Logger.logException(InventoryService.class, e, "openBox");
         }
     }
 
-    private void __________________Thêm_vật_phẩm_vào_danh_sách______________() {
-        //**********************************************************************
-    }
-
+    /**
+     * __________________Thêm_vật_phẩm_vào_danh_sách______________
+     */
     private boolean addItemSpecial(Player player, Item item) {
         //bùa
         if (item.template.type == 13) {
             int min = 0;
             try {
                 String tagShopBua = player.idMark.getShopOpen().tagName;
-                if (tagShopBua.equals("BUA_1H")) {
-                    min = 60;
-                } else if (tagShopBua.equals("BUA_8H")) {
-                    min = 60 * 8;
-                } else if (tagShopBua.equals("BUA_1M")) {
-                    min = 60 * 24 * 30;
+                switch (tagShopBua) {
+                    case "BUA_1H" -> min = 60;
+                    case "BUA_8H" -> min = 60 * 8;
+                    case "BUA_1M" -> min = 60 * 24 * 30;
+                    default -> {
+                    }
                 }
             } catch (Exception e) {
             }
@@ -708,18 +678,24 @@ public class InventoryService {
         }
 
         switch (item.template.id) {
-            case 568: //quả trứng
+            case 568 -> {
+                //quả trứng
                 if (player.mabuEgg == null) {
                     MabuEgg.createMabuEgg(player);
                 }
                 return true;
-            case 453: //tàu tennis
+            }
+            case 453 -> {
+                //tàu tennis
                 player.haveTennisSpaceShip = true;
                 return true;
-            case 74: //đùi gà nướng
+            }
+            case 74 -> {
+                //đùi gà nướng
                 player.nPoint.setFullHpMp();
                 PlayerService.gI().sendInfoHpMp(player);
                 return true;
+            }
         }
         return false;
     }
@@ -740,7 +716,7 @@ public class InventoryService {
 
         //gold, gem, ruby
         switch (item.template.type) {
-            case 9:
+            case 9 -> {
                 int actualGold = item.quantity;
                 if (player.inventory.gold + item.quantity <= Inventory.LIMIT_GOLD) {
                     if (player.effectSkill.isChibi && player.typeChibi == 0) {
@@ -762,7 +738,8 @@ public class InventoryService {
                     Service.gI().sendThongBao(player, "Vàng sau khi nhặt quá giới hạn cho phép");
                     return false;
                 }
-            case 10:
+            }
+            case 10 -> {
                 long gem = (long) player.inventory.gem + (long) item.quantity;
                 if (gem > Integer.MAX_VALUE) {
                     gem = Integer.MAX_VALUE;
@@ -770,7 +747,8 @@ public class InventoryService {
                 player.inventory.gem = (int) gem;
                 Service.gI().sendMoney(player);
                 return true;
-            case 34:
+            }
+            case 34 -> {
                 long ruby = (long) player.inventory.ruby + (long) item.quantity;
                 if (ruby > Integer.MAX_VALUE) {
                     ruby = Integer.MAX_VALUE;
@@ -778,6 +756,7 @@ public class InventoryService {
                 player.inventory.ruby = (int) ruby;
                 Service.gI().sendMoney(player);
                 return true;
+            }
         }
 
         //mở rộng hành trang - rương đồ
@@ -887,11 +866,7 @@ public class InventoryService {
         return true;
     }
 
-    private void __________________Kiểm_tra_điều_kiện_vật_phẩm______________() {
-        //**********************************************************************
-    }
-
-    /**
+    /**__________________Kiểm_tra_điều_kiện_vật_phẩm______________
      * Kiểm tra vật phẩm có phải là vật phẩm tăng chỉ số option hay không
      *
      * @param item
@@ -900,18 +875,20 @@ public class InventoryService {
     private int[] isItemIncrementalOption(Item item) {
         for (Item.ItemOption io : item.itemOptions) {
             switch (io.optionTemplate.id) {
-                case 1:
+                case 1 -> {
                     return new int[]{io.optionTemplate.id, io.param};
-                case 31:
+                }
+                case 31 -> {
                     return new int[]{io.optionTemplate.id, io.param};
+                }
             }
         }
         return new int[]{-1, -1};
     }
 
-    private void __________________Kiểm_tra_danh_sách_còn_chỗ_trống_________() {
-        //**********************************************************************
-    }
+    /**
+     * __________________Kiểm_tra_danh_sách_còn_chỗ_trống_________
+     */
 
     public byte getCountEmptyBag(Player player) {
         return getCountEmptyListItem(player.inventory.itemsBag);
@@ -1134,7 +1111,7 @@ public class InventoryService {
                 int option210Index = i;
                 item.itemOptions.remove(i);
                 int numberOfOptionsToAdd = io.param;
-                int[] allOptions = {8, 14, 108, 94, 108, 16, 80, 81, 97, 100, 101, 104, 106};
+                int[] allOptions = {8, 14, 94, 108, 16, 80, 81, 97, 100, 101, 104, 106};
                 List<Integer> selectedOptions = new ArrayList<>();
                 while (selectedOptions.size() < numberOfOptionsToAdd && selectedOptions.size() < allOptions.length) {
                     int randomIndex = (int) (Math.random() * allOptions.length);
@@ -1146,12 +1123,12 @@ public class InventoryService {
                 List<Item.ItemOption> newOptions = new ArrayList<>();
                 for (int option : selectedOptions) {
                     int newParam = 0;
-                    if (option == 8 || option == 14 || option == 108 || option == 94 || option == 108) {
-                        newParam = 3 + (int) (Math.random() * 3);
-                    } else if (option == 16 || option == 80 || option == 81 || option == 97 || option == 100 || option == 101 || option == 104) {
-                        newParam = 10 + (int) (Math.random() * 16);
-                    } else if (option == 106) {
-                        newParam = 0;
+                    switch (option) {
+                        case 8, 14, 94, 108 -> newParam = 3 + (int) (Math.random() * 3);
+                        case 16, 80, 81, 97, 100, 101, 104 -> newParam = 10 + (int) (Math.random() * 16);
+                        case 106 -> newParam = 0;
+                        default -> {
+                        }
                     }
                     newOptions.add(new Item.ItemOption(option, newParam));
                 }

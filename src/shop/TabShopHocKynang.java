@@ -1,14 +1,8 @@
 package shop;
 
-import player.badges.BagesTemplate;
-import task.BadgesTaskService;
-
 import java.util.ArrayList;
-import java.util.List;
-import item.Item;
+
 import player.Player;
-import shop.ItemShop;
-import shop.TabShop;
 
 public class TabShopHocKynang extends TabShop {
 

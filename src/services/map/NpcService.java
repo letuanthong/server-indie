@@ -7,18 +7,15 @@ package services.map;
  */
 
 
+import java.io.IOException;
+
 import consts.ConstNpc;
-import item.Item;
+import network.Message;
 import npc.Npc;
 import npc.NpcFactory;
 import player.Player;
 import server.Manager;
-import network.Message;
-import services.ItemService;
-import services.ItemTimeService;
 import services.Service;
-import services.player.InventoryService;
-import services.shenron.SummonDragon;
 import utils.Logger;
 
 public class NpcService {
@@ -64,117 +61,76 @@ public class NpcService {
             }
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
-            Logger.logException(NpcService.class, e);
+        } catch (IOException e) {
+            Logger.logException(NpcService.class, e, "createMenu");
         }
     }
-public boolean SummonDragonWhis_1_1(Player playerSummonShenron, int select) {
+    /**
+     * TODO: Lam sau
+     * @param playerSummonShenron
+     * @param select
+     * @return
+     */
+    public boolean SummonDragonWhis_1_1(Player playerSummonShenron, int select) {
         switch (select) {
-            case 0:           
-                   Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-                break;
-            case 1:
-                   Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-                break;
-            case 2: 
-                   Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-                break;
-            case 3:
-                   Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-                break;
-            case 4:
-                   Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-                break;
+            case 0 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 1 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 2 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 3 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 4 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
         }
         return true;
     }
 
     public boolean SummonDragonWhis_1_2(Player playerSummonShenron, int select) {
         switch (select) {
-            case 0:
-                 Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-            break;
-            case 1:
-              Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-            break;
-            case 2:
-                   Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 0 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 1 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 2 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
         }
         return true;
     }
 
     public boolean SummonDragonWhis_2_1(Player playerSummonShenron, int select) {
         switch (select) {
-            case 0: 
-                   Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-                break;
-            case 1: 
-                   Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-                break;
-            case 2:
-                   Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-                break;
+            case 0 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 1 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 2 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
         }
         return true;
     }
 
     public boolean SummonDragonWhis_3_1(Player playerSummonShenron, int select) {
         switch (select) {
-            case 0:
-                   Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-                break;
-            case 1:  
-                Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-                break;
-            case 2:
-                   Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-                break;
+            case 0 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 1 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 2 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
         }
         return true;
     }
 
     public boolean SummonDragonBlack_1(Player playerSummonShenron, int select) {
         switch (select) {
-            case 0:
-                Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-            
-                break;
-            case 1:
-                Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-            
-                break;
-            case 2:
-                Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-            
-                break;
-            case 3:
-               Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-            
-                break;
-            case 4:
-                Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-            
-                break;
+            case 0 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 1 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 2 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 3 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 4 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
         }
         return true;
     }
 
     public boolean SummonDragonICE_1(Player playerSummonShenron, int select) {
         switch (select) {
-            case 0: {
+            case 0 -> {
                Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
             }
-            break;
-            case 1: {
+            case 1 -> {
               Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
             }
-            break;
-            case 2:
+            case 2 -> Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
+            case 3 ->  {
                   Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-                break;
-            case 3: {
-                  Service.gI().sendThongBao(playerSummonShenron, "chua lam:v luoi qua huhu");
-                break;
             }
         }
         return true;
@@ -191,7 +147,8 @@ public boolean SummonDragonWhis_1_1(Player playerSummonShenron, int select) {
             }
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            Logger.logException(NpcService.class, e, "createTutorial");
         }
     }
 
@@ -206,7 +163,8 @@ public boolean SummonDragonWhis_1_1(Player playerSummonShenron, int select) {
             }
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            Logger.logException(NpcService.class, e, "createTutorial");
         }
     }
 

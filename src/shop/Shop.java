@@ -7,9 +7,8 @@ package shop;
  */
 import java.util.ArrayList;
 import java.util.List;
+
 import player.Player;
-import shop.TabShopHocKynang;
-import shop.TabShopSoHuu;
 
 public class Shop {
 
@@ -41,7 +40,6 @@ public class Shop {
             } else if (tabShop.id == 19) {
                     this.tabShops.add(new TabShopMuaAvatar(tabShop, player));
             } else if (tabShop.id == 13) {
-               
                 this.tabShops.add(new TabShopHangDoc(tabShop, player));
             } else if (tabShop.id == 44) {
                 this.tabShops.add(new TabShopDanhHieu(tabShop, player));

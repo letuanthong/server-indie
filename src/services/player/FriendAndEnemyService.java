@@ -7,21 +7,21 @@ package services.player;
  */
 
 
+import java.io.IOException;
+
 import consts.ConstNpc;
+import matches.PVPService;
+import network.Message;
 import player.Enemy;
 import player.Friend;
 import player.Player;
-import matches.PVPService;
-import network.Message;
 import server.Client;
+import services.Service;
+import services.map.ChangeMapService;
 import services.map.MapService;
 import services.map.NpcService;
-import services.Service;
-import services.TaskService;
-import services.map.ChangeMapService;
 import utils.Logger;
 import utils.Util;
-import java.io.IOException;
 
 public class FriendAndEnemyService {
 
@@ -46,15 +46,9 @@ public class FriendAndEnemyService {
         try {
             byte action = msg.reader().readByte();
             switch (action) {
-                case OPEN_LIST:
-                    openListFriend(player);
-                    break;
-                case MAKE_FRIEND:
-                    makeFriend(player, msg.reader().readInt());
-                    break;
-                case REMOVE_FRIEND:
-                    removeFriend(player, msg.reader().readInt());
-                    break;
+                case OPEN_LIST -> openListFriend(player);
+                case MAKE_FRIEND -> makeFriend(player, msg.reader().readInt());
+                case REMOVE_FRIEND -> removeFriend(player, msg.reader().readInt());
             }
         } catch (IOException ex) {
 
@@ -65,11 +59,9 @@ public class FriendAndEnemyService {
         try {
             byte action = msg.reader().readByte();
             switch (action) {
-                case OPEN_LIST:
-                    openListEnemy(player);
-                    break;
-                case REVENGE:
-//                    if (true) {
+                case OPEN_LIST -> openListEnemy(player);
+                case REVENGE -> {
+                    //                    if (true) {
 //                        Service.gI().sendThongBao(player, "Không thể thực hiện");
 //                        break;
 //                    }
@@ -86,10 +78,8 @@ public class FriendAndEnemyService {
                     } else {
                         Service.gI().sendThongBao(player, "Không thể thực hiện");
                     }
-                    break;
-                case REMOVE_ENEMY:
-                    removeEnemy(player, msg.reader().readInt());
-                    break;
+                }
+                case REMOVE_ENEMY -> removeEnemy(player, msg.reader().readInt());
             }
         } catch (IOException ex) {
 
@@ -98,7 +88,7 @@ public class FriendAndEnemyService {
 
     private void reloadFriend(Player player) {
         for (Friend f : player.friends) {
-            Player pl = null;
+            Player pl ;
             if ((pl = Client.gI().getPlayerByUser(f.id)) != null || (pl = Client.gI().getPlayer(f.name)) != null) {
                 try {
                     f.power = pl.nPoint.power;
@@ -117,7 +107,7 @@ public class FriendAndEnemyService {
 
     private void reloadEnemy(Player player) {
         for (Enemy e : player.enemies) {
-            Player pl = null;
+            Player pl ;
             if ((pl = Client.gI().getPlayerByUser(e.id)) != null || (pl = Client.gI().getPlayer(e.name)) != null) {
                 try {
                     e.power = pl.nPoint.power;
@@ -154,8 +144,8 @@ public class FriendAndEnemyService {
             }
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
-            Logger.logException(FriendAndEnemyService.class, e);
+        } catch (IOException e) {
+            Logger.logException(FriendAndEnemyService.class, e, "openListFriend");
         }
     }
 
@@ -179,8 +169,8 @@ public class FriendAndEnemyService {
             }
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
-            Logger.logException(FriendAndEnemyService.class, e);
+        } catch (IOException e) {
+            Logger.logException(FriendAndEnemyService.class, e, "openListEnemy");
         }
     }
 
@@ -208,29 +198,30 @@ public class FriendAndEnemyService {
     }
 
     private void removeFriend(Player player, int playerId) {
-        for (int i = 0; i < player.friends.size(); i++) {
-            if (player.friends.get(i).id == playerId) {
+        for (int idex = 0; idex < player.friends.size(); idex++) {
+            if (player.friends.get(idex).id == playerId) {
                 Service.gI().sendThongBao(player, "Đã xóa thành công "
-                        + player.friends.get(i).name + " khỏi danh sách bạn");
+                        + player.friends.get(idex).name + " khỏi danh sách bạn");
                 Message msg;
                 try {
                     msg = new Message(-80);
                     msg.writer().writeByte(REMOVE_FRIEND);
-                    msg.writer().writeInt((int) player.friends.get(i).id);
+                    msg.writer().writeInt((int) player.friends.get(idex).id);
                     player.sendMessage(msg);
                     msg.cleanup();
-                } catch (Exception e) {
+                } catch (IOException e) {
+                    Logger.logException(FriendAndEnemyService.class, e, "removeFriend");
                 }
-                player.friends.remove(i);
+                player.friends.remove(idex);
                 break;
             }
         }
     }
 
     private void removeEnemy(Player player, int playerId) {
-        for (int i = 0; i < player.enemies.size(); i++) {
-            if (player.enemies.get(i).id == playerId) {
-                player.enemies.remove(i);
+        for (int idex = 0; idex < player.enemies.size(); idex++) {
+            if (player.enemies.get(idex).id == playerId) {
+                player.enemies.remove(idex);
                 break;
             }
         }
@@ -247,7 +238,8 @@ public class FriendAndEnemyService {
                 if (pl != null) {
                     Service.gI().chatPrivate(player, pl, text);
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
+                Logger.logException(FriendAndEnemyService.class, e, "chatPrivate");
             }
         }
     }
@@ -291,7 +283,7 @@ public class FriendAndEnemyService {
                 }
             }
         } catch (IOException ex) {
-
+            Logger.logException(FriendAndEnemyService.class, ex, "goToPlayerWithYardrat");
         }
     }
 

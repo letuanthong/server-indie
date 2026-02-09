@@ -5,18 +5,15 @@ package services.map;
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
+import java.util.ArrayList;
+import java.util.List;
+
 import consts.ConstNpc;
 import consts.ConstTask;
 import npc.Npc;
 import player.Player;
 import server.Manager;
 import services.TaskService;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class NpcManager {
 

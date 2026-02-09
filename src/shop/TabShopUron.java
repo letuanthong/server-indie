@@ -1,8 +1,8 @@
 package shop;
 
-import player.Player;
 import java.util.ArrayList;
-import java.util.List;
+
+import player.Player;
 import services.player.InventoryService;
 
 public class TabShopUron extends TabShop {

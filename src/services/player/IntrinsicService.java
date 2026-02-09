@@ -7,15 +7,18 @@ package services.player;
  */
 
 
+import java.io.IOException;
+import java.util.List;
+
 import consts.ConstNpc;
 import intrinsic.Intrinsic;
+import network.Message;
 import player.Player;
 import server.Manager;
-import network.Message;
-import services.map.NpcService;
 import services.Service;
+import services.map.NpcService;
+import utils.Logger;
 import utils.Util;
-import java.util.List;
 
 public class IntrinsicService {
 
@@ -30,14 +33,11 @@ public class IntrinsicService {
     }
 
     public List<Intrinsic> getIntrinsics(byte playerGender) {
-        switch (playerGender) {
-            case 0:
-                return Manager.INTRINSIC_TD;
-            case 1:
-                return Manager.INTRINSIC_NM;
-            default:
-                return Manager.INTRINSIC_XD;
-        }
+        return switch (playerGender) {
+            case 0 -> Manager.INTRINSIC_TD;
+            case 1 -> Manager.INTRINSIC_NM;
+            default -> Manager.INTRINSIC_XD;
+        };
     }
 
     public Intrinsic getIntrinsicById(int id) {
@@ -58,7 +58,8 @@ public class IntrinsicService {
             msg.writer().writeUTF(player.playerIntrinsic.intrinsic.getName());
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            Logger.logException(IntrinsicService.class, e, "sendInfoIntrinsic");
         }
     }
 
@@ -77,7 +78,8 @@ public class IntrinsicService {
             }
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            Logger.logException(IntrinsicService.class, e, "showAllIntrinsic");
         }
     }
 

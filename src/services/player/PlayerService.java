@@ -7,9 +7,11 @@ package services.player;
  */
 
 
+import java.io.IOException;
+
 import data.AlyraManager;
-import player.Player;
 import network.Message;
+import player.Player;
 import server.Client;
 import services.EffectSkillService;
 import services.Service;
@@ -42,7 +44,8 @@ public class PlayerService {
                 msg.writer().writeInt((int) param);// số tn cần cộng
                 player.sendMessage(msg);
                 msg.cleanup();
-            } catch (Exception e) {
+            } catch (IOException e) {
+                Logger.logException(PlayerService.class, e, "sendTNSM");
             }
         }
     }
@@ -72,8 +75,8 @@ public class PlayerService {
             msg.writer().writeInt(player.nPoint.hp);
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
-            Logger.logException(PlayerService.class, e);
+        } catch (IOException e) {
+            Logger.logException(PlayerService.class, e, "sendInfoHp");
         }
     }
 
@@ -84,8 +87,8 @@ public class PlayerService {
             msg.writer().writeInt(player.nPoint.mp);
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
-            Logger.logException(PlayerService.class, e);
+        } catch (IOException e) {
+            Logger.logException(PlayerService.class, e, "sendInfoMp");
         }
     }
 
@@ -121,7 +124,7 @@ public class PlayerService {
                 } else {
                     msg.writer().writeInt((int) player.inventory.gold);
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
                 msg.writer().writeInt((int) player.inventory.gold);
             }
             msg.writer().writeInt(player.inventory.gem);//luong
@@ -129,8 +132,8 @@ public class PlayerService {
             msg.writer().writeInt(player.nPoint.mp);//cmp
             msg.writer().writeInt(player.inventory.ruby);//ruby
             player.sendMessage(msg);
-        } catch (Exception e) {
-            Logger.logException(PlayerService.class, e);
+        } catch (IOException e) {
+            Logger.logException(PlayerService.class, e, "sendInfoHpMpMoney");
         }
     }
 
@@ -149,13 +152,7 @@ public class PlayerService {
             player.location.y = y;
             player.location.lastTimeplayerMove = System.currentTimeMillis();
             switch (player.zone.map.mapId) {
-                case 85:
-                case 86:
-                case 87:
-                case 88:
-                case 89:
-                case 90:
-                case 91:
+                case 85, 86, 87, 88, 89, 90, 91 -> {
                     if (!player.isBoss && !player.isPet) {
                         if (x < 24 || x > player.zone.map.mapWidth - 24 || y < 0 || y > player.zone.map.mapHeight - 24) {
                             if (MapService.gI().getWaypointPlayerIn(player) == null) {
@@ -169,7 +166,7 @@ public class PlayerService {
                             return;
                         }
                     }
-                    break;
+                }
             }
             if (player.pet != null) {
                 player.pet.followMaster();
@@ -200,8 +197,8 @@ public class PlayerService {
             msg.writer().writeShort(player.nPoint.stamina);
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
-            Logger.logException(PlayerService.class, e);
+        } catch (IOException e) {
+            Logger.logException(PlayerService.class, e, "sendCurrentStamina");
         }
     }
 
@@ -212,8 +209,8 @@ public class PlayerService {
             msg.writer().writeShort(player.nPoint.maxStamina);
             player.sendMessage(msg);
             msg.cleanup();
-        } catch (Exception e) {
-            Logger.logException(PlayerService.class, e);
+        } catch (IOException e) {
+            Logger.logException(PlayerService.class, e, "sendMaxStamina");
         }
     }
 
@@ -234,7 +231,8 @@ public class PlayerService {
             msg.writer().writeByte(player.typePk);
             Service.gI().sendMessAllPlayerInMap(player, msg);
             msg.cleanup();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            Logger.logException(PlayerService.class, e, "sendTypePk");
         }
     }
 
@@ -287,7 +285,7 @@ public class PlayerService {
 
     public void hoiSinhMaBu(Player player) {
         if (player.isDie()) {
-            boolean canHs = false;
+            boolean canHs;
             if (MapService.gI().isMapMaBu(player.zone.map.mapId)) {
                 if (player.inventory.gold >= COST_GOLD_HOI_SINH_NRSD) {
                     player.inventory.gold -= COST_GOLD_HOI_SINH_NRSD;
