@@ -13,6 +13,5 @@ public class BadgesTaskTemplate {
         count = -1;
         idbadgesReward = -1;
     }
-    
-}
 
+}

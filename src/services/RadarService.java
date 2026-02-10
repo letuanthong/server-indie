@@ -1,19 +1,20 @@
 package services;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import network.Message;
+import player.Player;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import radar.Card;
 import radar.OptionCard;
 import radar.RadarCard;
-import player.Player;
-import network.Message;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RadarService {
 
@@ -41,29 +42,29 @@ public class RadarService {
                 m.writer().writeShort(radar.Id);
                 m.writer().writeShort(radar.IconId);
                 m.writer().writeByte(radar.Rank);
-                m.writer().writeByte(card.Amount);  //amount
-                m.writer().writeByte(card.MaxAmount);  //max_amount
-                m.writer().writeByte(radar.Type);  //type 0: monster, 1: charpart
+                m.writer().writeByte(card.Amount); // amount
+                m.writer().writeByte(card.MaxAmount); // max_amount
+                m.writer().writeByte(radar.Type); // type 0: monster, 1: charpart
                 switch (radar.Type) {
                     case 0:
-                        m.writer().writeShort(radar.Template); //Monster
+                        m.writer().writeShort(radar.Template); // Monster
                         break;
                     case 1:
-                        m.writer().writeShort(radar.Head); //Head
-                        m.writer().writeShort(radar.Body); //Body
-                        m.writer().writeShort(radar.Leg); //Leg
-                        m.writer().writeShort(radar.Bag); //bag
+                        m.writer().writeShort(radar.Head); // Head
+                        m.writer().writeShort(radar.Body); // Body
+                        m.writer().writeShort(radar.Leg); // Leg
+                        m.writer().writeShort(radar.Bag); // bag
                         break;
                 }
-                m.writer().writeUTF(radar.Name);  //name
-                m.writer().writeUTF(radar.Info);  //info
-                m.writer().writeByte(card.Level);  //Level
-                m.writer().writeByte(card.Used);  //use
-                m.writer().writeByte(radar.Options.size());  //option radar
+                m.writer().writeUTF(radar.Name); // name
+                m.writer().writeUTF(radar.Info); // info
+                m.writer().writeByte(card.Level); // Level
+                m.writer().writeByte(card.Used); // use
+                m.writer().writeByte(radar.Options.size()); // option radar
                 for (OptionCard option : radar.Options) {
-                    m.writer().writeByte(option.id);  //id
-                    m.writer().writeShort(option.param);  //param
-                    m.writer().writeByte(option.active);  //ActiveCard
+                    m.writer().writeByte(option.id); // id
+                    m.writer().writeShort(option.param); // param
+                    m.writer().writeByte(option.active); // ActiveCard
                 }
             }
             m.writer().flush();
@@ -126,4 +127,3 @@ public class RadarService {
         }
     }
 }
-

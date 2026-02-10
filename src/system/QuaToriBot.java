@@ -6,8 +6,8 @@ package system;
 
 import item.Item;
 import item.Item.ItemOption;
-import services.ItemService;
 import player.Player;
+import services.ItemService;
 import services.player.InventoryService;
 
 /**
@@ -21,8 +21,8 @@ public class QuaToriBot {
         Item PhieuGiamGia = ItemService.gI().createNewItem((short) 459, 10);
         Item DaBaoVe = ItemService.gI().createNewItem((short) 987, 5);
         Item CaiTrang = ItemService.gI().createNewItem((short) 1732, 1); // 1732 Black Goku | 1731 Black Goku Rose
-        Item PhuKien = ItemService.gI().createNewItem((short) 1721, 1); // Cá Koi Zombie 1721  | Cánh 1722
-        Item Pet = ItemService.gI().createNewItem((short) 1654, 1);  // Chó 1654 | Capybara 1629
+        Item PhuKien = ItemService.gI().createNewItem((short) 1721, 1); // Cá Koi Zombie 1721 | Cánh 1722
+        Item Pet = ItemService.gI().createNewItem((short) 1654, 1); // Chó 1654 | Capybara 1629
         // Option ThoiVang
         ThoiVang.itemOptions.add(new ItemOption(100, 1));
 
@@ -67,9 +67,10 @@ public class QuaToriBot {
         Item PhieuGiamGia = ItemService.gI().createNewItem((short) 459, 10);
         Item DaBaoVe = ItemService.gI().createNewItem((short) 987, 10);
         Item CaiTrang = ItemService.gI().createNewItem((short) 1732, 1); // 1732 Black Goku | 1731 Black Goku Rose
-        Item PhuKien = ItemService.gI().createNewItem((short) 1721, 1); // Cá Koi Zombie 1721  | Cánh 1722
-        Item Pet = ItemService.gI().createNewItem((short) 1654, 1);  // Chó 1654 | Capybara 1629
-        Item TheTieuDoiTruongVang = ItemService.gI().createNewItem((short) 1204, 10); // Đội Trưởng Vàng 957 | Namek 1204
+        Item PhuKien = ItemService.gI().createNewItem((short) 1721, 1); // Cá Koi Zombie 1721 | Cánh 1722
+        Item Pet = ItemService.gI().createNewItem((short) 1654, 1); // Chó 1654 | Capybara 1629
+        Item TheTieuDoiTruongVang = ItemService.gI().createNewItem((short) 1204, 10); // Đội Trưởng Vàng 957 | Namek
+                                                                                      // 1204
 
         // Option ThoiVang
         ThoiVang.itemOptions.add(new ItemOption(100, 1));
@@ -116,10 +117,10 @@ public class QuaToriBot {
         Item PhieuGiamGia = ItemService.gI().createNewItem((short) 459, 10);
         Item DaBaoVe = ItemService.gI().createNewItem((short) 987, 20);
         Item CaiTrang = ItemService.gI().createNewItem((short) 1731, 1); // 1732 Black Goku | 1731 Black Goku Rose
-        Item PhuKien = ItemService.gI().createNewItem((short) 1722, 1); // Cá Koi Zombie 1721  | Cánh 1722
-        Item Pet = ItemService.gI().createNewItem((short) 1629, 1);  // Chó 1654 | Capybara 1629
+        Item PhuKien = ItemService.gI().createNewItem((short) 1722, 1); // Cá Koi Zombie 1721 | Cánh 1722
+        Item Pet = ItemService.gI().createNewItem((short) 1629, 1); // Chó 1654 | Capybara 1629
         Item TheTieuDoiTruongVang = ItemService.gI().createNewItem((short) 956, 10); // Đội Trưởng Vàng 957 | Namek 1204
-//        Item CapsuleThanLinh = ItemService.gI().createNewItem((short) 1951, 1);
+        // Item CapsuleThanLinh = ItemService.gI().createNewItem((short) 1951, 1);
 
         // Option ThoiVang
         ThoiVang.itemOptions.add(new ItemOption(100, 1));
@@ -159,7 +160,7 @@ public class QuaToriBot {
         InventoryService.gI().addItemBag(player, PhuKien);
         InventoryService.gI().addItemBag(player, Pet);
         InventoryService.gI().addItemBag(player, TheTieuDoiTruongVang);
-//        InventoryService.gI().addItemBag(player, CapsuleThanLinh);
+        // InventoryService.gI().addItemBag(player, CapsuleThanLinh);
         InventoryService.gI().sendItemBags(player);
     }
 
@@ -168,10 +169,10 @@ public class QuaToriBot {
         Item PhieuGiamGia = ItemService.gI().createNewItem((short) 459, 10);
         Item DaBaoVe = ItemService.gI().createNewItem((short) 987, 20);
         Item CaiTrang = ItemService.gI().createNewItem((short) 1731, 1); // 1732 Black Goku | 1731 Black Goku Rose
-        Item PhuKien = ItemService.gI().createNewItem((short) 1722, 1); // Cá Koi Zombie 1721  | Cánh 1722
-        Item Pet = ItemService.gI().createNewItem((short) 1629, 1);  // Chó 1654 | Capybara 1629
+        Item PhuKien = ItemService.gI().createNewItem((short) 1722, 1); // Cá Koi Zombie 1721 | Cánh 1722
+        Item Pet = ItemService.gI().createNewItem((short) 1629, 1); // Chó 1654 | Capybara 1629
         Item TheTieuDoiTruongVang = ItemService.gI().createNewItem((short) 956, 20); // Đội Trưởng Vàng 956 | Namek 1204
-//        Item CapsuleThanLinh = ItemService.gI().createNewItem((short) 1951, 1);
+        // Item CapsuleThanLinh = ItemService.gI().createNewItem((short) 1951, 1);
         Item TheRongThanNamek = ItemService.gI().createNewItem((short) 1204, 20);
 
         // Option ThoiVang
@@ -215,9 +216,8 @@ public class QuaToriBot {
         InventoryService.gI().addItemBag(player, PhuKien);
         InventoryService.gI().addItemBag(player, Pet);
         InventoryService.gI().addItemBag(player, TheTieuDoiTruongVang);
-//        InventoryService.gI().addItemBag(player, CapsuleThanLinh);
+        // InventoryService.gI().addItemBag(player, CapsuleThanLinh);
         InventoryService.gI().addItemBag(player, TheRongThanNamek);
         InventoryService.gI().sendItemBags(player);
     }
 }
-

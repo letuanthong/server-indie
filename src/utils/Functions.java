@@ -1,10 +1,9 @@
 package utils;
 
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import player.Player;
-
-import java.util.regex.Pattern;
 
 public class Functions {
 
@@ -47,4 +46,3 @@ public class Functions {
     }
 
 }
-

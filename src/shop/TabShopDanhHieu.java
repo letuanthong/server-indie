@@ -28,7 +28,8 @@ public class TabShopDanhHieu extends TabShop {
                 if (shouldAdd) {
                     List<Item.ItemOption> listOptionBackup = new ArrayList<>(itemShop.options);
                     itemShop.options.clear();
-                    int percent = BadgesTaskService.sendPercenBadgesTask(player, BagesTemplate.fineIdEffectbyIdItem(itemShop.temp.id));
+                    int percent = BadgesTaskService.sendPercenBadgesTask(player,
+                            BagesTemplate.fineIdEffectbyIdItem(itemShop.temp.id));
                     if (percent != 0) {
                         boolean optionExists = false;
                         for (Item.ItemOption option : listOptionBackup) {
@@ -49,4 +50,3 @@ public class TabShopDanhHieu extends TabShop {
         }
     }
 }
-

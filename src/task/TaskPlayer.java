@@ -6,7 +6,6 @@ package task;
  * @Collab: ???
  */
 
-
 public class TaskPlayer {
 
     public TaskMain taskMain;
@@ -27,4 +26,3 @@ public class TaskPlayer {
     }
 
 }
-

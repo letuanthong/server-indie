@@ -6,7 +6,6 @@ package utils;
  * @Collab: ???
  */
 
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -110,4 +109,3 @@ public class FileIO {
         return fileList;
     }
 }
-

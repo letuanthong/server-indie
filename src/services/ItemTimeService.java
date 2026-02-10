@@ -1,23 +1,35 @@
 package services;
 
+import static item.ItemTime.BAN_DO_KHO_BAU;
+import static item.ItemTime.CON_DUONG_RAN_DOC;
+import static item.ItemTime.DOANH_TRAI;
+import static item.ItemTime.KHI_GAS_HUY_DIET;
+import static item.ItemTime.TIME_BUA_SANTA;
+import static item.ItemTime.TIME_CMS;
+import static item.ItemTime.TIME_DK;
+import static item.ItemTime.TIME_EAT_MEAL;
+import static item.ItemTime.TIME_ITEM;
+import static item.ItemTime.TIME_MAY_DO;
+import static item.ItemTime.TIME_NCD;
+import static item.ItemTime.TIME_OPEN_POWER;
+
+import java.io.IOException;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.ConstPlayer;
-import item.Item;
-import static item.ItemTime.*;
-import player.Fusion;
-import player.Player;
-import network.Message;
-import java.io.IOException;
-import dungeon.TreasureUnderSea;
-import dungeon.SnakeWay;
 import dungeon.DestronGas;
 import dungeon.RedRibbonHQ;
+import dungeon.SnakeWay;
+import dungeon.TreasureUnderSea;
+import item.Item;
+import network.Message;
+import player.Fusion;
+import player.Player;
 import services.player.InventoryService;
 import utils.Logger;
 
@@ -43,66 +55,87 @@ public class ItemTimeService {
                     (int) ((Fusion.TIME_FUSION - (System.currentTimeMillis() - player.fusion.lastTimeFusion)) / 1000));
         }
         if (player.itemTime.isUseBoHuyet) {
-            sendItemTime(player, 2755, (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeBoHuyet)) / 1000));
+            sendItemTime(player, 2755,
+                    (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeBoHuyet)) / 1000));
         }
         if (player.itemTime.isUseBoKhi) {
-            sendItemTime(player, 2756, (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeBoKhi)) / 1000));
+            sendItemTime(player, 2756,
+                    (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeBoKhi)) / 1000));
         }
         if (player.itemTime.isUseGiapXen) {
-            sendItemTime(player, 2757, (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeGiapXen)) / 1000));
+            sendItemTime(player, 2757,
+                    (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeGiapXen)) / 1000));
         }
         if (player.itemTime.isUseCuongNo) {
-            sendItemTime(player, 2754, (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeCuongNo)) / 1000));
+            sendItemTime(player, 2754,
+                    (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeCuongNo)) / 1000));
         }
 
         if (player.itemTime.isUseAnDanh) {
-            sendItemTime(player, 2760, (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeAnDanh)) / 1000));
+            sendItemTime(player, 2760,
+                    (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeAnDanh)) / 1000));
         }
         if (player.itemTime.isUseBoHuyet2) {
-            sendItemTime(player, 10714, (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeBoHuyet2)) / 1000));
+            sendItemTime(player, 10714,
+                    (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeBoHuyet2)) / 1000));
         }
         if (player.itemTime.isUseBoKhi2) {
-            sendItemTime(player, 10715, (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeBoKhi2)) / 1000));
+            sendItemTime(player, 10715,
+                    (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeBoKhi2)) / 1000));
         }
         if (player.itemTime.isUseGiapXen2) {
-            sendItemTime(player, 10712, (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeGiapXen2)) / 1000));
+            sendItemTime(player, 10712,
+                    (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeGiapXen2)) / 1000));
         }
         if (player.itemTime.isUseCuongNo2) {
-            sendItemTime(player, 10716, (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeCuongNo2)) / 1000));
+            sendItemTime(player, 10716,
+                    (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeCuongNo2)) / 1000));
         }
 
         if (player.itemTime.isUseAnDanh2) {
-            sendItemTime(player, 10717, (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeAnDanh2)) / 1000));
+            sendItemTime(player, 10717,
+                    (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeAnDanh2)) / 1000));
         }
         if (player.itemTime.isUseCMS) {
-            sendItemTime(player, 5829, (int) ((TIME_CMS - (System.currentTimeMillis() - player.itemTime.lastTimeUseCMS)) / 1000));
+            sendItemTime(player, 5829,
+                    (int) ((TIME_CMS - (System.currentTimeMillis() - player.itemTime.lastTimeUseCMS)) / 1000));
         }
         if (player.itemTime.isUseNCD) {
-            sendItemTime(player, 11173, (int) ((TIME_NCD - (System.currentTimeMillis() - player.itemTime.lastTimeUseNCD)) / 1000));
+            sendItemTime(player, 11173,
+                    (int) ((TIME_NCD - (System.currentTimeMillis() - player.itemTime.lastTimeUseNCD)) / 1000));
         }
         if (player.itemTime.isUseGTPT) {
-            sendItemTime(player, 3778, (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeUseGTPT)) / 1000));
+            sendItemTime(player, 3778,
+                    (int) ((TIME_ITEM - (System.currentTimeMillis() - player.itemTime.lastTimeUseGTPT)) / 1000));
         }
         if (player.itemTime.isUseDK) {
-            sendItemTime(player, 5072, (int) ((TIME_DK - (System.currentTimeMillis() - player.itemTime.lastTimeUseDK)) / 1000));
+            sendItemTime(player, 5072,
+                    (int) ((TIME_DK - (System.currentTimeMillis() - player.itemTime.lastTimeUseDK)) / 1000));
         }
         if (player.itemTime.isOpenPower) {
-            sendItemTime(player, 3783, (int) ((TIME_OPEN_POWER - (System.currentTimeMillis() - player.itemTime.lastTimeOpenPower)) / 1000));
+            sendItemTime(player, 3783,
+                    (int) ((TIME_OPEN_POWER - (System.currentTimeMillis() - player.itemTime.lastTimeOpenPower))
+                            / 1000));
         }
         if (player.itemTime.isUseMayDo) {
-            sendItemTime(player, 2758, (int) ((TIME_MAY_DO - (System.currentTimeMillis() - player.itemTime.lastTimeUseMayDo)) / 1000));
+            sendItemTime(player, 2758,
+                    (int) ((TIME_MAY_DO - (System.currentTimeMillis() - player.itemTime.lastTimeUseMayDo)) / 1000));
         }
         if (player.itemTime.isUseKhoBauX2) {
-            sendItemTime(player, 12834, (int) ((TIME_MAY_DO - (System.currentTimeMillis() - player.itemTime.lastTimeUseKhoBauX2)) / 1000));
+            sendItemTime(player, 12834,
+                    (int) ((TIME_MAY_DO - (System.currentTimeMillis() - player.itemTime.lastTimeUseKhoBauX2)) / 1000));
         }
-           if (player.itemTime.isUseBuaSanta) {
-            sendItemTime(player, 13540, (int) ((TIME_BUA_SANTA - (System.currentTimeMillis() - player.itemTime.lastTimeBuaSanta)) / 1000));
+        if (player.itemTime.isUseBuaSanta) {
+            sendItemTime(player, 13540,
+                    (int) ((TIME_BUA_SANTA - (System.currentTimeMillis() - player.itemTime.lastTimeBuaSanta)) / 1000));
         }
         if (player.itemTime.isEatMeal) {
-            sendItemTime(player, player.itemTime.iconMeal, (int) ((TIME_EAT_MEAL - (System.currentTimeMillis() - player.itemTime.lastTimeEatMeal)) / 1000));
+            sendItemTime(player, player.itemTime.iconMeal,
+                    (int) ((TIME_EAT_MEAL - (System.currentTimeMillis() - player.itemTime.lastTimeEatMeal)) / 1000));
         }
         if (player.itemTime.isEatMeal2) {
-            sendItemTime(player, player.itemTime.iconMeal2, (int) ((TIME_EAT_MEAL - (System.currentTimeMillis() - player.itemTime.lastTimeEatMeal2)) / 1000));
+            sendItemTime(player, player.itemTime.iconMeal2,
+                    (int) ((TIME_EAT_MEAL - (System.currentTimeMillis() - player.itemTime.lastTimeEatMeal2)) / 1000));
         }
         if (player.itemTime.isUseTDLT) {
             sendItemTime(player, 4387, player.itemTime.timeTDLT / 1000);
@@ -143,7 +176,8 @@ public class ItemTimeService {
         player.itemTime.isUseTDLT = false;
         for (Item.ItemOption io : item.itemOptions) {
             if (io.optionTemplate.id == 1) {
-                io.param += (short) ((player.itemTime.timeTDLT - (System.currentTimeMillis() - player.itemTime.lastTimeUseTDLT)) / 60 / 1000);
+                io.param += (short) ((player.itemTime.timeTDLT
+                        - (System.currentTimeMillis() - player.itemTime.lastTimeUseTDLT)) / 60 / 1000);
                 break;
             }
         }
@@ -276,4 +310,3 @@ public class ItemTimeService {
     }
 
 }
-

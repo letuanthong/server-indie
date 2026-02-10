@@ -38,7 +38,7 @@ public class Shop {
             } else if (tabShop.id == 17) {
                 this.tabShops.add(new TabShopSanta(tabShop, player));
             } else if (tabShop.id == 19) {
-                    this.tabShops.add(new TabShopMuaAvatar(tabShop, player));
+                this.tabShops.add(new TabShopMuaAvatar(tabShop, player));
             } else if (tabShop.id == 13) {
                 this.tabShops.add(new TabShopHangDoc(tabShop, player));
             } else if (tabShop.id == 44) {
@@ -86,4 +86,3 @@ public class Shop {
     }
 
 }
-

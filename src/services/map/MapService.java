@@ -36,7 +36,8 @@ public class MapService {
 
     public WayPoint getWaypointPlayerIn(Player player) {
         for (WayPoint wp : player.zone.map.wayPoints) {
-            if (player.location.x >= wp.minX && player.location.x <= wp.maxX && player.location.y >= wp.minY && player.location.y <= wp.maxY) {
+            if (player.location.x >= wp.minX && player.location.x <= wp.maxX && player.location.y >= wp.minY
+                    && player.location.y <= wp.maxY) {
                 return wp;
             }
         }
@@ -49,8 +50,7 @@ public class MapService {
      */
     public int[][] readTileIndexTileType(int tileTypeFocus) {
         int[][] tileIndexTileType = null;
-        try {
-            DataInputStream dis = new DataInputStream(new FileInputStream("data/map/tile_set_info"));
+        try (DataInputStream dis = new DataInputStream(new FileInputStream("data/map/tile_set_info"))) {
             int numTileMap = dis.readByte();
             tileIndexTileType = new int[numTileMap][];
             for (int idex = 0; idex < numTileMap; idex++) {
@@ -70,16 +70,15 @@ public class MapService {
                 }
             }
         } catch (IOException e) {
-            Logger.logException(MapService.class, e , "readTileIndexTileType");
+            Logger.logException(MapService.class, e, "readTileIndexTileType");
         }
         return tileIndexTileType;
     }
 
-    //tilemap for paint
+    // tilemap for paint
     public int[][] readTileMap(int mapId) {
         int[][] tileMap = null;
-        try {
-            DataInputStream dis = new DataInputStream(new FileInputStream("data/map/tile_map_data/" + mapId));
+        try (DataInputStream dis = new DataInputStream(new FileInputStream("data/map/tile_map_data/" + mapId))) {
             dis.readByte();
             int w = dis.readByte();
             int h = dis.readByte();
@@ -89,9 +88,8 @@ public class MapService {
                     tileMap1[j] = dis.readByte();
                 }
             }
-            dis.close();
         } catch (IOException e) {
-            Logger.logException(MapService.class, e , "readTileMap");
+            Logger.logException(MapService.class, e, "readTileMap");
         }
         return tileMap;
     }
@@ -101,28 +99,32 @@ public class MapService {
             return getMapById(mapId).zones.get(0);
         }
 
-        if (this.isMapDoanhTrai(mapId) && (player.zone == null || player.clan == null || player.clan.doanhTrai == null)) {
+        if (this.isMapDoanhTrai(mapId)
+                && (player.zone == null || player.clan == null || player.clan.doanhTrai == null)) {
             Zone zone = getZone(21 + player.gender);
             player.location.x = Util.nextInt(100, zone.map.mapWidth - 100);
             player.location.y = zone.map.yPhysicInTop(player.location.x, 100);
             return zone;
         }
 
-        if (this.isMapBanDoKhoBau(mapId) && (player.zone == null || player.clan == null || player.clan.BanDoKhoBau == null)) {
+        if (this.isMapBanDoKhoBau(mapId)
+                && (player.zone == null || player.clan == null || player.clan.BanDoKhoBau == null)) {
             Zone zone = getZone(5);
             player.location.x = Util.nextInt(100, zone.map.mapWidth - 100);
             player.location.y = zone.map.yPhysicInTop(player.location.x, 100);
             return zone;
         }
 
-        if (this.isMapKhiGasHuyDiet(mapId) && (player.zone == null || player.clan == null || player.clan.KhiGasHuyDiet == null)) {
+        if (this.isMapKhiGasHuyDiet(mapId)
+                && (player.zone == null || player.clan == null || player.clan.KhiGasHuyDiet == null)) {
             Zone zone = getZone(5);
             player.location.x = Util.nextInt(100, zone.map.mapWidth - 100);
             player.location.y = zone.map.yPhysicInTop(player.location.x, 100);
             return zone;
         }
 
-        if (this.isMapConDuongRanDoc(mapId) && (player.zone == null || player.clan == null || player.clan.ConDuongRanDoc == null)) {
+        if (this.isMapConDuongRanDoc(mapId)
+                && (player.zone == null || player.clan == null || player.clan.ConDuongRanDoc == null)) {
             Zone zone = getZone(48);
             player.location.x = Util.nextInt(100, zone.map.mapWidth - 100);
             player.location.y = zone.map.yPhysicInTop(player.location.x, 100);
@@ -285,8 +287,8 @@ public class MapService {
             return player.clan.ConDuongRanDoc.getMapById(mapId);
         }
 
-        //**********************************************************************
-        if (zoneId == -1) { //vào khu bất kỳ
+        // **********************************************************************
+        if (zoneId == -1) { // vào khu bất kỳ
             return getZone(mapId);
         } else {
             return getZoneByMapIDAndZoneID(mapId, zoneId);
@@ -299,10 +301,10 @@ public class MapService {
             return null;
         }
 
-        //int z = Util.nextInt(0, map.zones.size() - 1);
+        // int z = Util.nextInt(0, map.zones.size() - 1);
         int z = 0;
         while (map.zones.get(z).getNumOfPlayers() >= map.zones.get(z).maxPlayer) {
-            //   z = Util.nextInt(0, map.zones.size() - 1);
+            // z = Util.nextInt(0, map.zones.size() - 1);
             z++;
         }
         return map.zones.get(z);
@@ -515,21 +517,26 @@ public class MapService {
     }
 
     public boolean isMapPhoBan(int mapId) {
-        return isMapBanDoKhoBau(mapId) || isMapDoanhTrai(mapId) || isMapConDuongRanDoc(mapId) || isMapKhiGasHuyDiet(mapId);
+        return isMapBanDoKhoBau(mapId) || isMapDoanhTrai(mapId) || isMapConDuongRanDoc(mapId)
+                || isMapKhiGasHuyDiet(mapId);
     }
-public boolean isskh(int mapId) {
+
+    public boolean isskh(int mapId) {
         return (mapId >= 1 && mapId <= 3)
                 || (mapId >= 8 && mapId <= 11)
                 || mapId == 15 || mapId == 17;
     }
+
     public boolean isMapTuongLai(int mapId) {
         return (mapId >= 92 && mapId <= 94)
                 || (mapId >= 96 && mapId <= 100)
                 || mapId == 102 || mapId == 103;
     }
-  public boolean isMapEvent8_3(int mapId) {
+
+    public boolean isMapEvent8_3(int mapId) {
         return mapId >= 5 && mapId <= 110;
     }
+
     public boolean isMapUpSKH(int mapId) {
         return mapId == 1 || mapId == 2 || mapId == 3
                 || mapId == 8 || mapId == 9 || mapId == 11
@@ -559,10 +566,11 @@ public boolean isskh(int mapId) {
     public boolean isMapEventHalloween(int mapId) {
         return mapId == 174 || mapId == 179 || mapId == 180 || mapId == 181 || mapId == 168;
     }
- 
+
     public boolean isMapEvent1(int mapId) {
         return mapId == 0 || mapId == 7 || mapId == 14;
     }
+
     public boolean isMap3Planets(int mapId) {
         return mapId <= 38 && !(mapId == 24 || mapId == 25 || mapId == 26
                 || mapId == 0 || mapId == 7 || mapId == 14
@@ -581,4 +589,3 @@ public boolean isskh(int mapId) {
         player.zone.addPlayer(player);
     }
 }
-

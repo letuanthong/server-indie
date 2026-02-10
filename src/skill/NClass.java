@@ -1,13 +1,14 @@
 package skill;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 import system.Template.SkillTemplate;
-import java.util.ArrayList;
-import java.util.List;
 import utils.Util;
 
 public class NClass {
@@ -26,7 +27,8 @@ public class NClass {
         }
         return null;
     }
-public List<Skill> getSkills(int tempId) {
+
+    public List<Skill> getSkills(int tempId) {
         for (SkillTemplate skillTemplate : skillTemplatess) {
             if (skillTemplate.id == tempId) {
                 return skillTemplate.skillss;
@@ -34,9 +36,11 @@ public List<Skill> getSkills(int tempId) {
         }
         return null;
     }
+
     public SkillTemplate getSkillTemplateByName(String name) {
         for (SkillTemplate skillTemplate : skillTemplatess) {
-            if ((Util.removeAccent(skillTemplate.name).toUpperCase()).contains((Util.removeAccent(name)).toUpperCase())) {
+            if ((Util.removeAccent(skillTemplate.name).toUpperCase())
+                    .contains((Util.removeAccent(name)).toUpperCase())) {
                 return skillTemplate;
             }
         }
@@ -44,4 +48,3 @@ public List<Skill> getSkills(int tempId) {
     }
 
 }
-

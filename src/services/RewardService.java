@@ -1,5 +1,8 @@
 package services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
@@ -10,16 +13,14 @@ import item.Item.ItemOption;
 import player.Player;
 import services.player.InventoryService;
 import utils.Util;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RewardService {
 
     private static final int[][][] ACTIVATION_SET = {
-        {{129, 141, 1, 1000}, {127, 139, 1, 1000}, {128, 140, 1, 1000}}, // songoku - thien xin hang - kirin
-        {{131, 143, 1, 1000}, {132, 144, 1, 1000}, {130, 142, 1, 1000}}, // oc tieu - pikkoro daimao -
-        // picolo
-        {{135, 138, 1, 1000}, {133, 136, 1, 1000}, {134, 137, 1, 1000}} // kakarot - cadic - nappa
+            { { 129, 141, 1, 1000 }, { 127, 139, 1, 1000 }, { 128, 140, 1, 1000 } }, // songoku - thien xin hang - kirin
+            { { 131, 143, 1, 1000 }, { 132, 144, 1, 1000 }, { 130, 142, 1, 1000 } }, // oc tieu - pikkoro daimao -
+            // picolo
+            { { 135, 138, 1, 1000 }, { 133, 136, 1, 1000 }, { 134, 137, 1, 1000 } } // kakarot - cadic - nappa
     };
     private static RewardService I;
 
@@ -34,7 +35,7 @@ public class RewardService {
         return RewardService.I;
     }
 
-    //========================LUCKY ROUND========================
+    // ========================LUCKY ROUND========================
     public List<Item> getListItemLuckyRound(Player player, int num, boolean vip) {
         List<Item> list = new ArrayList<>();
         for (int i = 0; i < num; i++) {
@@ -111,7 +112,8 @@ public class RewardService {
                     it.quantity = 1;
                 }
 
-                // Nếu không chọn được vật phẩm từ danh sách VIP thì gọi itemRand để lấy vật phẩm mặc định
+                // Nếu không chọn được vật phẩm từ danh sách VIP thì gọi itemRand để lấy vật
+                // phẩm mặc định
                 if (it.quantity == 0) {
                     it = itemRand(it, success);
                 }
@@ -119,13 +121,13 @@ public class RewardService {
                 // Không VIP
                 if (Util.isTrue(1, 2)) {
                     // Các item mặc định khi không có item VIP
-                    int[] itemId = {467, 468, 469, 470, 471, 741, 745, 800, 801, 803, 804, 1000};
+                    int[] itemId = { 467, 468, 469, 470, 471, 741, 745, 800, 801, 803, 804, 1000 };
                     int itemid = itemId[Util.nextInt(itemId.length)];
                     if (Util.isTrue(20, 100)) {
-                        int[] itemId2 = {467, 468, 469, 470, 471, 741, 745, 800, 801, 803, 804, 999, 1000, 1001};
+                        int[] itemId2 = { 467, 468, 469, 470, 471, 741, 745, 800, 801, 803, 804, 999, 1000, 1001 };
                         itemid = itemId2[Util.nextInt(itemId2.length)];
                     }
-                    byte[] option = {77, 80, 81, 103, 50, 94, 5};
+                    byte[] option = { 77, 80, 81, 103, 50, 94, 5 };
                     byte optionid;
                     byte param;
                     Item vpdl = ItemService.gI().createNewItem((short) itemid);
@@ -160,7 +162,7 @@ public class RewardService {
         return list;
     }
 
-// Phương thức itemRand sẽ trả về vật phẩm mặc định nếu không thành công
+    // Phương thức itemRand sẽ trả về vật phẩm mặc định nếu không thành công
     public Item itemRand(Item item, boolean success) {
         if (!success) {
             // Trả về item vàng mặc định nếu không thành công
@@ -173,17 +175,19 @@ public class RewardService {
         if (InventoryService.gI().getCountEmptyBag(player) > 0) {
             player.canReward = false;
             player.haveReward = true;
-            int[] items = {734, 920, 849, 743, 733};
+            int[] items = { 734, 920, 849, 743, 733 };
             Item item = ItemService.gI().createNewItem((short) items[Util.nextInt(items.length)]);
-            byte[] option = {77, 80, 81, 103, 50, 94, 5};
-            byte[] option_v2 = {14, 16, 17, 19, 27, 28, 47, 87};
+            byte[] option = { 77, 80, 81, 103, 50, 94, 5 };
+            byte[] option_v2 = { 14, 16, 17, 19, 27, 28, 47, 87 };
             if (Util.isTrue(5, 100)) {
                 item.itemOptions.add(new Item.ItemOption(option[Util.nextInt(option.length)], Util.nextInt(1, 5)));
-                item.itemOptions.add(new Item.ItemOption(option_v2[Util.nextInt(option_v2.length)], Util.nextInt(1, 2)));
+                item.itemOptions
+                        .add(new Item.ItemOption(option_v2[Util.nextInt(option_v2.length)], Util.nextInt(1, 2)));
             } else {
                 item.itemOptions.add(new Item.ItemOption(option[Util.nextInt(option.length)], Util.nextInt(1, 10)));
                 if (Util.isTrue(1, 10)) {
-                    item.itemOptions.add(new Item.ItemOption(option_v2[Util.nextInt(option_v2.length)], Util.nextInt(1, 10)));
+                    item.itemOptions
+                            .add(new Item.ItemOption(option_v2[Util.nextInt(option_v2.length)], Util.nextInt(1, 10)));
                 }
                 item.itemOptions.add(new Item.ItemOption(93, Util.nextInt(1, 30)));
             }
@@ -196,9 +200,9 @@ public class RewardService {
             Service.gI().sendThongBao(player, "Cần 1 ô hành trang trống");
         }
     }
-//   public void initBaseOptionClothes(Item item) {
-//        SetClothes(item.template.id, item.template.type, item.itemOptions);
-//    }
+    // public void initBaseOptionClothes(Item item) {
+    // SetClothes(item.template.id, item.template.type, item.itemOptions);
+    // }
 
     public void initChiSoItem(Item item) {
         SetClothes(item.template.id, item.template.type, item.itemOptions);
@@ -206,7 +210,7 @@ public class RewardService {
 
     // chỉ số cơ bản: hp, ki, hồi phục, sđ, crit
     private static void SetClothes(int tempId, int type, List<ItemOption> list) {
-        int[][] option_param = {{-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}};
+        int[][] option_param = { { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
         switch (type) {
             case 0: // áo
                 option_param[0][0] = 47; // giáp
@@ -995,12 +999,12 @@ public class RewardService {
 
     }
 
-    //chỉ số cơ bản: hp, ki, hồi phục, sđ, crit
+    // chỉ số cơ bản: hp, ki, hồi phục, sđ, crit
     public void initBaseOptionClothes(Item itemid, int tempId, int type, List<ItemOption> list) {
-        int[][] option_param = {{-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}};
+        int[][] option_param = { { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 }, { -1, -1 } };
         switch (type) {
-            case 0: //áo
-                option_param[0][0] = 47; //giáp
+            case 0: // áo
+                option_param[0][0] = 47; // giáp
                 switch (tempId) {
                     case 0:
                         option_param[0][1] = 2;
@@ -1110,26 +1114,26 @@ public class RewardService {
                     case 241:
                         option_param[0][1] = 450;
                         break;
-                    case 555: //áo thần trái đất
-                        option_param[2][0] = 21; //yêu cầu sức mạnh
+                    case 555: // áo thần trái đất
+                        option_param[2][0] = 21; // yêu cầu sức mạnh
                         option_param[0][1] = 800;
                         option_param[2][1] = 15;
                         break;
-                    case 557: //áo thần namếc
-                        option_param[2][0] = 21; //yêu cầu sức mạnh
+                    case 557: // áo thần namếc
+                        option_param[2][0] = 21; // yêu cầu sức mạnh
                         option_param[0][1] = 800;
                         option_param[2][1] = 15;
                         break;
-                    case 559: //áo thần xayda
-                        option_param[2][0] = 21; //yêu cầu sức mạnh
+                    case 559: // áo thần xayda
+                        option_param[2][0] = 21; // yêu cầu sức mạnh
                         option_param[0][1] = 800;
                         option_param[2][1] = 15;
                         break;
                 }
                 break;
-            case 1: //quần
-                option_param[0][0] = 6; //hp
-                option_param[1][0] = 27; //hp hồi/30s
+            case 1: // quần
+                option_param[0][0] = 6; // hp
+                option_param[1][0] = 27; // hp hồi/30s
                 switch (tempId) {
                     case 6:
                         option_param[0][1] = 30;
@@ -1272,25 +1276,25 @@ public class RewardService {
                         option_param[0][1] = 24000;
                         option_param[1][1] = 3600;
                         break;
-                    case 556: //quần thần trái đất
-                        option_param[0][0] = 22; //hp
-                        option_param[2][0] = 21; //yêu cầu sức mạnh
+                    case 556: // quần thần trái đất
+                        option_param[0][0] = 22; // hp
+                        option_param[2][0] = 21; // yêu cầu sức mạnh
 
                         option_param[0][1] = 52;
                         option_param[1][1] = 10000;
                         option_param[2][1] = 15;
                         break;
-                    case 558: //quần thần namếc
-                        option_param[0][0] = 22; //hp
-                        option_param[2][0] = 21; //yêu cầu sức mạnh
+                    case 558: // quần thần namếc
+                        option_param[0][0] = 22; // hp
+                        option_param[2][0] = 21; // yêu cầu sức mạnh
 
                         option_param[0][1] = 50;
                         option_param[1][1] = 10000;
                         option_param[2][1] = 15;
                         break;
-                    case 560: //quần thần xayda
-                        option_param[0][0] = 22; //hp
-                        option_param[2][0] = 21; //yêu cầu sức mạnh
+                    case 560: // quần thần xayda
+                        option_param[0][0] = 22; // hp
+                        option_param[2][0] = 21; // yêu cầu sức mạnh
 
                         option_param[0][1] = 48;
                         option_param[1][1] = 10000;
@@ -1298,8 +1302,8 @@ public class RewardService {
                         break;
                 }
                 break;
-            case 2: //găng
-                option_param[0][0] = 0; //sđ
+            case 2: // găng
+                option_param[0][0] = 0; // sđ
                 switch (tempId) {
                     case 21:
                         option_param[0][1] = 4;
@@ -1409,28 +1413,28 @@ public class RewardService {
                     case 265:
                         option_param[0][1] = 2250;
                         break;
-                    case 562: //găng thần trái đất
-                        option_param[2][0] = 21; //yêu cầu sức mạnh
+                    case 562: // găng thần trái đất
+                        option_param[2][0] = 21; // yêu cầu sức mạnh
 
                         option_param[0][1] = 3700;
                         option_param[2][1] = 17;
                         break;
-                    case 564: //găng thần namếc
-                        option_param[2][0] = 21; //yêu cầu sức mạnh
+                    case 564: // găng thần namếc
+                        option_param[2][0] = 21; // yêu cầu sức mạnh
 
                         option_param[0][1] = 3500;
                         option_param[2][1] = 17;
                         break;
-                    case 566: //găng thần xayda
-                        option_param[2][0] = 21; //yêu cầu sức mạnh
+                    case 566: // găng thần xayda
+                        option_param[2][0] = 21; // yêu cầu sức mạnh
                         option_param[0][1] = 3800;
                         option_param[2][1] = 17;
                         break;
                 }
                 break;
-            case 3: //giày
-                option_param[0][0] = 7; //ki
-                option_param[1][0] = 28; //ki hồi /30s
+            case 3: // giày
+                option_param[0][0] = 7; // ki
+                option_param[1][0] = 28; // ki hồi /30s
                 switch (tempId) {
                     case 27:
                         option_param[0][1] = 10;
@@ -1573,25 +1577,25 @@ public class RewardService {
                         option_param[0][1] = 23000;
                         option_param[1][1] = 2800;
                         break;
-                    case 563: //giày thần trái đất
+                    case 563: // giày thần trái đất
                         option_param[0][0] = 23;
-                        option_param[2][0] = 21; //yêu cầu sức mạnh
+                        option_param[2][0] = 21; // yêu cầu sức mạnh
 
                         option_param[0][1] = 48;
                         option_param[1][1] = 10000;
                         option_param[2][1] = 14;
                         break;
-                    case 565: //giày thần namếc
+                    case 565: // giày thần namếc
                         option_param[0][0] = 23;
-                        option_param[2][0] = 21; //yêu cầu sức mạnh
+                        option_param[2][0] = 21; // yêu cầu sức mạnh
 
                         option_param[0][1] = 48;
                         option_param[1][1] = 10000;
                         option_param[2][1] = 14;
                         break;
-                    case 567: //giày thần xayda
+                    case 567: // giày thần xayda
                         option_param[0][0] = 23;
-                        option_param[2][0] = 21; //yêu cầu sức mạnh
+                        option_param[2][0] = 21; // yêu cầu sức mạnh
 
                         option_param[0][1] = 46;
                         option_param[1][1] = 10000;
@@ -1599,8 +1603,8 @@ public class RewardService {
                         break;
                 }
                 break;
-            case 4: //rada
-                option_param[0][0] = 14; //crit
+            case 4: // rada
+                option_param[0][0] = 14; // crit
                 switch (tempId) {
                     case 12:
                         option_param[0][1] = 1;
@@ -1638,8 +1642,8 @@ public class RewardService {
                     case 281:
                         option_param[0][1] = 12;
                         break;
-                    case 561: //nhẫn thần linh
-                        option_param[2][0] = 21; //yêu cầu sức mạnh
+                    case 561: // nhẫn thần linh
+                        option_param[2][0] = 21; // yêu cầu sức mạnh
                         option_param[0][1] = 15;
                         option_param[2][1] = 18;
                         break;
@@ -1669,17 +1673,19 @@ public class RewardService {
     public Item rewardCapsuleTet(Player player) {
         if (InventoryService.gI().getCountEmptyBag(player) > 0) {
             if (Util.isTrue(40, 100)) {
-                int[] items = {734, 920, 849, 743, 733};
+                int[] items = { 734, 920, 849, 743, 733 };
                 Item item = ItemService.gI().createNewItem((short) items[Util.nextInt(items.length)]);
-                byte[] option = {77, 80, 81, 103, 50, 94, 5};
-                byte[] option_v2 = {14, 16, 17, 19, 27, 28, 47, 87};
+                byte[] option = { 77, 80, 81, 103, 50, 94, 5 };
+                byte[] option_v2 = { 14, 16, 17, 19, 27, 28, 47, 87 };
                 if (Util.isTrue(5, 100)) {
                     item.itemOptions.add(new Item.ItemOption(option[Util.nextInt(option.length)], Util.nextInt(1, 5)));
-                    item.itemOptions.add(new Item.ItemOption(option_v2[Util.nextInt(option_v2.length)], Util.nextInt(1, 2)));
+                    item.itemOptions
+                            .add(new Item.ItemOption(option_v2[Util.nextInt(option_v2.length)], Util.nextInt(1, 2)));
                 } else {
                     item.itemOptions.add(new Item.ItemOption(option[Util.nextInt(option.length)], Util.nextInt(1, 10)));
                     if (Util.isTrue(1, 10)) {
-                        item.itemOptions.add(new Item.ItemOption(option_v2[Util.nextInt(option_v2.length)], Util.nextInt(1, 10)));
+                        item.itemOptions.add(
+                                new Item.ItemOption(option_v2[Util.nextInt(option_v2.length)], Util.nextInt(1, 10)));
                     }
                     item.itemOptions.add(new Item.ItemOption(93, Util.nextInt(1, 30)));
                 }
@@ -1687,17 +1693,19 @@ public class RewardService {
                 item.itemOptions.add(new Item.ItemOption(30, 0));
                 return item;
             } else if (Util.isTrue(50, 100)) {
-                int[] items = {942, 943, 944};
+                int[] items = { 942, 943, 944 };
                 Item item = ItemService.gI().createNewItem((short) items[Util.nextInt(items.length)]);
-                byte[] option = {77, 80, 81, 103, 50, 94, 5};
-                byte[] option_v2 = {14, 16, 17, 19, 27, 28, 47, 87};
+                byte[] option = { 77, 80, 81, 103, 50, 94, 5 };
+                byte[] option_v2 = { 14, 16, 17, 19, 27, 28, 47, 87 };
                 if (Util.isTrue(5, 100)) {
                     item.itemOptions.add(new Item.ItemOption(option[Util.nextInt(option.length)], Util.nextInt(1, 5)));
-                    item.itemOptions.add(new Item.ItemOption(option_v2[Util.nextInt(option_v2.length)], Util.nextInt(1, 2)));
+                    item.itemOptions
+                            .add(new Item.ItemOption(option_v2[Util.nextInt(option_v2.length)], Util.nextInt(1, 2)));
                 } else {
                     item.itemOptions.add(new Item.ItemOption(option[Util.nextInt(option.length)], Util.nextInt(1, 10)));
                     if (Util.isTrue(1, 10)) {
-                        item.itemOptions.add(new Item.ItemOption(option_v2[Util.nextInt(option_v2.length)], Util.nextInt(1, 10)));
+                        item.itemOptions.add(
+                                new Item.ItemOption(option_v2[Util.nextInt(option_v2.length)], Util.nextInt(1, 10)));
                     }
                     item.itemOptions.add(new Item.ItemOption(93, Util.nextInt(1, 30)));
                 }
@@ -1728,8 +1736,8 @@ public class RewardService {
                     it.itemOptions.add(new Item.ItemOption(14, Util.nextInt(2, 50)));
                     it.itemOptions.add(new Item.ItemOption(93, Util.nextInt(1, 15)));
                 }
-                byte[] option = {80, 81, 103, 50, 94, 5};
-                byte[] option_v2 = {14, 16, 17, 19, 27, 28, 47, 87};
+                byte[] option = { 80, 81, 103, 50, 94, 5 };
+                byte[] option_v2 = { 14, 16, 17, 19, 27, 28, 47, 87 };
                 if (Util.isTrue(20, 100)) {
                     it.itemOptions.add(new Item.ItemOption(option[Util.nextInt(option.length)], Util.nextInt(1, 5)));
                 }
@@ -1737,7 +1745,8 @@ public class RewardService {
                     it.itemOptions.add(new Item.ItemOption(108, Util.nextInt(1, 40)));
                 }
                 if (Util.isTrue(20, 100)) {
-                    it.itemOptions.add(new Item.ItemOption(option_v2[Util.nextInt(option_v2.length)], Util.nextInt(1, 2)));
+                    it.itemOptions
+                            .add(new Item.ItemOption(option_v2[Util.nextInt(option_v2.length)], Util.nextInt(1, 2)));
                 }
                 return it;
             }
@@ -1748,4 +1757,3 @@ public class RewardService {
     }
 
 }
-

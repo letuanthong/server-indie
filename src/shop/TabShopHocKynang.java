@@ -15,18 +15,17 @@ public class TabShopHocKynang extends TabShop {
         for (ItemShop itemShop : tabShop.itemShops) {
             if (itemShop.temp.gender == player.gender || itemShop.temp.gender > 2) {
                 boolean shouldAdd = true;
-                for (Integer i : player.BoughtSkill) {//check xem co ki nang chua
+                for (Integer i : player.BoughtSkill) {// check xem co ki nang chua
                     if (itemShop.temp.id == i) {
                         shouldAdd = false;
                         break;
                     }
                 }
                 if (shouldAdd) {
-                    
+
                     this.itemShops.add(new ItemShop(itemShop));
                 }
             }
         }
     }
 }
-

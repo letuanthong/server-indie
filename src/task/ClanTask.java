@@ -6,7 +6,6 @@ package task;
  * @Collab: ???
  */
 
-
 import consts.ConstTask;
 import utils.Util;
 
@@ -97,4 +96,3 @@ public class ClanTask {
         return (int) ((long) count * 100 / maxCount);
     }
 }
-

@@ -1,4 +1,4 @@
-package models.Training;
+package services;
 
 /*
  *
@@ -6,9 +6,7 @@ package models.Training;
  * @author YourSoulMatee
  */
 
-
 import boss.Boss;
-import consts.BossID;
 import boss.learn.Karin;
 import boss.learn.KhiBubbles;
 import boss.learn.MrPoPo;
@@ -18,13 +16,12 @@ import boss.learn.ThuongDe;
 import boss.learn.ToSuKaio;
 import boss.learn.Whis;
 import boss.learn.Yajiro;
+import consts.BossID;
 import consts.ConstNpc;
 import map.Zone;
 import player.Player;
-import services.map.MapService;
-import services.NpcService;
-import services.Service;
 import services.map.ChangeMapService;
+import services.map.MapService;
 import utils.Logger;
 import utils.Util;
 
@@ -144,7 +141,8 @@ public class TrainingService {
         if (time > 60) {
             tnsm = ((long) getTnsmMoiPhut(player) * (long) ((time > 86400 ? 86400 : time)) / 60);
             if (MapService.gI().isMapLuyenTap(player.zone.map.mapId)) {
-                NpcService.gI().createTutorial(player, -1, "Bạn tăng được " + Util.numberToMoney(tnsm) + " sức mạnh trong thời gian " + (time / 60) + " phút tập luyện Offline");
+                NpcService.gI().createTutorial(player, -1, "Bạn tăng được " + Util.numberToMoney(tnsm)
+                        + " sức mạnh trong thời gian " + (time / 60) + " phút tập luyện Offline");
                 Service.gI().addSMTN(player, (byte) 2, tnsm, false);
             } else if (player.dangKyTapTuDong && time > 1800) {
                 if (player.inventory.getGemAndRuby() > 1) {
@@ -160,8 +158,11 @@ public class TrainingService {
                             player.lastXOffline = player.location.x;
                             Service.gI().addSMTN(player, (byte) 2, tnsm, false);
                             player.teleTapTuDong = true;
-                            player.thongBaoTapTuDong = "Bạn tăng được " + Util.numberToMoney(tnsm) + " sức mạnh trong thời gian " + (time / 60) + " phút tập luyện Offline, -1 ngọc (phí đăng ký tập tự động)";
-                            ChangeMapService.gI().changeMapBySpaceShip(player, player.mapIdDangTapTuDong, 0, Util.nextInt(200, 400));
+                            player.thongBaoTapTuDong = "Bạn tăng được " + Util.numberToMoney(tnsm)
+                                    + " sức mạnh trong thời gian " + (time / 60)
+                                    + " phút tập luyện Offline, -1 ngọc (phí đăng ký tập tự động)";
+                            ChangeMapService.gI().changeMapBySpaceShip(player, player.mapIdDangTapTuDong, 0,
+                                    Util.nextInt(200, 400));
                             Service.gI().sendMoney(player);
                         } catch (InterruptedException e) {
                         }
@@ -180,4 +181,3 @@ public class TrainingService {
         }
     }
 }
-

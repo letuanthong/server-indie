@@ -1,28 +1,34 @@
 package utils;
 
+// import java.nio.charset.StandardCharsets;
+// import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
+// import java.security.MessageDigest;
+import java.text.NumberFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang.ArrayUtils;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import managers.boss.BossManager;
-import java.security.MessageDigest;
-import java.text.NumberFormat;
-import java.util.*;
 import mob.Mob;
 import npc.Npc;
 import player.Player;
-import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
-import java.text.DecimalFormat;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import org.apache.commons.lang.ArrayUtils;
-import java.time.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Util {
 
@@ -41,7 +47,7 @@ public class Util {
     }
 
     public static String numberToMoney(long power) {
-        Locale locale = new Locale("vi", "VN");
+        Locale locale = Locale.of("vi", "VN");
         NumberFormat num = NumberFormat.getInstance(locale);
         num.setMaximumFractionDigits(1);
         if (power >= 1000000000) {
@@ -54,7 +60,8 @@ public class Util {
             return num.format(power);
         }
     }
-public static String msToThang(long ms) {
+
+    public static String msToThang(long ms) {
         ms = ms - System.currentTimeMillis();
         if (ms < 0) {
             ms = 0;
@@ -90,8 +97,9 @@ public static String msToThang(long ms) {
         }
         return time;
     }
+
     public static String powerToString(long power) {
-        Locale locale = new Locale("vi", "VN");
+        Locale locale = Locale.of("vi", "VN");
         NumberFormat num = NumberFormat.getInstance(locale);
         num.setMaximumFractionDigits(1);
         if (power >= 1000000000) {
@@ -176,10 +184,12 @@ public static String msToThang(long ms) {
     public static boolean isTrue(long ratioPercentage, long totalPercentage, int accuracy) {
         return Util.nextLong(totalPercentage * accuracy) < ratioPercentage && Util.nextInt(accuracy) == 0;
     }
- public static int highlightsItem(boolean highlights, int value) {
+
+    public static int highlightsItem(boolean highlights, int value) {
         double highlightsNumber = 1.1;
         return highlights ? (int) (value * highlightsNumber) : value;
     }
+
     public static boolean isTrue(float ratioPercentage, long totalPercentage, int accuracy) {
         if (ratioPercentage < 1) {
             ratioPercentage *= 100;
@@ -199,29 +209,29 @@ public static String msToThang(long ms) {
         return System.currentTimeMillis() - lastTime > miniTimeTarget;
     }
 
-    private static final char[] SOURCE_CHARACTERS = {'À', 'Á', 'Â', 'Ã', 'È', 'É',
-        'Ê', 'Ì', 'Í', 'Ò', 'Ó', 'Ô', 'Õ', 'Ù', 'Ú', 'Ý', 'à', 'á', 'â',
-        'ã', 'è', 'é', 'ê', 'ì', 'í', 'ò', 'ó', 'ô', 'õ', 'ù', 'ú', 'ý',
-        'Ă', 'ă', 'Đ', 'đ', 'Ĩ', 'ĩ', 'Ũ', 'ũ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ạ',
-        'ạ', 'Ả', 'ả', 'Ấ', 'ấ', 'Ầ', 'ầ', 'Ẩ', 'ẩ', 'Ẫ', 'ẫ', 'Ậ', 'ậ',
-        'Ắ', 'ắ', 'Ằ', 'ằ', 'Ẳ', 'ẳ', 'Ẵ', 'ẵ', 'Ặ', 'ặ', 'Ẹ', 'ẹ', 'Ẻ',
-        'ẻ', 'Ẽ', 'ẽ', 'Ế', 'ế', 'Ề', 'ề', 'Ể', 'ể', 'Ễ', 'ễ', 'Ệ', 'ệ',
-        'Ỉ', 'ỉ', 'Ị', 'ị', 'Ọ', 'ọ', 'Ỏ', 'ỏ', 'Ố', 'ố', 'Ồ', 'ồ', 'Ổ',
-        'ổ', 'Ỗ', 'ỗ', 'Ộ', 'ộ', 'Ớ', 'ớ', 'Ờ', 'ờ', 'Ở', 'ở', 'Ỡ', 'ỡ',
-        'Ợ', 'ợ', 'Ụ', 'ụ', 'Ủ', 'ủ', 'Ứ', 'ứ', 'Ừ', 'ừ', 'Ử', 'ử', 'Ữ',
-        'ữ', 'Ự', 'ự',};
+    private static final char[] SOURCE_CHARACTERS = { 'À', 'Á', 'Â', 'Ã', 'È', 'É',
+            'Ê', 'Ì', 'Í', 'Ò', 'Ó', 'Ô', 'Õ', 'Ù', 'Ú', 'Ý', 'à', 'á', 'â',
+            'ã', 'è', 'é', 'ê', 'ì', 'í', 'ò', 'ó', 'ô', 'õ', 'ù', 'ú', 'ý',
+            'Ă', 'ă', 'Đ', 'đ', 'Ĩ', 'ĩ', 'Ũ', 'ũ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ạ',
+            'ạ', 'Ả', 'ả', 'Ấ', 'ấ', 'Ầ', 'ầ', 'Ẩ', 'ẩ', 'Ẫ', 'ẫ', 'Ậ', 'ậ',
+            'Ắ', 'ắ', 'Ằ', 'ằ', 'Ẳ', 'ẳ', 'Ẵ', 'ẵ', 'Ặ', 'ặ', 'Ẹ', 'ẹ', 'Ẻ',
+            'ẻ', 'Ẽ', 'ẽ', 'Ế', 'ế', 'Ề', 'ề', 'Ể', 'ể', 'Ễ', 'ễ', 'Ệ', 'ệ',
+            'Ỉ', 'ỉ', 'Ị', 'ị', 'Ọ', 'ọ', 'Ỏ', 'ỏ', 'Ố', 'ố', 'Ồ', 'ồ', 'Ổ',
+            'ổ', 'Ỗ', 'ỗ', 'Ộ', 'ộ', 'Ớ', 'ớ', 'Ờ', 'ờ', 'Ở', 'ở', 'Ỡ', 'ỡ',
+            'Ợ', 'ợ', 'Ụ', 'ụ', 'Ủ', 'ủ', 'Ứ', 'ứ', 'Ừ', 'ừ', 'Ử', 'ử', 'Ữ',
+            'ữ', 'Ự', 'ự', };
 
-    private static final char[] DESTINATION_CHARACTERS = {'A', 'A', 'A', 'A', 'E',
-        'E', 'E', 'I', 'I', 'O', 'O', 'O', 'O', 'U', 'U', 'Y', 'a', 'a',
-        'a', 'a', 'e', 'e', 'e', 'i', 'i', 'o', 'o', 'o', 'o', 'u', 'u',
-        'y', 'A', 'a', 'D', 'd', 'I', 'i', 'U', 'u', 'O', 'o', 'U', 'u',
-        'A', 'a', 'A', 'a', 'A', 'a', 'A', 'a', 'A', 'a', 'A', 'a', 'A',
-        'a', 'A', 'a', 'A', 'a', 'A', 'a', 'A', 'a', 'A', 'a', 'E', 'e',
-        'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E',
-        'e', 'I', 'i', 'I', 'i', 'O', 'o', 'O', 'o', 'O', 'o', 'O', 'o',
-        'O', 'o', 'O', 'o', 'O', 'o', 'O', 'o', 'O', 'o', 'O', 'o', 'O',
-        'o', 'O', 'o', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u',
-        'U', 'u', 'U', 'u',};
+    private static final char[] DESTINATION_CHARACTERS = { 'A', 'A', 'A', 'A', 'E',
+            'E', 'E', 'I', 'I', 'O', 'O', 'O', 'O', 'U', 'U', 'Y', 'a', 'a',
+            'a', 'a', 'e', 'e', 'e', 'i', 'i', 'o', 'o', 'o', 'o', 'u', 'u',
+            'y', 'A', 'a', 'D', 'd', 'I', 'i', 'U', 'u', 'O', 'o', 'U', 'u',
+            'A', 'a', 'A', 'a', 'A', 'a', 'A', 'a', 'A', 'a', 'A', 'a', 'A',
+            'a', 'A', 'a', 'A', 'a', 'A', 'a', 'A', 'a', 'A', 'a', 'E', 'e',
+            'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E',
+            'e', 'I', 'i', 'I', 'i', 'O', 'o', 'O', 'o', 'O', 'o', 'O', 'o',
+            'O', 'o', 'O', 'o', 'O', 'o', 'O', 'o', 'O', 'o', 'O', 'o', 'O',
+            'o', 'O', 'o', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u',
+            'U', 'u', 'U', 'u', };
 
     public static char removeAccent(char ch) {
         int index = Arrays.binarySearch(SOURCE_CHARACTERS, ch);
@@ -428,7 +438,7 @@ public static String msToThang(long ms) {
 
     public static String dvp2(double n) {
         if (n >= 1000) {
-            String[] suffixes = {"", "k", "m", "b"};
+            String[] suffixes = { "", "k", "m", "b" };
             int index = 0;
             while (n >= 1000 && index < suffixes.length - 1) {
                 index++;
@@ -440,4 +450,3 @@ public static String msToThang(long ms) {
     }
 
 }
-

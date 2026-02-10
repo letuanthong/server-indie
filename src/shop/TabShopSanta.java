@@ -3,11 +3,10 @@ package shop;
 import java.util.ArrayList;
 
 import player.Player;
-import services.player.InventoryService;
 
 public class TabShopSanta extends TabShop {
 
-    private final int[] listDauThan = {293, 294, 295, 296, 297, 298, 299, 596, 597, 598};
+    private final int[] listDauThan = { 293, 294, 295, 296, 297, 298, 299, 596, 597, 598 };
 
     public TabShopSanta(TabShop tabShop, Player player) {
         this.itemShops = new ArrayList<>();
@@ -18,7 +17,7 @@ public class TabShopSanta extends TabShop {
         int dauCanBuyId = idDauCanBuy(player);
 
         // Kiểm tra nếu người chơi có bông tai
-        boolean hasBongTai = InventoryService.gI().findItemBongTai(player);
+        // boolean hasBongTai = InventoryService.gI().findItemBongTai(player);
 
         for (ItemShop itemShop : tabShop.itemShops) {
             if (itemShop.temp.gender == player.gender || itemShop.temp.gender == 3) {
@@ -46,4 +45,3 @@ public class TabShopSanta extends TabShop {
         throw new IllegalArgumentException("Invalid magic tree level: " + level);
     }
 }
-

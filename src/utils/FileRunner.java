@@ -8,6 +8,5 @@ public class FileRunner {
         ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "start", batchFilePath);
         processBuilder.start();
     }
-    
-}
 
+}

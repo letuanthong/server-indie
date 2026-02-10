@@ -1,15 +1,15 @@
 package system;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import item.Item.ItemOption;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ConsignItem {
 
@@ -24,7 +24,8 @@ public class ConsignItem {
     public List<ItemOption> options = new ArrayList<>();
     public boolean isBuy;
 
-    public ConsignItem(int i, short id, int plId, byte t, int gold, int gem, int q, long isTime, List<ItemOption> op, boolean b) {
+    public ConsignItem(int i, short id, int plId, byte t, int gold, int gem, int q, long isTime, List<ItemOption> op,
+            boolean b) {
         this.id = i;
         itemId = id;
         player_sell = plId;
@@ -37,4 +38,3 @@ public class ConsignItem {
         isBuy = b;
     }
 }
-

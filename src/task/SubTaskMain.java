@@ -6,7 +6,6 @@ package task;
  * @Collab: ???
  */
 
-
 public class SubTaskMain {
 
     public short count;
@@ -34,4 +33,3 @@ public class SubTaskMain {
     }
 
 }
-

@@ -6,7 +6,6 @@ package utils;
  * @Collab: ???
  */
 
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -14,17 +13,16 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
 import dungeon.BlackBallWar;
 import services.dungeon.MajinBuuService;
 
 public class TimeUtil {
-public static String convertMillisecondToMinute(long time) {
+    public static String convertMillisecondToMinute(long time) {
         long minutes = TimeUnit.MILLISECONDS.toMinutes(time);
         return String.format("%02d phút", minutes);
     }
@@ -38,6 +36,7 @@ public static String convertMillisecondToMinute(long time) {
         long days = TimeUnit.MILLISECONDS.toDays(time);
         return String.format("%02d ngày", days);
     }
+
     public static final byte SECOND = 1;
     public static final byte MINUTE = 2;
     public static final byte HOUR = 3;
@@ -48,8 +47,8 @@ public static String convertMillisecondToMinute(long time) {
 
     /**
      *
-     * @param d1 thời gian bắt đầu
-     * @param d2 thời gian kết thúc
+     * @param d1   thời gian bắt đầu
+     * @param d2   thời gian kết thúc
      * @param type loại
      * @return khoảng cách thời gian theo loại
      */
@@ -136,7 +135,9 @@ public static String convertMillisecondToMinute(long time) {
 
     public static String getTimeLeft(long lastTime) {
         int secondPassed = (int) ((System.currentTimeMillis() - lastTime) / 1000);
-        return secondPassed > 86400 ? (secondPassed / 86400) + "n trước" : secondPassed > 3600 ? (secondPassed / 3600) + "g trước" : secondPassed > 60 ? (secondPassed / 60) + "p trước" : secondPassed + "gi trước";
+        return secondPassed > 86400 ? (secondPassed / 86400) + "n trước"
+                : secondPassed > 3600 ? (secondPassed / 3600) + "g trước"
+                        : secondPassed > 60 ? (secondPassed / 60) + "p trước" : secondPassed + "gi trước";
     }
 
     public static int getMinLeft(long lastTime, int secondTarget) {
@@ -188,24 +189,26 @@ public static String convertMillisecondToMinute(long time) {
             throw new Exception("Thời gian không hợp lệ");
         }
     }
-public static String getTime(long time) {
-    long seconds = time / 1000;
-    long minutes = seconds / 60;
-    long hours = minutes / 60;
-    long days = hours / 24;
 
-    if (seconds <= 0) {
-        seconds = 0;
+    public static String getTime(long time) {
+        long seconds = time / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
+
+        if (seconds <= 0) {
+            seconds = 0;
+        }
+
+        if (hours <= 0) {
+            return String.format("%d phút %d giây", minutes % 60, seconds % 60);
+        } else if (days <= 0) {
+            return String.format("%d giờ %d phút", hours % 24, minutes % 60);
+        } else {
+            return String.format("%d ngày %d giờ", days, hours % 24);
+        }
     }
 
-    if (hours <= 0) {
-        return String.format("%d phút %d giây", minutes % 60, seconds % 60);
-    } else if (days <= 0) {
-        return String.format("%d giờ %d phút", hours % 24, minutes % 60);
-    } else {
-        return String.format("%d ngày %d giờ", days, hours % 24);
-    }
-}
     public static String getTimeNow(String format) {
         SimpleDateFormat fm = new SimpleDateFormat(format);
         return fm.format(new Date());
@@ -261,7 +264,8 @@ public static String getTime(long time) {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         return (hour >= 21 && hour < 22);
     }
-public static boolean is22H() {
+
+    public static boolean is22H() {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         return (hour >= 22 && hour < 23);
@@ -285,14 +289,16 @@ public static boolean is22H() {
 
     public static boolean isBlackBallWarCanPick() {
         LocalTime currentTime = LocalTime.now();
-        LocalTime startTime = LocalTime.of(BlackBallWar.HOUR_CAN_PICK_DB, BlackBallWar.MIN_CAN_PICK_DB, BlackBallWar.SECOND_CAN_PICK_DB);
+        LocalTime startTime = LocalTime.of(BlackBallWar.HOUR_CAN_PICK_DB, BlackBallWar.MIN_CAN_PICK_DB,
+                BlackBallWar.SECOND_CAN_PICK_DB);
 
         return currentTime.isAfter(startTime) && isBlackBallWarOpen();
     }
 
     public static long getSecondsUntilCanPick() {
         LocalTime currentTime = LocalTime.now();
-        LocalTime startTime = LocalTime.of(BlackBallWar.HOUR_CAN_PICK_DB, BlackBallWar.MIN_CAN_PICK_DB, BlackBallWar.SECOND_CAN_PICK_DB);
+        LocalTime startTime = LocalTime.of(BlackBallWar.HOUR_CAN_PICK_DB, BlackBallWar.MIN_CAN_PICK_DB,
+                BlackBallWar.SECOND_CAN_PICK_DB);
 
         if (currentTime.isBefore(startTime)) {
             Duration duration = Duration.between(currentTime, startTime);
@@ -313,4 +319,3 @@ public static boolean is22H() {
     }
 
 }
-

@@ -1,10 +1,10 @@
 package task;
 
-import task.BadgesTask;
+// import task.BadgesTask;
 import player.Player;
 import player.badges.BadgesData;
 import server.Manager;
-import task.BadgesTaskTemplate;
+// import task.BadgesTaskTemplate;
 
 public class BadgesTaskService {
 
@@ -70,6 +70,4 @@ public class BadgesTaskService {
         return 0;
     }
 
-
 }
-

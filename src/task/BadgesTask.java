@@ -1,8 +1,8 @@
 package task;
 
-import player.Player;
-import server.Manager;
-import task.ClanTaskTemplate;
+// import player.Player;
+// import server.Manager;
+// import task.ClanTaskTemplate;
 
 public class BadgesTask {
 
@@ -24,16 +24,14 @@ public class BadgesTask {
         return this.count >= this.countMax;
     }
 
-public int getPercentProcess() {
-   
-    if (this.count >= this.countMax) {
-        return 100;
+    public int getPercentProcess() {
+
+        if (this.count >= this.countMax) {
+            return 100;
+        }
+        int percent = (int) ((long) count * 100 / countMax);
+        return percent;
     }
-    int percent = (int) ((long) count * 100 / countMax);
-    return percent;
-}
-
-
 
     @Override
     public String toString() {
@@ -44,4 +42,3 @@ public int getPercentProcess() {
                 + n + "idBadgesReward" + n + ":" + n + idBadgesReward + n + "}";
     }
 }
-

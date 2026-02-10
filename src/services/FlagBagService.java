@@ -1,18 +1,19 @@
 package services;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import network.Message;
+import player.Player;
+import server.Manager;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import system.Template.FlagBag;
-import java.util.List;
-import player.Player;
-import server.Manager;
-import network.Message;
-import java.util.ArrayList;
 
 public class FlagBagService {
 
@@ -68,7 +69,7 @@ public class FlagBagService {
         Message msg;
         try {
             msg = new Message(-46);
-            msg.writer().writeByte(1); //type
+            msg.writer().writeByte(1); // type
             msg.writer().writeByte(list.size());
             for (FlagBag fb : list) {
                 msg.writer().writeByte(fb.id);
@@ -93,9 +94,9 @@ public class FlagBagService {
 
     public List<FlagBag> getFlagsForChooseClan() {
         if (flagClan.isEmpty()) {
-            int[] flagsId = {0, 8, 7, 6, 5, 4, 3, 2, 1, 18, 17, 16, 15, 14, 13,
-                12, 11, 10, 9, 27, 26, 25, 24, 23, 36, 32, 33, 34, 35, 19, 22, 21, 20, 29, 37, 38,
-                69, 70, 71, 77, 78, 79
+            int[] flagsId = { 0, 8, 7, 6, 5, 4, 3, 2, 1, 18, 17, 16, 15, 14, 13,
+                    12, 11, 10, 9, 27, 26, 25, 24, 23, 36, 32, 33, 34, 35, 19, 22, 21, 20, 29, 37, 38,
+                    69, 70, 71, 77, 78, 79
             };
             for (int i = 0; i < flagsId.length; i++) {
                 flagClan.add(getFlagBag(flagsId[i]));
@@ -104,4 +105,3 @@ public class FlagBagService {
         return flagClan;
     }
 }
-

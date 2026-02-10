@@ -1,29 +1,28 @@
 package services.func;
 
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import data.AlyraManager;
 import database.daos.PlayerDAO;
-import player.Player;
 import network.Message;
+import player.Player;
 import server.Client;
 import server.Maintenance;
+import server.ServerManager;
 import services.Service;
 import utils.Functions;
 import utils.Logger;
 import utils.TimeUtil;
 import utils.Util;
-
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import server.ServerManager;
 
 public class TransactionService implements Runnable {
 
@@ -107,7 +106,8 @@ public class TransactionService implements Runnable {
                                     sendInviteTrade(pl, plMap);
                                 } else {
                                     Service.gI().sendThongBao(pl, "Thử lại sau "
-                                            + TimeUtil.getTimeLeft(Math.max(pl.idMark.getLastTimeTrade(), plMap.idMark.getLastTimeTrade()), TIME_DELAY_TRADE / 1000));
+                                            + TimeUtil.getTimeLeft(Math.max(pl.idMark.getLastTimeTrade(),
+                                                    plMap.idMark.getLastTimeTrade()), TIME_DELAY_TRADE / 1000));
                                 }
                             } else {
                                 if (plMap.idMark.getPlayerTradeId() == pl.id) {
@@ -130,7 +130,7 @@ public class TransactionService implements Runnable {
                             trade.cancelTrade();
                             break;
                         }
-                        if (quantity == 0) {//do
+                        if (quantity == 0) {// do
                             quantity = 1;
                         }
                         if (index != -1 && quantity > Trade.QUANLITY_MAX) {
@@ -216,8 +216,8 @@ public class TransactionService implements Runnable {
             try {
                 long st = System.currentTimeMillis();
                 Set<Map.Entry<Player, Trade>> entrySet = PLAYER_TRADE.entrySet();
-                for (Map.Entry entry : entrySet) {
-                    ((Trade) entry.getValue()).update();
+                for (Map.Entry<Player, Trade> entry : entrySet) {
+                    entry.getValue().update();
                 }
                 Functions.sleep(Math.max(300 - (System.currentTimeMillis() - st), 10));
             } catch (Exception e) {
@@ -225,4 +225,3 @@ public class TransactionService implements Runnable {
         }
     }
 }
-

@@ -1,9 +1,10 @@
 package utils;
 
-import com.sun.management.OperatingSystemMXBean;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
+
+import com.sun.management.OperatingSystemMXBean;
 
 public class SystemMetrics {
 
@@ -82,4 +83,3 @@ public class SystemMetrics {
         return string;
     }
 }
-

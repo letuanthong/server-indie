@@ -6,7 +6,6 @@ package task;
  * @Collab: ???
  */
 
-
 public class ClanTaskTemplate {
 
     public int id;
@@ -18,4 +17,3 @@ public class ClanTaskTemplate {
     }
 
 }
-

@@ -1,21 +1,22 @@
 package services;
 
+import java.util.Set;
+
+import item.Item;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import managers.GiftCodeManager;
-import system.GiftCode;
-import item.Item;
-import java.util.Set;
 import player.Player;
-import services.player.InventoryService;
 import services.map.NpcService;
-import shop.ItemShop;
-import shop.Shop;
+// import shop.ItemShop;
+// import shop.Shop;
+import services.player.InventoryService;
+import system.GiftCode;
 
 public class GiftCodeService {
 
@@ -31,14 +32,14 @@ public class GiftCodeService {
     public void giftCode(Player player, String code) {
         GiftCode giftcode = GiftCodeManager.gI().checkUseGiftCode(player, code);
         if (giftcode == null) {
-//            int itemId = 190;
-//            Item item = ItemService.gI().createNewItem(((short) itemId));
-//            ItemShop it = new Shop().getItemShop(itemId);
-//            if (it != null && !it.options.isEmpty()) {
-//                item.itemOptions.addAll(it.options);
-//            }
-//            InventoryService.gI().addItemBag(player, item);
-//            InventoryService.gI().sendItemBags(player);
+            // int itemId = 190;
+            // Item item = ItemService.gI().createNewItem(((short) itemId));
+            // ItemShop it = new Shop().getItemShop(itemId);
+            // if (it != null && !it.options.isEmpty()) {
+            // item.itemOptions.addAll(it.options);
+            // }
+            // InventoryService.gI().addItemBag(player, item);
+            // InventoryService.gI().sendItemBags(player);
             Service.gI().sendThongBao(player, "Code không chính xác!");
         } else if (giftcode.timeCode()) {
             Service.gI().sendThongBao(player, "Code đã hết hạn");
@@ -67,7 +68,8 @@ public class GiftCodeService {
                         if (itemGiftTemplate != null) {
                             Item itemGift = new Item((short) idItem);
 
-                            if (itemGift.template.type == 0 || itemGift.template.type == 1 || itemGift.template.type == 2 || itemGift.template.type == 3
+                            if (itemGift.template.type == 0 || itemGift.template.type == 1
+                                    || itemGift.template.type == 2 || itemGift.template.type == 3
                                     || itemGift.template.type == 4 || itemGift.template.type == 5) {
                                 if (itemGift.template.id == 457) {
                                     itemGift.itemOptions.add(new Item.ItemOption(30, 0));
@@ -92,4 +94,3 @@ public class GiftCodeService {
     }
 
 }
-

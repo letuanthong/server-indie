@@ -1,21 +1,22 @@
 package services;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import network.Message;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import player.Player;
-import network.Message;
+import server.Maintenance;
 import utils.Logger;
 import utils.TimeUtil;
 import utils.Util;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import server.Maintenance;
 
 public class ChatGlobalService implements Runnable {
 
@@ -118,7 +119,7 @@ public class ChatGlobalService implements Runnable {
             msg.writer().writeShort(chat.head);
             msg.writer().writeShort(-1);
             msg.writer().writeShort(chat.body);
-            msg.writer().writeShort(chat.bag); //bag
+            msg.writer().writeShort(chat.bag); // bag
             msg.writer().writeShort(chat.leg);
             msg.writer().writeByte(0);
             Service.gI().sendMessAllPlayer(msg);
@@ -162,4 +163,3 @@ public class ChatGlobalService implements Runnable {
     }
 
 }
-

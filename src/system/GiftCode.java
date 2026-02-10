@@ -1,16 +1,16 @@
 package system;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import item.Item.ItemOption;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
 import player.Player;
 
 public class GiftCode {
@@ -31,4 +31,3 @@ public class GiftCode {
         return this.datecreate.getTime() > this.dateexpired.getTime();
     }
 }
-

@@ -1,26 +1,19 @@
 package services.shenron;
 
-/*
- * @Author: dev1sme
- * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
- * @Collab: ???
- */
+import java.util.List;
 
-
-import services.shenron.SummonDragon;
-import network.Message;
 import consts.ConstNpc;
 import database.daos.NDVSqlFetcher;
 import database.daos.PlayerDAO;
 import item.Item;
-import java.util.List;
 import map.Zone;
+import network.Message;
 import player.Player;
 import server.Client;
-import services.player.InventoryService;
 import services.ItemService;
-import services.map.NpcService;
 import services.Service;
+import services.map.NpcService;
+import services.player.InventoryService;
 import utils.Util;
 
 public class SummonDragonNamek {
@@ -177,8 +170,10 @@ public class SummonDragonNamek {
                                 playerSummonShenron.clan.members.forEach(m -> {
                                     if (Client.gI().getPlayer(m.id) != null) {
                                         Player p = Client.gI().getPlayer(m.id);
-                                        byte[] option = {77, 80, 81, 103, 50, 94, 5};
-                                        byte[] option_v2 = {14, 16, 17, 19, 27, 28, 5, 47, 87}; //77 %hp // 80 //81 //103 //50 //94 //5 % sdcm
+                                        byte[] option = { 77, 80, 81, 103, 50, 94, 5 };
+                                        byte[] option_v2 = { 14, 16, 17, 19, 27, 28, 5, 47, 87 }; // 77 %hp // 80 //81
+                                                                                                  // //103 //50 //94 //5
+                                                                                                  // % sdcm
                                         byte optionid = 0;
                                         byte optionid_v2 = 0;
                                         byte param = 0;
@@ -198,8 +193,10 @@ public class SummonDragonNamek {
                                     } else {
                                         Player p = NDVSqlFetcher.loadById(m.id);
                                         if (p != null) {
-                                            byte[] option = {77, 80, 81, 103, 50, 94, 5};
-                                            byte[] option_v2 = {14, 16, 17, 19, 27, 28, 5, 47, 87}; //77 %hp // 80 //81 //103 //50 //94 //5 % sdcm
+                                            byte[] option = { 77, 80, 81, 103, 50, 94, 5 };
+                                            byte[] option_v2 = { 14, 16, 17, 19, 27, 28, 5, 47, 87 }; // 77 %hp // 80
+                                                                                                      // //81 //103 //50
+                                                                                                      // //94 //5 % sdcm
                                             byte optionid = 0;
                                             byte optionid_v2 = 0;
                                             byte param = 0;
@@ -220,8 +217,9 @@ public class SummonDragonNamek {
                                     }
                                 });
                             } else {
-                                byte[] option = {77, 80, 81, 103, 50, 94, 5};
-                                byte[] option_v2 = {14, 16, 17, 19, 27, 28, 5, 47, 87}; //77 %hp // 80 //81 //103 //50 //94 //5 % sdcm
+                                byte[] option = { 77, 80, 81, 103, 50, 94, 5 };
+                                byte[] option_v2 = { 14, 16, 17, 19, 27, 28, 5, 47, 87 }; // 77 %hp // 80 //81 //103
+                                                                                          // //50 //94 //5 % sdcm
                                 byte optionid = 0;
                                 byte optionid_v2 = 0;
                                 byte param = 0;
@@ -295,19 +293,24 @@ public class SummonDragonNamek {
                 }
                 break;
         }
-        NpcService.gI().createMenuRongThieng(pl, ConstNpc.SHENRON_NAMEK_CONFIRM, "Ngươi có chắc muốn ước?", wish, "Từ chối");
+        NpcService.gI().createMenuRongThieng(pl, ConstNpc.SHENRON_NAMEK_CONFIRM, "Ngươi có chắc muốn ước?", wish,
+                "Từ chối");
     }
 
     public void sendWhishesNamec(Player pl) {
-        NpcService.gI().createMenuRongThieng(pl, ConstNpc.SHOW_SHENRON_NAMEK_CONFIRM, "Ta sẽ ban cho cả bang hội ngươi 1 điều ước, ngươi có 5 phút, hãy suy nghĩ thật kỹ trước khi quyết định", "1-20 viên ngọc rồng 3 sao", "pet hổ sẽ béo", "x99 bột mỳ");
+        NpcService.gI().createMenuRongThieng(pl, ConstNpc.SHOW_SHENRON_NAMEK_CONFIRM,
+                "Ta sẽ ban cho cả bang hội ngươi 1 điều ước, ngươi có 5 phút, hãy suy nghĩ thật kỹ trước khi quyết định",
+                "1-20 viên ngọc rồng 3 sao", "pet hổ sẽ béo", "x99 bột mỳ");
     }
 
     public void shenronLeave(Player pl, byte type) {
         if (type == WISHED) {
-            //Điều ước Bùa mạnh mẽ cho tất cả trong 7 ngày của các con đã được thực hiện...tạm biệt
+            // Điều ước Bùa mạnh mẽ cho tất cả trong 7 ngày của các con đã được thực
+            // hiện...tạm biệt
             NpcService.gI().createTutorial(pl, 0, "Điều ước của ngươi đã được thực hiện...tạm biệt");
         } else {
-            NpcService.gI().createMenuRongThieng(pl, ConstNpc.IGNORE_MENU, "Ta buồn ngủ quá rồi\nHẹn gặp ngươi lần sau, ta đi đây, bái bai");
+            NpcService.gI().createMenuRongThieng(pl, ConstNpc.IGNORE_MENU,
+                    "Ta buồn ngủ quá rồi\nHẹn gặp ngươi lần sau, ta đi đây, bái bai");
         }
         activeShenron(pl, false, SummonDragon.DRAGON_SHENRON);
         this.isShenronAppear = false;
@@ -318,4 +321,3 @@ public class SummonDragonNamek {
         this.mapShenronAppear = null;
     }
 }
-

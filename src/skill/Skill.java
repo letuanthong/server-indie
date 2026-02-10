@@ -6,7 +6,6 @@ package skill;
  * @Collab: ???
  */
 
-
 import system.Template.SkillTemplate;
 
 public class Skill {
@@ -96,4 +95,3 @@ public class Skill {
         this.template = null;
     }
 }
-

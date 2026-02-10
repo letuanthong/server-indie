@@ -6,13 +6,10 @@ package clan;
  * @Collab: ???
  */
 
-
 public class ClanMessage {
 
     public static final byte BLACK = 0;
     public static final byte RED = 1;
-
-    private Clan clan;
 
     public int id;
 
@@ -39,15 +36,12 @@ public class ClanMessage {
     public byte color;
 
     public ClanMessage(Clan clan) {
-        this.clan = clan;
         this.id = clan.clanMessageId++;
         this.isNewMessage = 1;
         this.time = (int) (System.currentTimeMillis() / 1000 - 1000000000);
     }
 
     public void dispose() {
-        this.clan = null;
         this.text = null;
     }
 }
-

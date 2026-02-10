@@ -6,7 +6,6 @@ package services;
  * @Collab: ???
  */
 
-
 import player.NPoint;
 import player.Pet;
 import player.Player;
@@ -66,4 +65,3 @@ public class OpenPowerService {
     }
 
 }
-

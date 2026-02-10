@@ -1,25 +1,27 @@
 package services;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.ConstNpc;
-import managers.ConsignShopManager;
-import system.ConsignItem;
+import database.daos.NDVSqlFetcher;
 import item.Item;
 import item.Item.ItemOption;
-import player.Player;
+import managers.ConsignShopManager;
 import network.Message;
-import services.player.InventoryService;
+import player.Player;
 import services.map.NpcService;
-
-import java.util.*;
-
-import database.daos.NDVSqlFetcher;
+import services.player.InventoryService;
+import system.ConsignItem;
 import utils.Logger;
 
 public class ConsignShopService {
@@ -37,8 +39,10 @@ public class ConsignShopService {
         List<ConsignItem> its = new ArrayList<>();
         List<ConsignItem> listSort = new ArrayList<>();
         List<ConsignItem> listSort2 = new ArrayList<>();
-        ConsignShopManager.gI().listItem.stream().filter((it) -> (it != null && it.tab == tab && !it.isBuy)).forEachOrdered(its::add);
-        its.stream().filter(Objects::nonNull).sorted(Comparator.comparing(i -> i.lasttime, Comparator.reverseOrder())).forEach(i -> listSort.add(i));
+        ConsignShopManager.gI().listItem.stream().filter((it) -> (it != null && it.tab == tab && !it.isBuy))
+                .forEachOrdered(its::add);
+        its.stream().filter(Objects::nonNull).sorted(Comparator.comparing(i -> i.lasttime, Comparator.reverseOrder()))
+                .forEach(i -> listSort.add(i));
         if (max.length == 2) {
             if (listSort.size() > max[1]) {
                 for (int i = max[0]; i < max[1]; i++) {
@@ -70,7 +74,8 @@ public class ConsignShopService {
         List<ConsignItem> its = new ArrayList<>();
         List<ConsignItem> listSort = new ArrayList<>();
         ConsignShopManager.gI().listItem.stream().filter((it) -> (it != null && !it.isBuy)).forEachOrdered(its::add);
-        its.stream().filter(Objects::nonNull).sorted(Comparator.comparing(i -> i.lasttime, Comparator.reverseOrder())).forEach(i -> listSort.add(i));
+        its.stream().filter(Objects::nonNull).sorted(Comparator.comparing(i -> i.lasttime, Comparator.reverseOrder()))
+                .forEach(i -> listSort.add(i));
         return listSort;
     }
 
@@ -220,7 +225,10 @@ public class ConsignShopService {
             return;
         }
         pl.idMark.setIdItemUpTop(id);
-        NpcService.gI().createMenuConMeo(pl, ConstNpc.UP_TOP_ITEM, -1, "Bạn có muốn đưa vật phẩm '" + ItemService.gI().createNewItem(it.itemId).template.name + "' của bản thân lên trang đầu?\nYêu cầu 5tr vàng.", "Đồng ý", "Từ Chối");
+        NpcService.gI().createMenuConMeo(pl, ConstNpc.UP_TOP_ITEM, -1,
+                "Bạn có muốn đưa vật phẩm '" + ItemService.gI().createNewItem(it.itemId).template.name
+                        + "' của bản thân lên trang đầu?\nYêu cầu 5tr vàng.",
+                "Đồng ý", "Từ Chối");
     }
 
     public void claimOrDel(Player pl, byte action, int id) {
@@ -274,10 +282,18 @@ public class ConsignShopService {
 
     public List<ConsignItem> getItemCanKiGui(Player pl) {
         List<ConsignItem> its = new ArrayList<>();
-        ConsignShopManager.gI().listItem.stream().filter((it) -> (it != null && it.player_sell == pl.id)).forEachOrdered(its::add);
-        pl.inventory.itemsBag.stream().filter((it) -> (it != null && it.template != null && (it.itemOptions.stream().anyMatch(op -> op.optionTemplate.id == 86) || it.itemOptions.stream().anyMatch(op -> op.optionTemplate.id == 87) || it.template.type == 14 || it.template.type == 15 || it.template.type == 6 || it.template.id >= 14 && it.template.id <= 20))).forEachOrdered((it) -> {
-            its.add(new ConsignItem(InventoryService.gI().getIndexBag(pl, it), it.template.id, (int) pl.id, (byte) 4, -1, -1, it.quantity, (byte) -1, it.itemOptions, false));
-        });
+        ConsignShopManager.gI().listItem.stream().filter((it) -> (it != null && it.player_sell == pl.id))
+                .forEachOrdered(its::add);
+        pl.inventory.itemsBag.stream()
+                .filter((it) -> (it != null && it.template != null
+                        && (it.itemOptions.stream().anyMatch(op -> op.optionTemplate.id == 86)
+                                || it.itemOptions.stream().anyMatch(op -> op.optionTemplate.id == 87)
+                                || it.template.type == 14 || it.template.type == 15 || it.template.type == 6
+                                || it.template.id >= 14 && it.template.id <= 20)))
+                .forEachOrdered((it) -> {
+                    its.add(new ConsignItem(InventoryService.gI().getIndexBag(pl, it), it.template.id, (int) pl.id,
+                            (byte) 4, -1, -1, it.quantity, (byte) -1, it.itemOptions, false));
+                });
         return its;
     }
 
@@ -335,7 +351,8 @@ public class ConsignShopService {
             switch (moneyType) {
                 case 0:
                     InventoryService.gI().subQuantityItemsBag(pl, pl.inventory.itemsBag.get(id), quantity);
-                    ConsignShopManager.gI().listItem.add(new ConsignItem(getMaxId() + 1, it.template.id, (int) pl.id, getTabKiGui(it), money, -1, quantity, System.currentTimeMillis(), it.itemOptions, false));
+                    ConsignShopManager.gI().listItem.add(new ConsignItem(getMaxId() + 1, it.template.id, (int) pl.id,
+                            getTabKiGui(it), money, -1, quantity, System.currentTimeMillis(), it.itemOptions, false));
                     InventoryService.gI().sendItemBags(pl);
                     openShopKyGui(pl);
                     Service.gI().sendMoney(pl);
@@ -343,7 +360,8 @@ public class ConsignShopService {
                     break;
                 case 1:
                     InventoryService.gI().subQuantityItemsBag(pl, pl.inventory.itemsBag.get(id), quantity);
-                    ConsignShopManager.gI().listItem.add(new ConsignItem(getMaxId() + 1, it.template.id, (int) pl.id, getTabKiGui(it), -1, money, quantity, System.currentTimeMillis(), it.itemOptions, false));
+                    ConsignShopManager.gI().listItem.add(new ConsignItem(getMaxId() + 1, it.template.id, (int) pl.id,
+                            getTabKiGui(it), -1, money, quantity, System.currentTimeMillis(), it.itemOptions, false));
                     InventoryService.gI().sendItemBags(pl);
                     openShopKyGui(pl);
                     Service.gI().sendMoney(pl);
@@ -479,4 +497,3 @@ public class ConsignShopService {
         }
     }
 }
-

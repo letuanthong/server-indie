@@ -1,5 +1,8 @@
 package system;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
@@ -7,8 +10,6 @@ package system;
  */
 import map.WayPoint;
 import skill.Skill;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Template {
 
@@ -67,7 +68,8 @@ public class Template {
         public ItemTemplate() {
         }
 
-        public ItemTemplate(short id, byte type, byte gender, String name, String description, short iconID, short part, boolean isUpToUp, int strRequire) {
+        public ItemTemplate(short id, byte type, byte gender, String name, String description, short iconID, short part,
+                boolean isUpToUp, int strRequire) {
             this.id = id;
             this.type = type;
             this.gender = gender;
@@ -285,4 +287,3 @@ public class Template {
     }
 
 }
-

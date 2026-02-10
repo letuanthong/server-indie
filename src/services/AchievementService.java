@@ -6,16 +6,14 @@ package services;
  * @Collab: ???
  */
 
-
 import consts.ConstAchievement;
-import item.Item;
 import mob.Mob;
-import system.Template.AchievementTemplate;
 import network.Message;
 import player.Player;
 import server.Manager;
 import services.player.InventoryService;
 import skill.Skill;
+import system.Template.AchievementTemplate;
 import utils.Util;
 
 public class AchievementService {
@@ -38,7 +36,9 @@ public class AchievementService {
             for (int i = 0; i < Manager.ACHIEVEMENT_TEMPLATE.size(); i++) {
                 AchievementTemplate at = Manager.ACHIEVEMENT_TEMPLATE.get(i);
                 msg.writer().writeUTF(at.info1); // info 1
-                msg.writer().writeUTF(regex(player, at.info2) + " (" + numberToString(player.achievement.getCompleted(i)) + "/" + numberToString(at.maxCount) + ")"); // info 2
+                msg.writer().writeUTF(regex(player, at.info2) + " ("
+                        + numberToString(player.achievement.getCompleted(i)) + "/" + numberToString(at.maxCount) + ")"); // info
+                                                                                                                         // 2
                 msg.writer().writeShort(at.money); // money
                 msg.writer().writeBoolean(player.achievement.isFinish(i, at.maxCount));// isFinish
                 msg.writer().writeBoolean(player.achievement.isRecieve(i)); // isRecieve
@@ -56,42 +56,44 @@ public class AchievementService {
         if (player.achievement == null) {
             return;
         }
-//        if (InventoryService.gI().findItemTVC(player)) {
-//            if (!player.achievement.canReward(select)) {
-//                Service.gI().sendThongBao(player, "Không thể thực hiện");
-//                return;
-//            }
-            if (InventoryService.gI().getCountEmptyBag(player) > 0) {
-                int money = Manager.ACHIEVEMENT_TEMPLATE.get(select).money;
-                player.achievement.reward(select);
-                player.inventory.gem += money;
-               // Item item = ItemService.gI().createNewItem((short) 457, money * 100);
-//                InventoryService.gI().addItemBag(player, item);
-                InventoryService.gI().sendItemBags(player);
-                Service.gI().sendMoney(player);
-                Service.gI().sendThongBao(player, "Bạn vừa nhận được " + money + " ngọc.");
-           //     Service.gI().sendThongBao(player, "Bạn vừa nhận được " + money * 100 + " thỏi vàng.");
-              //  Service.gI().sendThongBao(player, "Bạn vừa nhận được " + money + " điểm sự kiện.");
-            } else {
-                Service.gI().sendThongBao(player, "Cần tối thiểu 1 ô trống hành trang để nhận thưởng");
-                return;
-            }
-            Message msg = null;
-            try {
-                msg = new Message(-76);
-                msg.writer().writeByte(1);
-                msg.writer().writeByte(select);
-                player.sendMessage(msg);
-            } catch (Exception e) {
-            } finally {
-                if (msg != null) {
-                    msg.cleanup();
-                }
-            }
-//        } else {
-//            Service.gI().sendThongBao(player, "null");
+        // if (InventoryService.gI().findItemTVC(player)) {
+        // if (!player.achievement.canReward(select)) {
+        // Service.gI().sendThongBao(player, "Không thể thực hiện");
+        // return;
+        // }
+        if (InventoryService.gI().getCountEmptyBag(player) > 0) {
+            int money = Manager.ACHIEVEMENT_TEMPLATE.get(select).money;
+            player.achievement.reward(select);
+            player.inventory.gem += money;
+            // Item item = ItemService.gI().createNewItem((short) 457, money * 100);
+            // InventoryService.gI().addItemBag(player, item);
+            InventoryService.gI().sendItemBags(player);
+            Service.gI().sendMoney(player);
+            Service.gI().sendThongBao(player, "Bạn vừa nhận được " + money + " ngọc.");
+            // Service.gI().sendThongBao(player, "Bạn vừa nhận được " + money * 100 + " thỏi
+            // vàng.");
+            // Service.gI().sendThongBao(player, "Bạn vừa nhận được " + money + " điểm sự
+            // kiện.");
+        } else {
+            Service.gI().sendThongBao(player, "Cần tối thiểu 1 ô trống hành trang để nhận thưởng");
+            return;
         }
-//    }
+        Message msg = null;
+        try {
+            msg = new Message(-76);
+            msg.writer().writeByte(1);
+            msg.writer().writeByte(select);
+            player.sendMessage(msg);
+        } catch (Exception e) {
+        } finally {
+            if (msg != null) {
+                msg.cleanup();
+            }
+        }
+        // } else {
+        // Service.gI().sendThongBao(player, "null");
+    }
+    // }
 
     public String numberToString(long num) {
         return num <= 10000 ? num + "" : Util.numberToMoney(num);
@@ -99,7 +101,8 @@ public class AchievementService {
 
     public String regex(Player player, String text) {
         int gen = player.gender;
-        return text.replaceAll("%1", gen == 0 ? "Siêu nhân" : gen == 1 ? "Siêu Namếc" : "Siêu Xayda").replaceAll("%2", gen == 0 ? "Bunma" : gen == 1 ? "Dende" : "Appule");
+        return text.replaceAll("%1", gen == 0 ? "Siêu nhân" : gen == 1 ? "Siêu Namếc" : "Siêu Xayda").replaceAll("%2",
+                gen == 0 ? "Bunma" : gen == 1 ? "Dende" : "Appule");
     }
 
     public void checkDoneTask(Player player, int aId) {
@@ -134,8 +137,10 @@ public class AchievementService {
                 case Skill.KAMEJOKO, Skill.MASENKO, Skill.ANTOMIC -> {
                     checkDoneTask(player, ConstAchievement.NOI_CONG_CAO_CUONG);
                 }
-                case Skill.DRAGON, Skill.DEMON, Skill.GALICK, Skill.LIEN_HOAN, Skill.KAIOKEN, Skill.DICH_CHUYEN_TUC_THOI -> {
-                }
+                case Skill.DRAGON, Skill.DEMON, Skill.GALICK, Skill.LIEN_HOAN, Skill.KAIOKEN,
+                        Skill.DICH_CHUYEN_TUC_THOI ->
+                    {
+                    }
                 default ->
                     checkDoneTask(player, ConstAchievement.KY_NANG_THANH_THAO);
             }
@@ -152,4 +157,3 @@ public class AchievementService {
     }
 
 }
-

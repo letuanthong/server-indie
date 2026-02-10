@@ -27,7 +27,8 @@ public class TabShopSoHuu extends TabShop {
                 if (shouldAdd) {
                     for (Item.ItemOption option : itemShop.options) {
                         if (option.optionTemplate.id == 93) {
-                            option.param = BadgesTaskService.sendDay(player, BagesTemplate.fineIdEffectbyIdItem(itemShop.temp.id));
+                            option.param = BadgesTaskService.sendDay(player,
+                                    BagesTemplate.fineIdEffectbyIdItem(itemShop.temp.id));
                             break;
                         }
                     }
@@ -37,4 +38,3 @@ public class TabShopSoHuu extends TabShop {
         }
     }
 }
-

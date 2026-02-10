@@ -98,4 +98,3 @@ public class PlayerSkill {
         this.skills = null;
     }
 }
-
