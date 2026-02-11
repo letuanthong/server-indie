@@ -1,31 +1,34 @@
 package boss.randoc;
 
+import static consts.BossType.PHOBANCDRD;
+
+import java.util.List;
+
+import boss.Boss;
+import boss.BossData;
+import clan.Clan;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
 import consts.BossStatus;
-import managers.boss.SnakeWayManager;
-import utils.Functions;
 import consts.ConstPlayer;
-import boss.*;
-import static consts.BossType.PHOBANCDRD;
-import clan.Clan;
-import network.Message;
-import java.util.List;
+import managers.boss.SnakeWayManager;
 import map.ItemMap;
 import map.Zone;
+import network.Message;
 import player.Player;
 import services.EffectSkillService;
+import services.Service;
+import services.map.ChangeMapService;
 import services.map.MapService;
 import services.player.PlayerService;
 import skill.Skill;
-import services.Service;
-import services.map.ChangeMapService;
+import utils.Functions;
 import utils.Util;
 
 public class SAIBAMEN extends Boss {
@@ -33,22 +36,22 @@ public class SAIBAMEN extends Boss {
     private Clan clan;
     private int idboss;
 
-    private static final int[][] FULL_GALICK = new int[][]{{Skill.GALICK, 1}, {Skill.GALICK, 2}, {Skill.GALICK, 3}, {Skill.GALICK, 4}, {Skill.GALICK, 5}, {Skill.GALICK, 6}, {Skill.GALICK, 7}};
+    private static final int[][] FULL_GALICK = new int[][] { { Skill.GALICK, 1 }, { Skill.GALICK, 2 },
+            { Skill.GALICK, 3 }, { Skill.GALICK, 4 }, { Skill.GALICK, 5 }, { Skill.GALICK, 6 }, { Skill.GALICK, 7 } };
 
     public SAIBAMEN(Zone zone, Clan clan, int id, int dame, int hp) throws Exception {
         super(PHOBANCDRD, BossID.SAIBAMEN - id, new BossData(
                 "Số " + id,
                 ConstPlayer.XAYDA,
-                new short[]{642, 643, 644, -1, -1, -1},
+                new short[] { 642, 643, 644, -1, -1, -1 },
                 ((10000 + dame)),
-                new int[]{((500000 + hp))},
-                new int[]{144},
+                new int[] { ((500000 + hp)) },
+                new int[] { 144 },
                 (int[][]) Util.addArray(FULL_GALICK),
-                new String[]{},
-                new String[]{},
-                new String[]{},
-                60
-        ));
+                new String[] {},
+                new String[] {},
+                new String[] {},
+                60));
         this.zone = zone;
         this.clan = clan;
         this.idboss = id;
@@ -139,7 +142,7 @@ public class SAIBAMEN extends Boss {
             }
             Service.gI().chat(plAtt, "Trời ơi muộn mất rồi");
             EffectSkillService.gI().startStun(plAtt, System.currentTimeMillis(), 3500);
-            //gồng tự sát
+            // gồng tự sát
             this.playerSkill.prepareTuSat = true;
             this.playerSkill.lastTimePrepareTuSat = System.currentTimeMillis();
             Message msg;
@@ -158,7 +161,7 @@ public class SAIBAMEN extends Boss {
         Service.gI().chat(this, "He he he");
         while (this.playerSkill.prepareTuSat) {
             if (Util.canDoWithTime(this.playerSkill.lastTimePrepareTuSat, 2500)) {
-//                EffectSkillService.gI().removeStun(plAtt);
+                // EffectSkillService.gI().removeStun(plAtt);
                 this.playerSkill.prepareTuSat = false;
                 setDie(this);
                 die(plAtt);
@@ -178,4 +181,3 @@ public class SAIBAMEN extends Boss {
         }
     }
 }
-

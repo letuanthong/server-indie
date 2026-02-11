@@ -1,15 +1,15 @@
 package boss.tau_77;
 
+import static consts.BossType.FINAL;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import boss.Boss;
 import boss.BossesData;
-import static consts.BossType.FINAL;
 import player.Player;
 import services.EffectSkillService;
 import services.Service;
@@ -58,4 +58,3 @@ public class TaoPaiPai extends Boss {
         }
     }
 }
-

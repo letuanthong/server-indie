@@ -1,27 +1,29 @@
 package boss.event.trungthu;
 
+import static consts.BossType.TRUNGTHU_EVENT;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import boss.Boss;
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
 import consts.BossStatus;
-import boss.*;
-import static consts.BossType.TRUNGTHU_EVENT;
-
 import item.Item;
-import java.util.ArrayList;
-import java.util.List;
 import map.ItemMap;
 import player.Player;
 import services.EffectSkillService;
-import services.player.PlayerService;
 import services.Service;
 import services.SkillService;
 import services.map.ChangeMapService;
+import services.player.PlayerService;
 import utils.Util;
 
 public class NhatThan extends Boss {
@@ -99,7 +101,7 @@ public class NhatThan extends Boss {
 
     @Override
     public void joinMap() {
-        super.joinMap(); //To change body of generated methods, choose Tools | Templates.
+        super.joinMap(); // To change body of generated methods, choose Tools | Templates.
         st = System.currentTimeMillis();
         Service.gI().changeFlag(this, 2);
     }
@@ -161,7 +163,8 @@ public class NhatThan extends Boss {
                     }
                     return;
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 int dis = Util.getDistance(this, pl);
                 if (dis > 450) {
                     move(pl.location.x - 24, pl.location.y);
@@ -183,7 +186,7 @@ public class NhatThan extends Boss {
                     checkPlayerDie(pl);
                 }
             } catch (Exception ex) {
-//                ex.printStackTrace();
+                // ex.printStackTrace();
             }
         }
     }
@@ -212,4 +215,3 @@ public class NhatThan extends Boss {
         this.changeStatus(BossStatus.REST);
     }
 }
-

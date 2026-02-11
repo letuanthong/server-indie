@@ -1,15 +1,16 @@
 package boss.daihoi;
 
+import static consts.BossType.PHOBAN;
+
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
-import boss.BossesData;
-import static consts.BossType.PHOBAN;
 import player.Player;
 import services.EffectSkillService;
 import utils.Util;
@@ -48,4 +49,3 @@ public class ThienXinHang extends The23rdMartialArtCongress {
         }
     }
 }
-

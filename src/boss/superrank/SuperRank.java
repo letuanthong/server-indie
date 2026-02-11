@@ -1,29 +1,29 @@
 package boss.superrank;
 
+import boss.Boss;
+import boss.BossData;
+import consts.BossStatus;
+import consts.BossType;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.ConstRatio;
-import boss.Boss;
-import boss.BossData;
-import managers.boss.OtherBossManager;
-import consts.BossStatus;
-import consts.BossType;
 import consts.ConstSuperRank;
+import managers.boss.OtherBossManager;
 import player.Player;
 import services.EffectSkillService;
-import services.player.PlayerService;
 import services.Service;
 import services.SkillService;
-import services.map.ChangeMapService;
 import services.func.UseItem;
+import services.map.ChangeMapService;
+import services.player.PlayerService;
+import skill.Skill;
 import utils.SkillUtil;
 import utils.Util;
-import skill.Skill;
 
 public abstract class SuperRank extends Boss {
 
@@ -44,7 +44,8 @@ public abstract class SuperRank extends Boss {
 
     @Override
     public void afk() {
-        if (!(playerAtt != null && playerAtt.location != null && playerAtt.zone != null && this.zone != null && this.zone.equals(playerAtt.zone))) {
+        if (!(playerAtt != null && playerAtt.location != null && playerAtt.zone != null && this.zone != null
+                && this.zone.equals(playerAtt.zone))) {
             this.leaveMap();
         }
     }
@@ -62,7 +63,8 @@ public abstract class SuperRank extends Boss {
     @Override
     public void attack() {
         try {
-            if (playerAtt != null && playerAtt.location != null && playerAtt.zone != null && this.zone != null && this.zone.equals(playerAtt.zone)) {
+            if (playerAtt != null && playerAtt.location != null && playerAtt.zone != null && this.zone != null
+                    && this.zone.equals(playerAtt.zone)) {
                 if (this.isDie() || playerAtt.lostByDeath) {
                     return;
                 }
@@ -74,7 +76,8 @@ public abstract class SuperRank extends Boss {
                     UseItem.gI().eatPea(this);
                     lastTimeEatPea = System.currentTimeMillis();
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 if (playerAtt.effectSkill.isHaveEffectSkill()) {
                     switch (this.playerSkill.skillSelect.template.id) {
                         case Skill.KHIEN_NANG_LUONG, Skill.THAI_DUONG_HA_SAN, Skill.THOI_MIEN, Skill.TROI ->
@@ -89,7 +92,10 @@ public abstract class SuperRank extends Boss {
                 }
                 if (Util.getDistance(this, playerAtt) <= this.getRangeCanAttackWithSkillSelect()) {
                     if (Util.isTrue(15, ConstRatio.PER100) && SkillUtil.isUseSkillChuong(this)) {
-                        goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)), Util.nextInt(10) % 2 == 0 ? playerAtt.location.y : playerAtt.location.y - Util.nextInt(0, 50), false);
+                        goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)),
+                                Util.nextInt(10) % 2 == 0 ? playerAtt.location.y
+                                        : playerAtt.location.y - Util.nextInt(0, 50),
+                                false);
                     }
                     SkillService.gI().useSkill(this, playerAtt, null, -1, null);
                     checkPlayerDie(playerAtt);
@@ -147,7 +153,8 @@ public abstract class SuperRank extends Boss {
     public void update() {
         try {
             super.updateInfo();
-            if ((this.effectSkill != null && this.effectSkill.isHaveEffectSkill()) || (this.newSkill != null && this.newSkill.isStartSkillSpecial)) {
+            if ((this.effectSkill != null && this.effectSkill.isHaveEffectSkill())
+                    || (this.newSkill != null && this.newSkill.isStartSkillSpecial)) {
                 return;
             }
             switch (this.bossStatus) {
@@ -173,6 +180,8 @@ public abstract class SuperRank extends Boss {
                         this.attack();
                     }
                     break;
+                default:
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -190,7 +199,8 @@ public abstract class SuperRank extends Boss {
                     && !Util.canDoWithTime(plAtt.effectSkill.lastTimeUpBinh, 3000)) {
                 return 0;
             }
-            if (plAtt != null && plAtt.isPl() && this.maBuHold != null && this.zone != null && this.zone.map.mapId == 128) {
+            if (plAtt != null && plAtt.isPl() && this.maBuHold != null && this.zone != null
+                    && this.zone.map.mapId == 128) {
                 this.precentMabuHold++;
                 damage = 1;
             }
@@ -335,7 +345,8 @@ public abstract class SuperRank extends Boss {
 
     @Override
     public void leaveMap() {
-        if (playerAtt.location != null && playerAtt != null && playerAtt.zone != null && this.zone != null && this.zone.equals(playerAtt.zone) && !playerAtt.lostByDeath) {
+        if (playerAtt.location != null && playerAtt != null && playerAtt.zone != null && this.zone != null
+                && this.zone.equals(playerAtt.zone) && !playerAtt.lostByDeath) {
             Service.gI().chat(this, ConstSuperRank.TEXT_CLONE_THUA);
         } else {
             Service.gI().chat(this, ConstSuperRank.TEXT_CLONE_THANG);
@@ -351,4 +362,3 @@ public abstract class SuperRank extends Boss {
         this.dispose();
     }
 }
-

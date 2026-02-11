@@ -1,15 +1,17 @@
 package boss.event.trungthu;
 
+import static consts.BossType.TRUNGTHU_EVENT;
+
+import boss.Boss;
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
-import boss.*;
-import static consts.BossType.TRUNGTHU_EVENT;
 import map.ItemMap;
 import player.Player;
 import services.EffectSkillService;
@@ -56,7 +58,7 @@ public class KhiDot extends Boss {
 
     @Override
     public void joinMap() {
-        super.joinMap(); //To change body of generated methods, choose Tools | Templates.
+        super.joinMap(); // To change body of generated methods, choose Tools | Templates.
         st = System.currentTimeMillis();
     }
 
@@ -72,4 +74,3 @@ public class KhiDot extends Boss {
         }
     }
 }
-

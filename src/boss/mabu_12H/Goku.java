@@ -1,30 +1,28 @@
 package boss.mabu_12H;
 
+import static consts.BossType.FINAL;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import boss.Boss;
+import boss.BossesData;
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
-import static consts.BossType.FINAL;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import player.Player;
+import server.ServerNotify;
 import services.EffectSkillService;
 import services.Service;
-import utils.Util;
-
-import server.ServerNotify;
-import services.player.PlayerService;
 import services.SkillService;
 import services.map.ChangeMapService;
+import services.player.PlayerService;
+import utils.Util;
 
 public class Goku extends Boss {
 
@@ -57,8 +55,9 @@ public class Goku extends Boss {
         this.zone = this.parentBoss.zoneFinal;
         this.nPoint.hp /= 4;
         ChangeMapService.gI().changeMap(this, this.zone, Util.nextInt(300, 400), 336);
-//        ChangeMapService.gI().changeMap(this, this.zone,
-//                this.parentBoss.location.x + Util.nextInt(-100, 100), this.parentBoss.location.y);
+        // ChangeMapService.gI().changeMap(this, this.zone,
+        // this.parentBoss.location.x + Util.nextInt(-100, 100),
+        // this.parentBoss.location.y);
         Service.gI().changeFlag(this, 9);
         this.changeStatus(BossStatus.CHAT_S);
     }
@@ -94,6 +93,7 @@ public class Goku extends Boss {
         return null;
     }
 
+    @SuppressWarnings("unused")
     private void petrifyPlayersInTheMap() {
         for (Player pl : this.zone.getNotBosses()) {
             if (Util.isTrue(1, 10)) {
@@ -150,7 +150,7 @@ public class Goku extends Boss {
         }
         if (Util.canDoWithTime(this.lastTimeAttack, 100)) {
             if (Util.canDoWithTime(lastTimePetrify, 10000)) {
-//                petrifyPlayersInTheMap();
+                // petrifyPlayersInTheMap();
                 this.lastTimePetrify = System.currentTimeMillis();
             }
             this.lastTimeAttack = System.currentTimeMillis();
@@ -167,7 +167,8 @@ public class Goku extends Boss {
                     }
                     return;
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 int dis = Util.getDistance(this, pl);
                 if (dis > 450) {
                     move(pl.location.x - 24, pl.location.y);
@@ -280,4 +281,3 @@ public class Goku extends Boss {
     }
 
 }
-

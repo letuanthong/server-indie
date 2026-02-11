@@ -1,19 +1,20 @@
 package boss.android;
 
+import java.util.Random;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 import boss.Boss;
-import consts.BossID;
 import boss.BossesData;
-import java.util.Random;
+import consts.BossID;
 import map.ItemMap;
 import player.Player;
-import services.player.PlayerService;
 import services.Service;
 import services.TaskService;
+import services.player.PlayerService;
 import utils.Util;
 
 public class Android15 extends Boss {
@@ -33,7 +34,8 @@ public class Android15 extends Boss {
                 this.location.x, this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24), plKill.id));
         // 50% xác suất rơi thêm vật phẩm
         if (Util.isTrue(80, 100)) {
-            int[] items = Util.isTrue(50, 100) ? new int[]{18, 19, 20} : new int[]{1066, 1067, 1068, 1069, 1070, 1229};
+            int[] items = Util.isTrue(50, 100) ? new int[] { 18, 19, 20 }
+                    : new int[] { 1066, 1067, 1068, 1069, 1070, 1229 };
             int randomItem = items[new Random().nextInt(items.length)];
             Service.gI().dropItemMap(this.zone, ItemMap.create(this.zone, randomItem, 1,
                     this.location.x, this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24), plKill.id));
@@ -66,4 +68,3 @@ public class Android15 extends Boss {
         PlayerService.gI().hoiPhuc(this, this.nPoint.hpMax, 0);
     }
 }
-

@@ -1,32 +1,31 @@
 package boss.golden_fide;
 
+import java.util.List;
+
+import boss.Boss;
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
 import consts.BossStatus;
-import boss.*;
 import consts.ConstPlayer;
-
-import java.util.List;
-
+import mob.Mob;
+import network.Message;
 import player.Player;
 import services.EffectSkillService;
 import services.Service;
-import utils.Util;
-
-import mob.Mob;
-import network.Message;
-import services.map.MapService;
-import services.player.PlayerService;
 import services.SkillService;
 import services.map.ChangeMapService;
+import services.map.MapService;
+import services.player.PlayerService;
 import utils.SkillUtil;
 import utils.TimeUtil;
+import utils.Util;
 
 public class GoldenFrieza extends Boss {
 
@@ -144,15 +143,18 @@ public class GoldenFrieza extends Boss {
                         if (pl == null || pl.isDie()) {
                             return;
                         }
-                        this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                        this.playerSkill.skillSelect = this.playerSkill.skills
+                                .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                         if (Util.getDistance(this, pl) <= this.getRangeCanAttackWithSkillSelect()) {
                             if (Util.isTrue(5, 20)) {
                                 if (SkillUtil.isUseSkillChuong(this)) {
                                     this.moveTo(pl.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 200)),
-                                            Util.nextInt(10) % 2 == 0 ? pl.location.y : pl.location.y - Util.nextInt(0, 70));
+                                            Util.nextInt(10) % 2 == 0 ? pl.location.y
+                                                    : pl.location.y - Util.nextInt(0, 70));
                                 } else {
                                     this.moveTo(pl.location.x + (Util.getOne(-1, 1) * Util.nextInt(10, 40)),
-                                            Util.nextInt(10) % 2 == 0 ? pl.location.y : pl.location.y - Util.nextInt(0, 50));
+                                            Util.nextInt(10) % 2 == 0 ? pl.location.y
+                                                    : pl.location.y - Util.nextInt(0, 50));
                                 }
                             }
                             SkillService.gI().useSkill(this, pl, null, -1, null);
@@ -199,7 +201,7 @@ public class GoldenFrieza extends Boss {
                         for (Player pl : playersMap) {
                             if (!this.equals(pl)) {
                                 pl.injured(this, 2_100_000_000, true, false);
-//                            pl.setDie();
+                                // pl.setDie();
                                 PlayerService.gI().sendInfoHpMpMoney(pl);
                                 Service.gI().Send_Info_NV(pl);
                             }
@@ -219,4 +221,3 @@ public class GoldenFrieza extends Boss {
         this.changeStatus(BossStatus.REST);
     }
 }
-

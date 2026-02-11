@@ -1,16 +1,17 @@
 package boss.learn;
 
+import static consts.BossType.PHOBAN;
+
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
-import static consts.BossType.PHOBAN;
 import database.daos.TraningDAO;
 import player.Player;
 import services.Service;
@@ -76,7 +77,7 @@ public class Whis extends TrainingBoss {
         this.nPoint.subHP(damage);
         if (this.nPoint.hp > 0 && this.nPoint.hp < this.nPoint.hpMax / 3) {
             if (Util.canDoWithTime(lastTimeChat, 2000)) {
-                String[] text = {"AAAAAAAAA", "ai da"};
+                String[] text = { "AAAAAAAAA", "ai da" };
                 this.chat(text[Util.nextInt(text.length)]);
             }
         }
@@ -108,7 +109,8 @@ public class Whis extends TrainingBoss {
             if (this.indexChatE == 1) {
                 return true;
             }
-            String[] text = new String[]{"OK ta chịu thua", "Ta rất tự hào về con", "Tại hôm nay ta...ta hơi bị đau bụng", "Thua thì thua"};
+            String[] text = new String[] { "OK ta chịu thua", "Ta rất tự hào về con",
+                    "Tại hôm nay ta...ta hơi bị đau bụng", "Thua thì thua" };
             String t = text[Util.nextInt(text.length)];
             this.chat(t);
             this.lastTimeChatE = System.currentTimeMillis();
@@ -134,4 +136,3 @@ public class Whis extends TrainingBoss {
         }
     }
 }
-

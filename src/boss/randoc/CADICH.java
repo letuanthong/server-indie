@@ -1,29 +1,31 @@
 package boss.randoc;
 
+import static consts.BossType.PHOBANCDRD;
+
+import boss.Boss;
+import boss.BossData;
+import clan.Clan;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
 import consts.BossStatus;
-import managers.boss.SnakeWayManager;
-import utils.Functions;
 import consts.ConstPlayer;
-import boss.*;
-import static consts.BossType.PHOBANCDRD;
-import clan.Clan;
 import item.Item;
+import managers.boss.SnakeWayManager;
 import map.ItemMap;
 import map.Zone;
 import player.Player;
 import services.EffectSkillService;
-import skill.Skill;
 import services.Service;
 import services.SkillService;
 import services.map.ChangeMapService;
+import skill.Skill;
+import utils.Functions;
 import utils.SkillUtil;
 import utils.Util;
 
@@ -40,21 +42,20 @@ public class CADICH extends Boss {
         super(PHOBANCDRD, BossID.CADICH, new BossData(
                 "Cađích",
                 ConstPlayer.XAYDA,
-                new short[]{645, 646, 647, -1, -1, -1},
+                new short[] { 645, 646, 647, -1, -1, -1 },
                 ((10000 + dame)),
-                new int[]{((500000 + hp))},
-                new int[]{144},
-                new int[][]{
-                    {Skill.GALICK, 7, 1000},
-                    {Skill.MASENKO, 1, 1000},
-                    {Skill.ANTOMIC, 1, 1000},
-                    {Skill.KAMEJOKO, 4, 1000},
-                    {Skill.BIEN_KHI, 1, 1000}},//skill
-                new String[]{"|-1|Vĩnh biệt chú mày nhé, Na đíc"},
-                new String[]{},
-                new String[]{"|-1|Tốt lắm phi thuyền đã đến đón ta"},
-                60
-        ));
+                new int[] { ((500000 + hp)) },
+                new int[] { 144 },
+                new int[][] {
+                        { Skill.GALICK, 7, 1000 },
+                        { Skill.MASENKO, 1, 1000 },
+                        { Skill.ANTOMIC, 1, 1000 },
+                        { Skill.KAMEJOKO, 4, 1000 },
+                        { Skill.BIEN_KHI, 1, 1000 } }, // skill
+                new String[] { "|-1|Vĩnh biệt chú mày nhé, Na đíc" },
+                new String[] {},
+                new String[] { "|-1|Tốt lắm phi thuyền đã đến đón ta" },
+                60));
         this.zone = zone;
         this.clan = clan;
     }
@@ -145,7 +146,8 @@ public class CADICH extends Boss {
 
     @Override
     public void attack() {
-        if (!gongBienKhi && !this.effectSkill.isCharging && Util.canDoWithTime(this.lastTimeAttack, 100) && this.typePk == ConstPlayer.PK_ALL) {
+        if (!gongBienKhi && !this.effectSkill.isCharging && Util.canDoWithTime(this.lastTimeAttack, 100)
+                && this.typePk == ConstPlayer.PK_ALL) {
             this.lastTimeAttack = System.currentTimeMillis();
             try {
                 Player pl = getPlayerAttack();
@@ -211,4 +213,3 @@ public class CADICH extends Boss {
         }
     }
 }
-

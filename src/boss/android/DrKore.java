@@ -1,5 +1,7 @@
 package boss.android;
 
+import java.util.Random;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
@@ -8,7 +10,6 @@ package boss.android;
 import boss.Boss;
 import boss.BossesData;
 import consts.BossID;
-import java.util.Random;
 import map.ItemMap;
 import player.Player;
 import services.Service;
@@ -33,12 +34,13 @@ public class DrKore extends Boss {
 
         // 50% xác suất rơi thêm vật phẩm
         if (Util.isTrue(80, 100)) {
-            int[] items = Util.isTrue(50, 100) ? new int[]{18, 19, 20} : new int[]{1066, 1067, 1068, 1069, 1070, 1229};
+            int[] items = Util.isTrue(50, 100) ? new int[] { 18, 19, 20 }
+                    : new int[] { 1066, 1067, 1068, 1069, 1070, 1229 };
             int randomItem = items[new Random().nextInt(items.length)];
             Service.gI().dropItemMap(this.zone, ItemMap.create(this.zone, randomItem, 1,
                     this.location.x, this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24), plKill.id));
         }
-         
+
     }
 
     @Override
@@ -71,9 +73,10 @@ public class DrKore extends Boss {
 
     @Override
     public void joinMap() {
-        super.joinMap(); //To change body of generated methods, choose Tools | Templates.
+        super.joinMap(); // To change body of generated methods, choose Tools | Templates.
         st = System.currentTimeMillis();
     }
+
     private long st;
 
     @Override
@@ -108,4 +111,3 @@ public class DrKore extends Boss {
         this.chat("Mau đền mạng cho thằng em trai ta");
     }
 }
-

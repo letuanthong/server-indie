@@ -1,32 +1,30 @@
 package boss.mabu_12H;
 
+import static consts.BossType.FINAL;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import boss.Boss;
+import boss.BossesData;
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
-import static consts.BossType.FINAL;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import player.Player;
+import server.ServerNotify;
 import services.EffectSkillService;
 import services.Service;
-import utils.Util;
-
-import server.ServerNotify;
 import services.SkillService;
 import services.TaskService;
 import services.map.ChangeMapService;
 import skill.Skill;
 import utils.SkillUtil;
+import utils.Util;
 
 public class Drabura extends Boss {
 
@@ -129,7 +127,8 @@ public class Drabura extends Boss {
                     }
                     return;
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 if (Util.getDistance(this, pl) <= this.getRangeCanAttackWithSkillSelect()) {
                     if (Util.isTrue(5, 20)) {
                         if (SkillUtil.isUseSkillChuong(this)) {
@@ -203,4 +202,3 @@ public class Drabura extends Boss {
     }
 
 }
-

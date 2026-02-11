@@ -1,5 +1,10 @@
 package boss.miniboss;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import boss.Boss;
+import boss.BossesData;
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
@@ -8,25 +13,20 @@ package boss.miniboss;
 import consts.BossID;
 import consts.BossStatus;
 import managers.boss.BossManager;
-import boss.*;
-import java.util.ArrayList;
-import java.util.List;
-import map.ItemMap;
 import map.Zone;
 import player.Player;
-import services.Service;
 import services.map.ChangeMapService;
 import utils.Logger;
 import utils.Util;
 
 public class SoiHecQuyn extends Boss {
 
-    private long lastTimeDrop;
+    // private long lastTimeDrop;
+    // private long lastTimRestPawn;
     private long st;
     private int timeLeave;
     private boolean Gwen_KiemTraNhatXuong = false;
     private long Gwen_ThoiGianNhatXuong = 0;
-    private long lastTimRestPawn;
 
     public SoiHecQuyn() throws Exception {
         super(BossID.SOI_HEC_QUYN1, BossesData.SOI_HEC_QUYN);
@@ -68,8 +68,9 @@ public class SoiHecQuyn extends Boss {
                     // Random chọn một zone hợp lệ
                     int randomIndex = Util.nextInt(availableZones.size());
                     this.zone = availableZones.get(randomIndex);
-                    ChangeMapService.gI().changeMap(this, this.zone, Util.nextInt(100, 500), this.zone.map.yPhysicInTop(this.location.x,
-                            this.location.y - 24));
+                    ChangeMapService.gI().changeMap(this, this.zone, Util.nextInt(100, 500),
+                            this.zone.map.yPhysicInTop(this.location.x,
+                                    this.location.y - 24));
                     this.changeStatus(BossStatus.CHAT_S);
                     st = System.currentTimeMillis();
                     timeLeave = Util.nextInt(100000, 300000);
@@ -95,7 +96,8 @@ public class SoiHecQuyn extends Boss {
         if (!Util.canDoWithTime(this.lastTimeChatM, this.timeChatM)) {
             return;
         }
-        String textChat = this.data[this.currentLevel].getTextM()[Util.nextInt(0, this.data[this.currentLevel].getTextM().length - 1)];
+        String textChat = this.data[this.currentLevel].getTextM()[Util.nextInt(0,
+                this.data[this.currentLevel].getTextM().length - 1)];
         int prefix = Integer.parseInt(textChat.substring(1, textChat.lastIndexOf("|")));
         textChat = textChat.substring(textChat.lastIndexOf("|") + 1);
         this.chat(prefix, textChat);
@@ -143,7 +145,8 @@ public class SoiHecQuyn extends Boss {
                 if (pl == null || pl.location == null) {
                     return;
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 if (Util.getDistance(this, pl) <= this.getRangeCanAttackWithSkillSelect()) {
                     if (Util.isTrue(5, 20) && Util.getDistance(this, pl) > 50) {
                         if (Util.isTrue(5, 20)) {
@@ -181,4 +184,3 @@ public class SoiHecQuyn extends Boss {
     public void reward(Player plKill) {
     }
 }
-

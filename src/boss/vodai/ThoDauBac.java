@@ -1,15 +1,16 @@
 package boss.vodai;
 
+import static consts.BossType.PHOBAN;
+
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
-import boss.BossesData;
-import static consts.BossType.PHOBAN;
 import consts.ConstRatio;
 import player.Player;
 import services.EffectSkillService;
@@ -24,20 +25,25 @@ public class ThoDauBac extends DeathOrAliveArena {
         this.playerAtt = player;
     }
 
-@Override
+    @Override
     public void attack() {
         try {
-            if (playerAtt.location != null && playerAtt != null && playerAtt.zone != null && this.zone != null && this.zone.equals(playerAtt.zone)) {
+            if (playerAtt.location != null && playerAtt != null && playerAtt.zone != null && this.zone != null
+                    && this.zone.equals(playerAtt.zone)) {
                 if (this.isDie()) {
                     return;
                 }
                 hutMau();
                 tanHinh();
                 bayLungTung();
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 if (Util.getDistance(this, playerAtt) <= this.getRangeCanAttackWithSkillSelect()) {
                     if (Util.isTrue(15, ConstRatio.PER100) && SkillUtil.isUseSkillChuong(this)) {
-                        goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)), Util.nextInt(10) % 2 == 0 ? playerAtt.location.y : playerAtt.location.y - Util.nextInt(0, 50), false);
+                        goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)),
+                                Util.nextInt(10) % 2 == 0 ? playerAtt.location.y
+                                        : playerAtt.location.y - Util.nextInt(0, 50),
+                                false);
                     }
                     SkillService.gI().useSkill(this, playerAtt, null, -1, null);
                     checkPlayerDie(playerAtt);
@@ -54,7 +60,8 @@ public class ThoDauBac extends DeathOrAliveArena {
     protected void goToPlayer(Player pl, boolean isTeleport) {
         goToXY(pl.location.x, pl.location.y, isTeleport);
     }
-     @Override
+
+    @Override
     public synchronized int injured(Player plAtt, long damage, boolean piercing, boolean isMobAttack) {
         if (!this.isDie()) {
             if (!piercing && Util.isTrue(100, 1000)) {
@@ -92,6 +99,3 @@ public class ThoDauBac extends DeathOrAliveArena {
         }
     }
 }
-
-
-

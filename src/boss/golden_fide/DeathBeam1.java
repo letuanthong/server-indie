@@ -1,21 +1,21 @@
 package boss.golden_fide;
 
+import static consts.BossType.SKILLSUMMONED;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import boss.Boss;
+import boss.BossesData;
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
-import static consts.BossType.SKILLSUMMONED;
 import player.Player;
-import services.map.MapService;
 import services.Service;
 import services.map.ChangeMapService;
+import services.map.MapService;
 import utils.Util;
 
 public class DeathBeam1 extends Boss {
@@ -138,8 +138,7 @@ public class DeathBeam1 extends Boss {
 
     @Override
     public void setDie() {
-//        playerAtt.setDie();
+        // playerAtt.setDie();
         playerAtt.injured(this.playerUseSkill, 2_100_000_000, true, false);
     }
 }
-

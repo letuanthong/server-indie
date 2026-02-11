@@ -1,31 +1,30 @@
 package boss.mabu_14H;
 
+import static consts.BossType.FINAL;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import boss.Boss;
-import managers.boss.FinalBossManager;
+import boss.BossesData;
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
-import static consts.BossType.FINAL;
-import java.util.ArrayList;
-import java.util.List;
-
+import managers.boss.FinalBossManager;
 import player.Player;
+import server.ServerNotify;
 import services.EffectSkillService;
 import services.Service;
-import utils.Util;
-
-import server.ServerNotify;
 import services.SkillService;
 import services.TaskService;
 import services.map.ChangeMapService;
 import utils.SkillUtil;
+import utils.Util;
 
 public class SuperBu extends Boss {
 
@@ -60,7 +59,8 @@ public class SuperBu extends Boss {
                     timeUseSkill = Util.nextInt(5000, 10000);
                     return;
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 if (Util.getDistance(this, pl) <= this.getRangeCanAttackWithSkillSelect()) {
                     if (Util.isTrue(5, 20)) {
                         if (SkillUtil.isUseSkillChuong(this)) {
@@ -148,4 +148,3 @@ public class SuperBu extends Boss {
     }
 
 }
-

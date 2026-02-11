@@ -6,9 +6,9 @@ package boss.cell;
  * @Collab: ???
  */
 import boss.Boss;
+import boss.BossesData;
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
 import map.ItemMap;
 import player.Player;
 import services.ItemService;
@@ -26,18 +26,18 @@ public class XENCON1 extends Boss {
     }
 
     @Override
-    public void reward(Player plKill) {      
+    public void reward(Player plKill) {
         ItemMap itemWithOptions = ItemService.gI().randDoTL(this.zone, 1, this.location.x,
                 this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24), plKill.id);
         if (Util.isTrue(15, 100)) {
-            
+
             Service.gI().dropItemMap(this.zone, itemWithOptions);
-        }       
+        }
         TaskService.gI().checkDoneTaskKillBoss(plKill, this);
-//        // Tính điểm thưởng cho người chơi
-//        int diem = 20;
-//        plKill.event.setEventPoint(diem);
-//        Service.gI().sendThongBao(plKill, "+20 Point");
+        // // Tính điểm thưởng cho người chơi
+        // int diem = 20;
+        // plKill.event.setEventPoint(diem);
+        // Service.gI().sendThongBao(plKill, "+20 Point");
     }
 
     @Override
@@ -58,7 +58,9 @@ public class XENCON1 extends Boss {
             return;
         }
         for (Boss boss : this.parentBoss.bossAppearTogether[this.parentBoss.currentLevel]) {
-            if ((boss.id == BossID.XEN_CON_2 || boss.id == BossID.XEN_CON_3 || boss.id == BossID.XEN_CON_4 || boss.id == BossID.XEN_CON_5 || boss.id == BossID.XEN_CON_6 || boss.id == BossID.XEN_CON_7) && !boss.isDie()) {
+            if ((boss.id == BossID.XEN_CON_2 || boss.id == BossID.XEN_CON_3 || boss.id == BossID.XEN_CON_4
+                    || boss.id == BossID.XEN_CON_5 || boss.id == BossID.XEN_CON_6 || boss.id == BossID.XEN_CON_7)
+                    && !boss.isDie()) {
                 return;
             }
         }
@@ -71,7 +73,7 @@ public class XENCON1 extends Boss {
         this.lastZone = null;
         this.lastTimeRest = System.currentTimeMillis();
         this.changeStatus(BossStatus.REST);
-//        BossManager.gI().removeBoss(this);
+        // BossManager.gI().removeBoss(this);
     }
 
     @Override
@@ -84,4 +86,3 @@ public class XENCON1 extends Boss {
         }
     }
 }
-

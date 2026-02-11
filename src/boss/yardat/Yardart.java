@@ -6,7 +6,6 @@ package boss.yardat;
  * @Collab: ???
  */
 
-
 import boss.Boss;
 import boss.BossData;
 import consts.BossStatus;
@@ -16,10 +15,10 @@ import item.Item;
 import map.ItemMap;
 import player.Player;
 import services.EffectSkillService;
-import services.player.PlayerService;
 import services.Service;
 import services.SkillService;
 import services.map.ChangeMapService;
+import services.player.PlayerService;
 import skill.Skill;
 import utils.SkillUtil;
 import utils.Util;
@@ -90,7 +89,8 @@ public abstract class Yardart extends Boss {
     @Override
     public void reward(Player plKill) {
         if (Util.isTrue(1, rewardRatio)) {
-            ItemMap it = ItemMap.create(zone, 590, 1, plKill.location.x + (Util.nextInt(-10, 10)), plKill.location.y, plKill.id);
+            ItemMap it = ItemMap.create(zone, 590, 1, plKill.location.x + (Util.nextInt(-10, 10)), plKill.location.y,
+                    plKill.id);
             it.options.clear();
             it.options.add(new Item.ItemOption(31, 1));
             Service.gI().dropItemMap(this.zone, it);
@@ -124,13 +124,19 @@ public abstract class Yardart extends Boss {
                 }
                 Player pl = getPlayerAttack();
 
-                if (pl != null && !pl.isDie() && ((Math.abs(pl.location.x - x) < range && Math.abs(pl.location.y - y) < range) || (Math.abs(pl.location.x - x2) < range && Math.abs(pl.location.y - y2) < range) || Util.isTrue(4, 5)) && Util.getDistance(pl, this) < range2) {
-                    this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                if (pl != null && !pl.isDie()
+                        && ((Math.abs(pl.location.x - x) < range && Math.abs(pl.location.y - y) < range)
+                                || (Math.abs(pl.location.x - x2) < range && Math.abs(pl.location.y - y2) < range)
+                                || Util.isTrue(4, 5))
+                        && Util.getDistance(pl, this) < range2) {
+                    this.playerSkill.skillSelect = this.playerSkill.skills
+                            .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                     if (Util.getDistance(this, pl) <= this.getRangeCanAttackWithSkillSelect()) {
                         if (Util.getDistance(this, pl) < 50) {
                             if (SkillUtil.isUseSkillChuong(this)) {
                                 while (true) {
-                                    this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                                    this.playerSkill.skillSelect = this.playerSkill.skills
+                                            .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                                     if (!SkillUtil.isUseSkillChuong(this)) {
                                         break;
                                     }
@@ -143,7 +149,8 @@ public abstract class Yardart extends Boss {
                             } else {
                                 if (Util.isTrue(1, 5)) {
                                     while (true) {
-                                        this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                                        this.playerSkill.skillSelect = this.playerSkill.skills
+                                                .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                                         if (SkillUtil.isUseSkillChuong(this)) {
                                             break;
                                         }
@@ -161,7 +168,8 @@ public abstract class Yardart extends Boss {
                     } else {
                         if (Util.isTrue(3, 4)) {
                             while (!SkillUtil.isUseSkillChuong(this)) {
-                                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                                this.playerSkill.skillSelect = this.playerSkill.skills
+                                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                                 if (SkillUtil.isUseSkillChuong(this)) {
                                     break;
                                 }
@@ -176,7 +184,8 @@ public abstract class Yardart extends Boss {
                             moveToPlayer(pl);
                         }
                     }
-                    this.nPoint.dame = (int) ((long) pl.nPoint.hpMax * Util.nextInt(1, 3) / 100) / (Util.nextInt(10, 30));
+                    this.nPoint.dame = (int) ((long) pl.nPoint.hpMax * Util.nextInt(1, 3) / 100)
+                            / (Util.nextInt(10, 30));
                     if (this.playerSkill.skillSelect.template.id == Skill.DICH_CHUYEN_TUC_THOI) {
                         if (Util.isTrue(3, 4)) {
                             this.playerSkill.skillSelect = this.playerSkill.skills.get(0);
@@ -251,10 +260,10 @@ public abstract class Yardart extends Boss {
                 if (Util.isTrue(1, 10)) {
                     Service.gI().Send_Info_NV(this);
                 }
-                //setDie(plAtt);
-                //Service.gI().hsChar(this, this.nPoint.hpMax, this.nPoint.mpMax);
-                //this.changeToTypePK();
-                //this.changeStatus(BossStatus.AFK);
+                // setDie(plAtt);
+                // Service.gI().hsChar(this, this.nPoint.hpMax, this.nPoint.mpMax);
+                // this.changeToTypePK();
+                // this.changeStatus(BossStatus.AFK);
                 reward(plAtt);
             }
             return (int) damage;
@@ -262,13 +271,12 @@ public abstract class Yardart extends Boss {
             return 0;
         }
     }
-//
-//    @Override
-//    public void afk() {
-//        Service.gI().hsChar(this, this.nPoint.hpMax, this.nPoint.mpMax);
-//        this.changeStatus(BossStatus.CHAT_S);
-//        this.nPoint.hp = 1;
-//    }
+    //
+    // @Override
+    // public void afk() {
+    // Service.gI().hsChar(this, this.nPoint.hpMax, this.nPoint.mpMax);
+    // this.changeStatus(BossStatus.CHAT_S);
+    // this.nPoint.hp = 1;
+    // }
 
 }
-

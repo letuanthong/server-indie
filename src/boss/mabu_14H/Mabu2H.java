@@ -1,33 +1,32 @@
 package boss.mabu_14H;
 
+import static consts.BossType.FINAL;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import boss.Boss;
-import managers.boss.FinalBossManager;
+import boss.BossesData;
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
-import static consts.BossType.FINAL;
-import java.util.ArrayList;
-import java.util.List;
-
+import managers.boss.FinalBossManager;
 import player.Player;
-import services.EffectSkillService;
-import services.Service;
-import utils.Util;
-
 import server.ServerNotify;
+import services.EffectSkillService;
 import services.ItemTimeService;
+import services.Service;
 import services.SkillService;
 import services.TaskService;
 import services.map.ChangeMapService;
 import skill.Skill;
 import utils.SkillUtil;
+import utils.Util;
 
 public class Mabu2H extends Boss {
 
@@ -38,7 +37,8 @@ public class Mabu2H extends Boss {
     public List<Player> maBuEat = new ArrayList<>();
 
     public Mabu2H() throws Exception {
-        super(FINAL, BossID.MABU, BossesData.MABU, BossesData.SUPER_BU, BossesData.BU_TENK, BossesData.BU_HAN, BossesData.KID_BU);
+        super(FINAL, BossID.MABU, BossesData.MABU, BossesData.SUPER_BU, BossesData.BU_TENK, BossesData.BU_HAN,
+                BossesData.KID_BU);
     }
 
     @Override
@@ -100,7 +100,8 @@ public class Mabu2H extends Boss {
                         return;
                     }
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 if (Util.getDistance(this, pl) <= this.getRangeCanAttackWithSkillSelect()) {
                     if (Util.isTrue(5, 20)) {
                         if (SkillUtil.isUseSkillChuong(this)) {
@@ -195,4 +196,3 @@ public class Mabu2H extends Boss {
     }
 
 }
-

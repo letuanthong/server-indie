@@ -1,15 +1,17 @@
 package boss.event.halloween;
 
+import static consts.BossType.HALLOWEEN_EVENT;
+
+import boss.Boss;
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
-import boss.*;
-import static consts.BossType.HALLOWEEN_EVENT;
 import consts.ConstPlayer;
 import map.ItemMap;
 import player.Player;
@@ -76,7 +78,8 @@ public class MaTroi extends Boss {
                     return;
                 }
                 this.nPoint.dame = pl.nPoint.hpMax / Util.nextInt(30, 50);
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 if (Util.getDistance(this, pl) <= this.getRangeCanAttackWithSkillSelect()) {
                     if (Util.isTrue(5, 20)) {
                         if (SkillUtil.isUseSkillChuong(this)) {
@@ -103,7 +106,7 @@ public class MaTroi extends Boss {
     @Override
     public void joinMap() {
         this.name = "Ma trơi " + Util.nextInt(10, 100);
-        super.joinMap(); //To change body of generated methods, choose Tools | Templates.
+        super.joinMap(); // To change body of generated methods, choose Tools | Templates.
         st = System.currentTimeMillis();
     }
 
@@ -119,4 +122,3 @@ public class MaTroi extends Boss {
         }
     }
 }
-

@@ -1,5 +1,9 @@
 package boss.doanhtrai;
 
+import static consts.BossType.PHOBANDT;
+
+import boss.Boss;
+import boss.BossData;
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
@@ -9,39 +13,41 @@ import consts.BossID;
 import consts.BossStatus;
 import consts.ConstPlayer;
 import managers.boss.RedRibbonHQManager;
-import boss.*;
-import static consts.BossType.PHOBANDT;
 import map.ItemMap;
 import map.Zone;
 import player.Player;
-import skill.Skill;
 import services.EffectSkillService;
 import services.Service;
 import services.map.ChangeMapService;
+import skill.Skill;
 import utils.Util;
 
 public class TrungUyXanhLo extends Boss {
 
     public TrungUyXanhLo(Zone zone, int dame, int hp) throws Exception {
         super(PHOBANDT, BossID.TRUNG_UY_XANH_LO, new BossData(
-                "Trung uý Xanh Lơ", //name
-                ConstPlayer.TRAI_DAT, //gender
-                new short[]{135, 136, 137, -1, -1, -1}, //outfit {head, body, leg, bag, aura, eff}
-                ((dame)), //dame
-                new int[]{((hp))}, //hp
-                new int[]{62}, //map join
-                new int[][]{
-                    {Skill.DEMON, 3, 1}, {Skill.DEMON, 6, 2}, {Skill.DRAGON, 7, 3}, {Skill.DRAGON, 1, 4}, {Skill.GALICK, 5, 5},
-                    {Skill.KAMEJOKO, 7, 6}, {Skill.KAMEJOKO, 6, 7}, {Skill.KAMEJOKO, 5, 8}, {Skill.KAMEJOKO, 4, 9}, {Skill.KAMEJOKO, 3, 10}, {Skill.KAMEJOKO, 2, 11}, {Skill.KAMEJOKO, 1, 12},
-                    {Skill.ANTOMIC, 1, 13}, {Skill.ANTOMIC, 2, 14}, {Skill.ANTOMIC, 3, 15}, {Skill.ANTOMIC, 4, 16}, {Skill.ANTOMIC, 5, 17}, {Skill.ANTOMIC, 6, 19}, {Skill.ANTOMIC, 7, 20},
-                    {Skill.MASENKO, 1, 21}, {Skill.MASENKO, 5, 22}, {Skill.MASENKO, 6, 23},
-                    {Skill.KAMEJOKO, 7, 1000}, {Skill.THAI_DUONG_HA_SAN, 7, 60000},},
-                new String[]{}, //text chat 1
-                new String[]{"|-1|Xem các ngươi mạnh đến đâu",
-                    "|-1|He he he"}, //text chat 2
-                new String[]{}, //text chat 3
-                60
-        ));
+                "Trung uý Xanh Lơ", // name
+                ConstPlayer.TRAI_DAT, // gender
+                new short[] { 135, 136, 137, -1, -1, -1 }, // outfit {head, body, leg, bag, aura, eff}
+                ((dame)), // dame
+                new int[] { ((hp)) }, // hp
+                new int[] { 62 }, // map join
+                new int[][] {
+                        { Skill.DEMON, 3, 1 }, { Skill.DEMON, 6, 2 }, { Skill.DRAGON, 7, 3 }, { Skill.DRAGON, 1, 4 },
+                        { Skill.GALICK, 5, 5 },
+                        { Skill.KAMEJOKO, 7, 6 }, { Skill.KAMEJOKO, 6, 7 }, { Skill.KAMEJOKO, 5, 8 },
+                        { Skill.KAMEJOKO, 4, 9 }, { Skill.KAMEJOKO, 3, 10 }, { Skill.KAMEJOKO, 2, 11 },
+                        { Skill.KAMEJOKO, 1, 12 },
+                        { Skill.ANTOMIC, 1, 13 }, { Skill.ANTOMIC, 2, 14 }, { Skill.ANTOMIC, 3, 15 },
+                        { Skill.ANTOMIC, 4, 16 }, { Skill.ANTOMIC, 5, 17 }, { Skill.ANTOMIC, 6, 19 },
+                        { Skill.ANTOMIC, 7, 20 },
+                        { Skill.MASENKO, 1, 21 }, { Skill.MASENKO, 5, 22 }, { Skill.MASENKO, 6, 23 },
+                        { Skill.KAMEJOKO, 7, 1000 }, { Skill.THAI_DUONG_HA_SAN, 7, 60000 }, },
+                new String[] {}, // text chat 1
+                new String[] { "|-1|Xem các ngươi mạnh đến đâu",
+                        "|-1|He he he" }, // text chat 2
+                new String[] {}, // text chat 3
+                60));
 
         this.zone = zone;
     }
@@ -56,8 +62,7 @@ public class TrungUyXanhLo extends Boss {
                     1,
                     this.location.x,
                     this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24),
-                    plKill.id
-            );
+                    plKill.id);
             Service.gI().dropItemMap(this.zone, it);
         }
 
@@ -69,8 +74,7 @@ public class TrungUyXanhLo extends Boss {
                     Util.nextInt(1, 2),
                     this.location.x,
                     this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24),
-                    plKill.id
-            );
+                    plKill.id);
             Service.gI().dropItemMap(this.zone, it);
         }
     }
@@ -146,4 +150,3 @@ public class TrungUyXanhLo extends Boss {
         this.dispose();
     }
 }
-

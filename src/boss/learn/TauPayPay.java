@@ -1,26 +1,24 @@
 package boss.learn;
 
+import static consts.BossType.PHOBAN;
+
+import java.io.IOException;
+
 /*
  * @author EMTI
  */
 
 import boss.BossesData;
-import consts.ConstPlayer;
+import consts.BossID;
+import consts.BossStatus;
 import consts.ConstTask;
 import network.Message;
 import player.Player;
-import services.Service;
 import services.TaskService;
-import utils.Logger;
-import utils.Util;
-
-import java.io.IOException;
-
-import consts.BossID;
-import consts.BossStatus;
-import static consts.BossType.PHOBAN;
 import services.map.ChangeMapService;
 import services.map.MapService;
+import utils.Logger;
+import utils.Util;
 
 public class TauPayPay extends TrainingBoss {
 
@@ -38,20 +36,20 @@ public class TauPayPay extends TrainingBoss {
         }
     }
 
-//    @Override
-//    public void checkPlayerDie(Player pl) {
-//        Service.gI().sendPVB(playerAtt, this, ConstPlayer.PK_PVP);
-//        TaskService.gI().doneTask(pl, ConstTask.TASK_31_1);
-//    }
-//
-//    @Override
-//    public void die(Player plKill) {
-//        this.changeStatus(BossStatus.LEAVE_MAP);
-//        this.chatE();
-//        this.lastTimeAFK = 0;
-//        Service.gI().sendPlayerVS(playerAtt, null, (byte) 0);
-//        boolean doneTask = TaskService.gI().doneTask(plKill, ConstTask.TASK_31_1);
-//    }
+    // @Override
+    // public void checkPlayerDie(Player pl) {
+    // Service.gI().sendPVB(playerAtt, this, ConstPlayer.PK_PVP);
+    // TaskService.gI().doneTask(pl, ConstTask.TASK_31_1);
+    // }
+    //
+    // @Override
+    // public void die(Player plKill) {
+    // this.changeStatus(BossStatus.LEAVE_MAP);
+    // this.chatE();
+    // this.lastTimeAFK = 0;
+    // Service.gI().sendPlayerVS(playerAtt, null, (byte) 0);
+    // boolean doneTask = TaskService.gI().doneTask(plKill, ConstTask.TASK_31_1);
+    // }
 
     @Override
     public boolean chatS() {
@@ -92,7 +90,6 @@ public class TauPayPay extends TrainingBoss {
     public void buffPea() {
     }
 
-  
     @Override
     public synchronized int injured(Player plAtt, long damage, boolean piercing, boolean isMobAttack) {
         if (!this.isDie()) {
@@ -109,7 +106,7 @@ public class TauPayPay extends TrainingBoss {
 
             if (this.nPoint.hp > 0 && this.nPoint.hp < this.nPoint.hpMax / 5) {
                 if (Util.canDoWithTime(lastTimeChat, 2000)) {
-                    String[] text = {"AAAAAAAAA", "ai da"};
+                    String[] text = { "AAAAAAAAA", "ai da" };
                     this.chat(text[Util.nextInt(text.length)]);
                 }
             }
@@ -132,4 +129,3 @@ public class TauPayPay extends TrainingBoss {
         }
     }
 }
-

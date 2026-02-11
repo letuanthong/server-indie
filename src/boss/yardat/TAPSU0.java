@@ -1,15 +1,16 @@
 package boss.yardat;
 
+import static consts.BossType.YARDART;
+
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
-import boss.BossesData;
-import static consts.BossType.YARDART;
 
 public class TAPSU0 extends Yardart {
 
@@ -29,4 +30,3 @@ public class TAPSU0 extends Yardart {
         rewardRatio = 5;
     }
 }
-

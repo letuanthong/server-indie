@@ -1,23 +1,23 @@
 package boss.vodai;
 
+import boss.Boss;
+import boss.BossData;
+import consts.BossStatus;
+import consts.BossType;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.ConstRatio;
-import boss.Boss;
-import boss.BossData;
 import managers.boss.OtherBossManager;
-import consts.BossStatus;
-import consts.BossType;
 import player.Player;
 import services.EffectSkillService;
-import services.player.PlayerService;
 import services.SkillService;
 import services.map.ChangeMapService;
+import services.player.PlayerService;
 import utils.SkillUtil;
 import utils.Util;
 
@@ -50,7 +50,8 @@ public abstract class DeathOrAliveArena extends Boss {
 
     @Override
     public void afk() {
-        if (!(playerAtt.location != null && playerAtt != null && playerAtt.zone != null && this.zone != null && this.zone.equals(playerAtt.zone))) {
+        if (!(playerAtt.location != null && playerAtt != null && playerAtt.zone != null && this.zone != null
+                && this.zone.equals(playerAtt.zone))) {
             this.leaveMap();
         }
     }
@@ -68,17 +69,22 @@ public abstract class DeathOrAliveArena extends Boss {
     @Override
     public void attack() {
         try {
-            if (playerAtt.location != null && playerAtt != null && playerAtt.zone != null && this.zone != null && this.zone.equals(playerAtt.zone)) {
+            if (playerAtt.location != null && playerAtt != null && playerAtt.zone != null && this.zone != null
+                    && this.zone.equals(playerAtt.zone)) {
                 if (this.isDie()) {
                     return;
                 }
                 hutMau();
                 tanHinh();
                 bayLungTung();
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 if (Util.getDistance(this, playerAtt) <= this.getRangeCanAttackWithSkillSelect()) {
                     if (Util.isTrue(15, ConstRatio.PER100) && SkillUtil.isUseSkillChuong(this)) {
-                        goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)), Util.nextInt(10) % 2 == 0 ? playerAtt.location.y : playerAtt.location.y - Util.nextInt(0, 50), false);
+                        goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)),
+                                Util.nextInt(10) % 2 == 0 ? playerAtt.location.y
+                                        : playerAtt.location.y - Util.nextInt(0, 50),
+                                false);
                     }
                     SkillService.gI().useSkill(this, playerAtt, null, -1, null);
                     checkPlayerDie(playerAtt);
@@ -114,7 +120,8 @@ public abstract class DeathOrAliveArena extends Boss {
     public void update() {
         try {
             super.updateInfo();
-            if ((this.effectSkill != null && this.effectSkill.isHaveEffectSkill()) || (this.newSkill != null && this.newSkill.isStartSkillSpecial)) {
+            if ((this.effectSkill != null && this.effectSkill.isHaveEffectSkill())
+                    || (this.newSkill != null && this.newSkill.isStartSkillSpecial)) {
                 return;
             }
             switch (this.bossStatus) {
@@ -139,6 +146,8 @@ public abstract class DeathOrAliveArena extends Boss {
                     } else {
                         this.attack();
                     }
+                    break;
+                default:
                     break;
             }
         } catch (Exception e) {
@@ -202,4 +211,3 @@ public abstract class DeathOrAliveArena extends Boss {
         this.dispose();
     }
 }
-

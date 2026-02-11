@@ -40,6 +40,7 @@ public class Event_8_3 extends Event {
         initNpc();
     }
 
+    @SuppressWarnings("unused")
     private long generateUniqueID() {
         return uniqueID++;
     }
@@ -54,7 +55,8 @@ public class Event_8_3 extends Event {
                 @Override
                 public void openBaseMenu(Player player) {
                     if (canOpenNpc(player)) {
-                        this.createOtherMenu(player, ConstNpc.BASE_MENU, "Xin Chào Tôi Là ChiChi. Bạn Có Muốn Đổi  Hoa Lấy ","Đổi Điểm\nSự Kiện", "Từ chối");
+                        this.createOtherMenu(player, ConstNpc.BASE_MENU,
+                                "Xin Chào Tôi Là ChiChi. Bạn Có Muốn Đổi  Hoa Lấy ", "Đổi Điểm\nSự Kiện", "Từ chối");
                     }
                 }
 
@@ -63,7 +65,9 @@ public class Event_8_3 extends Event {
                     int menuID = player.idMark.getIndexMenu();
                     if (player.idMark.isBaseMenu()) {
                         switch (select) {
-                            case 0 -> this.createOtherMenu(player, ConstNpc.ORTHER_MENU, "Xin chào, sự kiện hè 2023 đang được diễn ra", "Đổi\n Vỏ Ốc", "Đổi Sò", "Đổi Cua", "Đổi \nSao Biển", "Đổi Quà\n Đặc Biệt", "Từ Chối");
+                            case 0 -> this.createOtherMenu(player, ConstNpc.ORTHER_MENU,
+                                    "Xin chào, sự kiện hè 2023 đang được diễn ra", "Đổi\n Vỏ Ốc", "Đổi Sò", "Đổi Cua",
+                                    "Đổi \nSao Biển", "Đổi Quà\n Đặc Biệt", "Từ Chối");
                         }
                     } else if (menuID == ConstNpc.ORTHER_MENU) {
                         if (select < 3) {
@@ -74,7 +78,7 @@ public class Event_8_3 extends Event {
                                         if (evPoint >= 999) {
                                             Item capsule = ItemService.gI().createNewItem((short) 2052, 1);
                                             player.event.setEventPoint(evPoint - 999);
-                                            
+
                                             capsule.itemOptions.add(new ItemOption(74, 0));
                                             capsule.itemOptions.add(new ItemOption(30, 0));
                                             InventoryService.gI().addItemBag(player, capsule);
@@ -94,7 +98,7 @@ public class Event_8_3 extends Event {
                                         case 1 -> n = 10;
                                         case 2 -> n = 99;
                                     }
-                                    
+
                                     if (n > 0) {
                                         Item bonghoa = InventoryService.gI().finditemBongHoa(player, n);
                                         if (bonghoa != null) {
@@ -107,7 +111,8 @@ public class Event_8_3 extends Event {
                                                     "Cần ít nhất " + n + " bông hoa để có thể tặng");
                                         }
                                     } else {
-                                        Service.gI().sendThongBao(player, "Cần ít nhất " + n + " bông hoa để có thể tặng");
+                                        Service.gI().sendThongBao(player,
+                                                "Cần ít nhất " + n + " bông hoa để có thể tặng");
                                     }
                                 }
                             }
@@ -127,7 +132,7 @@ public class Event_8_3 extends Event {
 
     @Override
     public void dropItem(Player player, Mob mob, List<ItemMap> list, int x, int yEnd) {
-        int mapid = player.zone.map.mapId;
+        // int mapid = player.zone.map.mapId;
     }
 
     @Override
@@ -138,4 +143,3 @@ public class Event_8_3 extends Event {
     }
 
 }
-

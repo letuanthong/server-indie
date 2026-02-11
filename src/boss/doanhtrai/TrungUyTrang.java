@@ -1,29 +1,31 @@
 package boss.doanhtrai;
 
+import static consts.BossType.PHOBANDT;
+
+import boss.Boss;
+import boss.BossData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
 import consts.BossStatus;
 import consts.ConstPlayer;
-import managers.boss.RedRibbonHQManager;
-import boss.*;
-import static consts.BossType.PHOBANDT;
 import consts.ConstRatio;
+import managers.boss.RedRibbonHQManager;
 import map.ItemMap;
 import map.Zone;
 import player.Player;
-import skill.Skill;
 import services.EffectSkillService;
-import services.player.PlayerService;
 import services.Service;
 import services.SkillService;
 import services.TaskService;
 import services.map.ChangeMapService;
+import services.player.PlayerService;
+import skill.Skill;
 import utils.SkillUtil;
 import utils.Util;
 
@@ -31,25 +33,29 @@ public class TrungUyTrang extends Boss {
 
     public TrungUyTrang(Zone zone, int dame, int hp) throws Exception {
         super(PHOBANDT, BossID.TRUNG_UY_TRANG, new BossData(
-                "Trung uý Trắng", //name
-                ConstPlayer.TRAI_DAT, //gender
-                new short[]{141, 142, 143, -1, -1, -1}, //outfit {head, body, leg, bag, aura, eff}
-                (dame), //dame
-                new int[]{(hp)}, //hp
-                new int[]{59}, //map join
-                new int[][]{
-                    {Skill.DEMON, 3, 1}, {Skill.DEMON, 6, 2}, {Skill.DRAGON, 7, 3}, {Skill.DRAGON, 1, 4}, {Skill.GALICK, 5, 5},
-                    {Skill.KAMEJOKO, 7, 6}, {Skill.KAMEJOKO, 6, 7}, {Skill.KAMEJOKO, 5, 8}, {Skill.KAMEJOKO, 4, 9}, {Skill.KAMEJOKO, 3, 10}, {Skill.KAMEJOKO, 2, 11}, {Skill.KAMEJOKO, 1, 12},
-                    {Skill.ANTOMIC, 1, 13}, {Skill.ANTOMIC, 2, 14}, {Skill.ANTOMIC, 3, 15}, {Skill.ANTOMIC, 4, 16}, {Skill.ANTOMIC, 5, 17}, {Skill.ANTOMIC, 6, 19}, {Skill.ANTOMIC, 7, 20},
-                    {Skill.MASENKO, 1, 21}, {Skill.MASENKO, 5, 22}, {Skill.MASENKO, 6, 23},
-                    {Skill.KAMEJOKO, 7, 1000},},
-                new String[]{}, //text chat 1
-                new String[]{"|-1|Xem mi dùng cách nào hạ được ta",
-                    "|-1|Ha ha ha",
-                    "|-1|Bulon đâu tiêu diệt hết bọn chúng cho ta"}, //text chat 2
-                new String[]{}, //text chat 3
-                60
-        ));
+                "Trung uý Trắng", // name
+                ConstPlayer.TRAI_DAT, // gender
+                new short[] { 141, 142, 143, -1, -1, -1 }, // outfit {head, body, leg, bag, aura, eff}
+                (dame), // dame
+                new int[] { (hp) }, // hp
+                new int[] { 59 }, // map join
+                new int[][] {
+                        { Skill.DEMON, 3, 1 }, { Skill.DEMON, 6, 2 }, { Skill.DRAGON, 7, 3 }, { Skill.DRAGON, 1, 4 },
+                        { Skill.GALICK, 5, 5 },
+                        { Skill.KAMEJOKO, 7, 6 }, { Skill.KAMEJOKO, 6, 7 }, { Skill.KAMEJOKO, 5, 8 },
+                        { Skill.KAMEJOKO, 4, 9 }, { Skill.KAMEJOKO, 3, 10 }, { Skill.KAMEJOKO, 2, 11 },
+                        { Skill.KAMEJOKO, 1, 12 },
+                        { Skill.ANTOMIC, 1, 13 }, { Skill.ANTOMIC, 2, 14 }, { Skill.ANTOMIC, 3, 15 },
+                        { Skill.ANTOMIC, 4, 16 }, { Skill.ANTOMIC, 5, 17 }, { Skill.ANTOMIC, 6, 19 },
+                        { Skill.ANTOMIC, 7, 20 },
+                        { Skill.MASENKO, 1, 21 }, { Skill.MASENKO, 5, 22 }, { Skill.MASENKO, 6, 23 },
+                        { Skill.KAMEJOKO, 7, 1000 }, },
+                new String[] {}, // text chat 1
+                new String[] { "|-1|Xem mi dùng cách nào hạ được ta",
+                        "|-1|Ha ha ha",
+                        "|-1|Bulon đâu tiêu diệt hết bọn chúng cho ta" }, // text chat 2
+                new String[] {}, // text chat 3
+                60));
 
         this.zone = zone;
     }
@@ -61,7 +67,7 @@ public class TrungUyTrang extends Boss {
                     this.location.y - 24), plKill.id);
             Service.gI().dropItemMap(this.zone, it);
         }
-          TaskService.gI().checkDoneTaskKillBoss(plKill, this);
+        TaskService.gI().checkDoneTaskKillBoss(plKill, this);
     }
 
     @Override
@@ -105,14 +111,19 @@ public class TrungUyTrang extends Boss {
             if (this.location.x < 775) {
                 goToPlayer(playerAtt, true);
             }
-            if (playerAtt.location != null && playerAtt != null && playerAtt.zone != null && this.zone != null && this.zone.equals(playerAtt.zone)) {
+            if (playerAtt.location != null && playerAtt != null && playerAtt.zone != null && this.zone != null
+                    && this.zone.equals(playerAtt.zone)) {
                 if (this.isDie()) {
                     return;
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 if (Util.getDistance(this, playerAtt) <= this.getRangeCanAttackWithSkillSelect()) {
                     if (Util.isTrue(15, ConstRatio.PER100) && SkillUtil.isUseSkillChuong(this)) {
-                        goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)), Util.nextInt(10) % 2 == 0 ? playerAtt.location.y : playerAtt.location.y - Util.nextInt(0, 50), false);
+                        goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)),
+                                Util.nextInt(10) % 2 == 0 ? playerAtt.location.y
+                                        : playerAtt.location.y - Util.nextInt(0, 50),
+                                false);
                     }
                     SkillService.gI().useSkill(this, playerAtt, null, -1, null);
                     checkPlayerDie(playerAtt);
@@ -168,4 +179,3 @@ public class TrungUyTrang extends Boss {
         this.dispose();
     }
 }
-

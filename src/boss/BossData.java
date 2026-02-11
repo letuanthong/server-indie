@@ -6,7 +6,6 @@ package boss;
  * @Collab: ???
  */
 
-
 import consts.AppearType;
 import lombok.Data;
 
@@ -88,4 +87,3 @@ public class BossData {
         this.typeAppear = typeAppear;
     }
 }
-

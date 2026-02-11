@@ -1,16 +1,17 @@
 package boss.learn;
 
+import static consts.BossType.PHOBAN;
+
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
-import static consts.BossType.PHOBAN;
 import player.Player;
 import utils.Util;
 
@@ -49,4 +50,3 @@ public class KhiBubbles extends TrainingBoss {
     }
 
 }
-

@@ -1,30 +1,28 @@
 package boss.mabu_12H;
 
+import static consts.BossType.FINAL;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import boss.Boss;
+import boss.BossesData;
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
-import static consts.BossType.FINAL;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import player.Player;
+import server.ServerNotify;
 import services.EffectSkillService;
 import services.Service;
-import utils.Util;
-
-import server.ServerNotify;
-import services.player.PlayerService;
 import services.SkillService;
 import services.map.ChangeMapService;
+import services.player.PlayerService;
+import utils.Util;
 
 public class Cadic extends Boss {
 
@@ -92,6 +90,7 @@ public class Cadic extends Boss {
         return null;
     }
 
+    @SuppressWarnings("unused")
     private void petrifyPlayersInTheMap() {
         for (Player pl : this.zone.getNotBosses()) {
             if (Util.isTrue(1, 10)) {
@@ -131,7 +130,7 @@ public class Cadic extends Boss {
         }
         if (Util.canDoWithTime(this.lastTimeAttack, 100)) {
             if (Util.canDoWithTime(lastTimePetrify, 10000)) {
-//                petrifyPlayersInTheMap();
+                // petrifyPlayersInTheMap();
                 this.lastTimePetrify = System.currentTimeMillis();
             }
             this.lastTimeAttack = System.currentTimeMillis();
@@ -148,7 +147,8 @@ public class Cadic extends Boss {
                     }
                     return;
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 int dis = Util.getDistance(this, pl);
                 if (dis > 450) {
                     move(pl.location.x - 24, pl.location.y);
@@ -279,4 +279,3 @@ public class Cadic extends Boss {
     }
 
 }
-

@@ -1,30 +1,33 @@
 package boss.pocolo;
 
+import static consts.BossType.PHOBAN;
+
+import java.io.IOException;
+
+import boss.Boss;
+import boss.BossData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
 import consts.BossStatus;
 import consts.ConstPlayer;
-import boss.*;
-import static consts.BossType.PHOBAN;
 import managers.boss.OtherBossManager;
-import network.Message;
-import java.io.IOException;
-import services.dungeon.SuperDivineWaterService;
 import map.Zone;
 import mob.Mob;
+import network.Message;
 import player.Player;
 import services.EffectSkillService;
-import services.player.PlayerService;
 import services.Service;
 import services.SkillService;
-import skill.Skill;
+import services.dungeon.SuperDivineWaterService;
 import services.map.ChangeMapService;
+import services.player.PlayerService;
+import skill.Skill;
 import utils.SkillUtil;
 import utils.Util;
 
@@ -37,7 +40,7 @@ public class Pocolo extends Boss {
     private boolean isLaze;
     private long lastTimeLaze;
 
-    private final String text[] = {"Không xong rồi, không xong rồi", "Nguy to cho thằng nhóc rồi"};
+    private final String text[] = { "Không xong rồi, không xong rồi", "Nguy to cho thằng nhóc rồi" };
     private long lastTimeChat;
     private long lastTimeMove;
     private int indexChat = 0;
@@ -46,39 +49,38 @@ public class Pocolo extends Boss {
         super(PHOBAN, BossID.POCOLO, new BossData(
                 "Ma vương Pôcôlô",
                 ConstPlayer.NAMEC,
-                new short[]{739, 740, 741, -1, -1, -1},
+                new short[] { 739, 740, 741, -1, -1, -1 },
                 dame,
-                new int[]{hp},
-                new int[]{146},
-                new int[][]{
-                    {Skill.DEMON, 7, 1000},
-                    {Skill.MASENKO, 1, 1000},
-                    {Skill.MASENKO, 2, 1000},
-                    {Skill.MASENKO, 3, 1000},
-                    {Skill.MASENKO, 4, 1000},
-                    {Skill.MASENKO, 5, 1000},
-                    {Skill.MASENKO, 6, 1000},
-                    {Skill.MASENKO, 7, 1000},
-                    {Skill.KAMEJOKO, 1, 1000},
-                    {Skill.KAMEJOKO, 2, 1000},
-                    {Skill.KAMEJOKO, 3, 1000},
-                    {Skill.KAMEJOKO, 4, 1000},
-                    {Skill.KAMEJOKO, 5, 1000},
-                    {Skill.KAMEJOKO, 6, 1000},
-                    {Skill.KAMEJOKO, 7, 1000},
-                    {Skill.ANTOMIC, 1, 1000},
-                    {Skill.ANTOMIC, 2, 1000},
-                    {Skill.ANTOMIC, 3, 1000},
-                    {Skill.ANTOMIC, 4, 1000},
-                    {Skill.ANTOMIC, 5, 1000},
-                    {Skill.ANTOMIC, 6, 1000},
-                    {Skill.ANTOMIC, 7, 1000},
-                    {Skill.TAI_TAO_NANG_LUONG, 7, 15000},},//skill
-                new String[]{"|-1|Được! Mi muốn chết thì ta cho chết!"},
-                new String[]{"|-1|Khí công pháo"},
-                new String[]{"|-1|Hâyaaaa"},
-                60
-        ));
+                new int[] { hp },
+                new int[] { 146 },
+                new int[][] {
+                        { Skill.DEMON, 7, 1000 },
+                        { Skill.MASENKO, 1, 1000 },
+                        { Skill.MASENKO, 2, 1000 },
+                        { Skill.MASENKO, 3, 1000 },
+                        { Skill.MASENKO, 4, 1000 },
+                        { Skill.MASENKO, 5, 1000 },
+                        { Skill.MASENKO, 6, 1000 },
+                        { Skill.MASENKO, 7, 1000 },
+                        { Skill.KAMEJOKO, 1, 1000 },
+                        { Skill.KAMEJOKO, 2, 1000 },
+                        { Skill.KAMEJOKO, 3, 1000 },
+                        { Skill.KAMEJOKO, 4, 1000 },
+                        { Skill.KAMEJOKO, 5, 1000 },
+                        { Skill.KAMEJOKO, 6, 1000 },
+                        { Skill.KAMEJOKO, 7, 1000 },
+                        { Skill.ANTOMIC, 1, 1000 },
+                        { Skill.ANTOMIC, 2, 1000 },
+                        { Skill.ANTOMIC, 3, 1000 },
+                        { Skill.ANTOMIC, 4, 1000 },
+                        { Skill.ANTOMIC, 5, 1000 },
+                        { Skill.ANTOMIC, 6, 1000 },
+                        { Skill.ANTOMIC, 7, 1000 },
+                        { Skill.TAI_TAO_NANG_LUONG, 7, 15000 }, }, // skill
+                new String[] { "|-1|Được! Mi muốn chết thì ta cho chết!" },
+                new String[] { "|-1|Khí công pháo" },
+                new String[] { "|-1|Hâyaaaa" },
+                60));
         this.zone = zone;
         this.playerCall = player;
     }
@@ -154,15 +156,15 @@ public class Pocolo extends Boss {
             Message msg;
             try {
                 msg = new Message(-60);
-                msg.writer().writeInt((int) this.id); //id pem
-                msg.writer().writeByte(83); //skill pem
-                msg.writer().writeByte(1); //số người pem
-                msg.writer().writeInt((int) playerCall.id); //id ăn pem
-                msg.writer().writeByte(1); //read continue
-                msg.writer().writeByte(1); //type skill
-                msg.writer().writeInt(1_000_000_000); //dame ăn
-                msg.writer().writeBoolean(true); //is die
-                msg.writer().writeBoolean(this.nPoint.isCrit); //crit
+                msg.writer().writeInt((int) this.id); // id pem
+                msg.writer().writeByte(83); // skill pem
+                msg.writer().writeByte(1); // số người pem
+                msg.writer().writeInt((int) playerCall.id); // id ăn pem
+                msg.writer().writeByte(1); // read continue
+                msg.writer().writeByte(1); // type skill
+                msg.writer().writeInt(1_000_000_000); // dame ăn
+                msg.writer().writeBoolean(true); // is die
+                msg.writer().writeBoolean(this.nPoint.isCrit); // crit
                 Service.gI().sendMessAllPlayerInMap(this, msg);
                 msg.cleanup();
             } catch (IOException e) {
@@ -225,7 +227,8 @@ public class Pocolo extends Boss {
         if (!Util.canDoWithTime(this.lastTimeChatM, this.timeChatM)) {
             return;
         }
-        String textChat = this.data[this.currentLevel].getTextM()[Util.nextInt(0, this.data[this.currentLevel].getTextM().length - 1)];
+        String textChat = this.data[this.currentLevel].getTextM()[Util.nextInt(0,
+                this.data[this.currentLevel].getTextM().length - 1)];
         int prefix = Integer.parseInt(textChat.substring(1, textChat.lastIndexOf("|")));
         textChat = textChat.substring(textChat.lastIndexOf("|") + 1);
         this.chat(prefix, textChat);
@@ -330,4 +333,3 @@ public class Pocolo extends Boss {
         }
     }
 }
-

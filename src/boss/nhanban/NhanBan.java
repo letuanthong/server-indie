@@ -6,7 +6,6 @@ package boss.nhanban;
  * @Collab: ???
  */
 
-
 import boss.Boss;
 import boss.BossData;
 import consts.BossStatus;
@@ -28,7 +27,7 @@ import utils.Util;
 public class NhanBan extends Boss {
 
     private Player playerAtt;
-    private long timeJoinMap;
+    // private long timeJoinMap;
 
     public NhanBan(Player player, BossData bossData) throws Exception {
         super(Util.createIdBossClone((int) player.id), bossData);
@@ -84,14 +83,19 @@ public class NhanBan extends Boss {
             if (this.typePk == ConstPlayer.NON_PK) {
                 PlayerService.gI().changeAndSendTypePK(this, ConstPlayer.PK_PVP);
             }
-            if (playerAtt.location != null && playerAtt != null && playerAtt.zone != null && this.zone != null && this.zone.equals(playerAtt.zone)) {
+            if (playerAtt.location != null && playerAtt != null && playerAtt.zone != null && this.zone != null
+                    && this.zone.equals(playerAtt.zone)) {
                 if (this.isDie()) {
                     return;
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 if (Util.getDistance(this, playerAtt) <= this.getRangeCanAttackWithSkillSelect()) {
                     if (Util.isTrue(15, ConstRatio.PER100) && SkillUtil.isUseSkillChuong(this)) {
-                        goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)), Util.nextInt(10) % 2 == 0 ? playerAtt.location.y : playerAtt.location.y - Util.nextInt(0, 50), false);
+                        goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)),
+                                Util.nextInt(10) % 2 == 0 ? playerAtt.location.y
+                                        : playerAtt.location.y - Util.nextInt(0, 50),
+                                false);
                     }
                     SkillService.gI().useSkill(this, playerAtt, null, -1, null);
                     checkPlayerDie(playerAtt);
@@ -100,7 +104,7 @@ public class NhanBan extends Boss {
                 }
             }
         } catch (Exception ex) {
-//            ex.printStackTrace();
+            // ex.printStackTrace();
         }
     }
 
@@ -135,4 +139,3 @@ public class NhanBan extends Boss {
         this.dispose();
     }
 }
-

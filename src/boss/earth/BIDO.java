@@ -1,18 +1,18 @@
 package boss.earth;
 
+import java.util.List;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import boss.Boss;
+import boss.BossesData;
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
 import item.Item;
-import java.util.List;
 import map.ItemMap;
 import player.Player;
 import services.ItemService;
@@ -37,24 +37,34 @@ public class BIDO extends Boss {
 
     @Override
     public void reward(Player plKill) {
-        Service.gI().dropItemMap(this.zone, ItemMap.create(zone, 190, Util.nextInt(1, 10), this.location.x + Util.nextInt(-50, 50), this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24), plKill.id));
+        Service.gI().dropItemMap(this.zone,
+                ItemMap.create(zone, 190, Util.nextInt(1, 10), this.location.x + Util.nextInt(-50, 50),
+                        this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24), plKill.id));
         for (int i = 0; i < Util.nextInt(2); i++) {
-            Service.gI().dropItemMap(this.zone, ItemMap.create(zone, 821, Util.nextInt(1, 3), this.location.x + i * Util.nextInt(-50, 50), this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24), plKill.id));
+            Service.gI().dropItemMap(this.zone,
+                    ItemMap.create(zone, 821, Util.nextInt(1, 3), this.location.x + i * Util.nextInt(-50, 50),
+                            this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24), plKill.id));
         }
         for (int i = 0; i < Util.nextInt(3, 10); i++) {
-            Service.gI().dropItemMap(this.zone, ItemMap.create(zone, 190, Util.nextInt(1_000_000, 20_000_000), this.location.x + i * 10, this.zone.map.yPhysicInTop(this.location.x,
-                    this.location.y - 24), plKill.id));
+            Service.gI().dropItemMap(this.zone,
+                    ItemMap.create(zone, 190, Util.nextInt(1_000_000, 20_000_000), this.location.x + i * 10,
+                            this.zone.map.yPhysicInTop(this.location.x,
+                                    this.location.y - 24),
+                            plKill.id));
         }
         for (int i = 1; i < Util.nextInt(3, 10) + 1; i++) {
-            Service.gI().dropItemMap(this.zone, ItemMap.create(zone, 190, Util.nextInt(1_000_000, 20_000_000), this.location.x - i * 10, this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24), plKill.id));
+            Service.gI().dropItemMap(this.zone,
+                    ItemMap.create(zone, 190, Util.nextInt(1_000_000, 20_000_000), this.location.x - i * 10,
+                            this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24), plKill.id));
         }
         short itTemp = 426;
-        ItemMap it = ItemMap.create(zone, itTemp, 1, this.location.x + Util.nextInt(-50, 50), this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24), plKill.id);
+        ItemMap it = ItemMap.create(zone, itTemp, 1, this.location.x + Util.nextInt(-50, 50),
+                this.zone.map.yPhysicInTop(this.location.x, this.location.y - 24), plKill.id);
         List<Item.ItemOption> ops = ItemService.gI().getListOptionItemShop(itTemp);
         if (!ops.isEmpty()) {
             it.options = ops;
         }
-        Service.gI().dropItemMap(this.zone, it);            
+        Service.gI().dropItemMap(this.zone, it);
     }
 
     @Override
@@ -95,4 +105,3 @@ public class BIDO extends Boss {
         this.parentBoss.changeStatus(BossStatus.ACTIVE);
     }
 }
-

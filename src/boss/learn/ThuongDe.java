@@ -1,22 +1,23 @@
 package boss.learn;
 
+import static consts.BossType.PHOBAN;
+
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
-import managers.boss.OtherBossManager;
 import consts.BossStatus;
-import boss.BossesData;
-import static consts.BossType.PHOBAN;
-import services.dungeon.TrainingService;
+import managers.boss.OtherBossManager;
 import player.Player;
-import services.map.MapService;
 import services.Service;
+import services.dungeon.TrainingService;
 import services.map.ChangeMapService;
+import services.map.MapService;
 import utils.Util;
 
 public class ThuongDe extends TrainingBoss {
@@ -87,4 +88,3 @@ public class ThuongDe extends TrainingBoss {
         this.dispose();
     }
 }
-

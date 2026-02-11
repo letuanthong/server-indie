@@ -1,17 +1,19 @@
 package boss.event.noel;
 
+import static consts.BossType.CHRISTMAS_EVENT;
+
+import boss.Boss;
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
 import consts.BossStatus;
 import managers.boss.BossManager;
-import boss.*;
-import static consts.BossType.CHRISTMAS_EVENT;
 import map.ItemMap;
 import player.Player;
 import services.Service;
@@ -55,7 +57,8 @@ public class OngGiaNoel extends Boss {
                     zoneid++;
                 }
                 // Check trong khu có boss sẽ chuyển sang khu n + 1
-                while (zoneid < this.zone.map.zones.size() && BossManager.gI().checkBosses(this.zone.map.zones.get(zoneid), BossID.ONG_GIA_NOEL)) {
+                while (zoneid < this.zone.map.zones.size()
+                        && BossManager.gI().checkBosses(this.zone.map.zones.get(zoneid), BossID.ONG_GIA_NOEL)) {
                     zoneid++;
                 }
                 if (zoneid < this.zone.map.zones.size()) {
@@ -64,8 +67,9 @@ public class OngGiaNoel extends Boss {
                     this.leaveMapNew();
                     return;
                 }
-                ChangeMapService.gI().changeMap(this, this.zone, Util.nextInt(100, 500), this.zone.map.yPhysicInTop(this.location.x,
-                        this.location.y - 24));
+                ChangeMapService.gI().changeMap(this, this.zone, Util.nextInt(100, 500),
+                        this.zone.map.yPhysicInTop(this.location.x,
+                                this.location.y - 24));
                 this.changeStatus(BossStatus.CHAT_S);
                 st = System.currentTimeMillis();
                 timeLeave = Util.nextInt(100000, 300000);
@@ -87,7 +91,8 @@ public class OngGiaNoel extends Boss {
         if (!Util.canDoWithTime(this.lastTimeChatM, this.timeChatM)) {
             return;
         }
-        String textChat = this.data[this.currentLevel].getTextM()[Util.nextInt(0, this.data[this.currentLevel].getTextM().length - 1)];
+        String textChat = this.data[this.currentLevel].getTextM()[Util.nextInt(0,
+                this.data[this.currentLevel].getTextM().length - 1)];
         int prefix = Integer.parseInt(textChat.substring(1, textChat.lastIndexOf("|")));
         textChat = textChat.substring(textChat.lastIndexOf("|") + 1);
         this.chat(prefix, textChat);
@@ -100,10 +105,14 @@ public class OngGiaNoel extends Boss {
             this.chat("Hô hô hô");
             ItemMap item = ItemMap.create(zone, 648, 1, this.location.x, this.zone.map.yPhysicInTop(this.location.x,
                     this.location.y - 24), -1);
-            ItemMap item2 = ItemMap.create(zone, 648, 1, this.location.x + Util.nextInt(50), this.zone.map.yPhysicInTop(this.location.x,
-                    this.location.y - 24), -1);
-            ItemMap item3 = ItemMap.create(zone, 648, 1, this.location.x - Util.nextInt(50), this.zone.map.yPhysicInTop(this.location.x,
-                    this.location.y - 24), -1);
+            ItemMap item2 = ItemMap.create(zone, 648, 1, this.location.x + Util.nextInt(50),
+                    this.zone.map.yPhysicInTop(this.location.x,
+                            this.location.y - 24),
+                    -1);
+            ItemMap item3 = ItemMap.create(zone, 648, 1, this.location.x - Util.nextInt(50),
+                    this.zone.map.yPhysicInTop(this.location.x,
+                            this.location.y - 24),
+                    -1);
             if (Util.isTrue(1, 3)) {
                 Service.gI().dropItemMap(this.zone, item);
             }
@@ -146,7 +155,8 @@ public class OngGiaNoel extends Boss {
                 if (pl == null || pl.location == null) {
                     return;
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 if (Util.getDistance(this, pl) <= this.getRangeCanAttackWithSkillSelect()) {
                     if (Util.isTrue(5, 20) && Util.getDistance(this, pl) > 50) {
                         if (Util.isTrue(5, 20)) {
@@ -178,4 +188,3 @@ public class OngGiaNoel extends Boss {
     public void reward(Player plKill) {
     }
 }
-

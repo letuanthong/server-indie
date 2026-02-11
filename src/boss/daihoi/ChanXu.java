@@ -1,15 +1,16 @@
 package boss.daihoi;
 
+import static consts.BossType.PHOBAN;
+
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
-import boss.BossesData;
-import static consts.BossType.PHOBAN;
 import consts.ConstRatio;
 import player.Player;
 import services.EffectSkillService;
@@ -31,7 +32,8 @@ public class ChanXu extends The23rdMartialArtCongress {
     public void attack() {
         try {
             if (Util.canDoWithTime(timeJoinMap, 10000)) {
-                if (playerAtt.location != null && playerAtt != null && playerAtt.zone != null && this.zone != null && this.zone.equals(playerAtt.zone)) {
+                if (playerAtt.location != null && playerAtt != null && playerAtt.zone != null && this.zone != null
+                        && this.zone.equals(playerAtt.zone)) {
                     if (this.isDie()) {
                         return;
                     }
@@ -39,7 +41,7 @@ public class ChanXu extends The23rdMartialArtCongress {
                         int time = Util.nextInt(1, 10);
                         EffectSkillService.gI().startStun(playerAtt, System.currentTimeMillis(), time * 1000);
                         ItemTimeService.gI().sendItemTime(playerAtt, 3779, time);
-                        String[] text = {"Đứng hình", "Nhất dương chỉ"};
+                        String[] text = { "Đứng hình", "Nhất dương chỉ" };
                         this.chat(text[Util.nextInt(2)]);
                         timeChoang = System.currentTimeMillis();
                     }
@@ -48,10 +50,14 @@ public class ChanXu extends The23rdMartialArtCongress {
                     } else {
                         this.nPoint.crit = 0;
                     }
-                    this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                    this.playerSkill.skillSelect = this.playerSkill.skills
+                            .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                     if (Util.getDistance(this, playerAtt) <= this.getRangeCanAttackWithSkillSelect()) {
                         if (Util.isTrue(15, ConstRatio.PER100) && SkillUtil.isUseSkillChuong(this)) {
-                            goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)), Util.nextInt(10) % 2 == 0 ? playerAtt.location.y : playerAtt.location.y - Util.nextInt(0, 50), false);
+                            goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)),
+                                    Util.nextInt(10) % 2 == 0 ? playerAtt.location.y
+                                            : playerAtt.location.y - Util.nextInt(0, 50),
+                                    false);
                         }
                         SkillService.gI().useSkill(this, playerAtt, null, -1, null);
                         checkPlayerDie(playerAtt);
@@ -67,4 +73,3 @@ public class ChanXu extends The23rdMartialArtCongress {
         }
     }
 }
-

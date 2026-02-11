@@ -1,24 +1,24 @@
 package boss.black;
 
+import boss.Boss;
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
-import boss.*;
 import consts.ConstPlayer;
 import consts.ConstTask;
 import map.ItemMap;
 import player.Player;
 import services.EffectSkillService;
 import services.Service;
-import utils.Util;
-
 import services.SkillService;
 import services.TaskService;
+import utils.Util;
 
 public class BlackGoku extends Boss {
 
@@ -32,12 +32,13 @@ public class BlackGoku extends Boss {
     @Override
     public void reward(Player plKill) {
         if (TaskService.gI().getIdTask(plKill) == ConstTask.TASK_32_0) {
-            Service.gI().dropItemMap(this.zone, ItemMap.create(zone, 992, 1, this.location.x, this.location.y, plKill.id));
-//              int diem = 50;
-//    plKill.event.setEventPoint(diem);
-//    Service.gI().sendThongBao(plKill, "+50 Point");
+            Service.gI().dropItemMap(this.zone,
+                    ItemMap.create(zone, 992, 1, this.location.x, this.location.y, plKill.id));
+            // int diem = 50;
+            // plKill.event.setEventPoint(diem);
+            // Service.gI().sendThongBao(plKill, "+50 Point");
             return;
-            
+
         }
     }
 
@@ -101,7 +102,8 @@ public class BlackGoku extends Boss {
                 if (pl == null || pl.isDie()) {
                     return;
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 int dis = Util.getDistance(this, pl);
                 if (dis > 450) {
                     move(pl.location.x - 24, pl.location.y);
@@ -123,4 +125,3 @@ public class BlackGoku extends Boss {
         }
     }
 }
-

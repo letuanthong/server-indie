@@ -1,24 +1,26 @@
 package boss.doanhtrai;
 
+import static consts.BossType.PHOBANDT;
+
+import boss.Boss;
+import boss.BossData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossStatus;
 import consts.ConstPlayer;
 import managers.boss.RedRibbonHQManager;
-import boss.*;
-import static consts.BossType.PHOBANDT;
 import map.ItemMap;
 import map.Zone;
 import player.Player;
-import skill.Skill;
 import services.EffectSkillService;
 import services.Service;
 import services.map.ChangeMapService;
+import skill.Skill;
 import utils.Util;
 
 public class NinjaClone extends Boss {
@@ -27,23 +29,27 @@ public class NinjaClone extends Boss {
 
     public NinjaClone(Zone zone, Boss boss, int dame, int hp, int id) throws Exception {
         super(PHOBANDT, id, new BossData(
-                "Ninja Áo Tím", //name
-                ConstPlayer.TRAI_DAT, //gender
-                new short[]{123, 124, 125, -1, -1, -1}, //outfit {head, body, leg, bag, aura, eff}
-                ((dame)), //dame
-                new int[]{((hp))}, //hp
-                new int[]{54}, //map join
-                new int[][]{
-                    {Skill.DEMON, 3, 1}, {Skill.DEMON, 6, 2}, {Skill.DRAGON, 7, 3}, {Skill.DRAGON, 1, 4}, {Skill.GALICK, 5, 5},
-                    {Skill.KAMEJOKO, 7, 6}, {Skill.KAMEJOKO, 6, 7}, {Skill.KAMEJOKO, 5, 8}, {Skill.KAMEJOKO, 4, 9}, {Skill.KAMEJOKO, 3, 10}, {Skill.KAMEJOKO, 2, 11}, {Skill.KAMEJOKO, 1, 12},
-                    {Skill.ANTOMIC, 1, 13}, {Skill.ANTOMIC, 2, 14}, {Skill.ANTOMIC, 3, 15}, {Skill.ANTOMIC, 4, 16}, {Skill.ANTOMIC, 5, 17}, {Skill.ANTOMIC, 6, 19}, {Skill.ANTOMIC, 7, 20},
-                    {Skill.MASENKO, 1, 21}, {Skill.MASENKO, 5, 22}, {Skill.MASENKO, 6, 23},},
-                new String[]{}, //text chat 1
-                new String[]{"|-1|Ta sẽ xé xác ngươi ra thành trăm mảnh",
-                    "|-1|Ha ha ha"}, //text chat 2
-                new String[]{}, //text chat 3
-                60
-        ));
+                "Ninja Áo Tím", // name
+                ConstPlayer.TRAI_DAT, // gender
+                new short[] { 123, 124, 125, -1, -1, -1 }, // outfit {head, body, leg, bag, aura, eff}
+                ((dame)), // dame
+                new int[] { ((hp)) }, // hp
+                new int[] { 54 }, // map join
+                new int[][] {
+                        { Skill.DEMON, 3, 1 }, { Skill.DEMON, 6, 2 }, { Skill.DRAGON, 7, 3 }, { Skill.DRAGON, 1, 4 },
+                        { Skill.GALICK, 5, 5 },
+                        { Skill.KAMEJOKO, 7, 6 }, { Skill.KAMEJOKO, 6, 7 }, { Skill.KAMEJOKO, 5, 8 },
+                        { Skill.KAMEJOKO, 4, 9 }, { Skill.KAMEJOKO, 3, 10 }, { Skill.KAMEJOKO, 2, 11 },
+                        { Skill.KAMEJOKO, 1, 12 },
+                        { Skill.ANTOMIC, 1, 13 }, { Skill.ANTOMIC, 2, 14 }, { Skill.ANTOMIC, 3, 15 },
+                        { Skill.ANTOMIC, 4, 16 }, { Skill.ANTOMIC, 5, 17 }, { Skill.ANTOMIC, 6, 19 },
+                        { Skill.ANTOMIC, 7, 20 },
+                        { Skill.MASENKO, 1, 21 }, { Skill.MASENKO, 5, 22 }, { Skill.MASENKO, 6, 23 }, },
+                new String[] {}, // text chat 1
+                new String[] { "|-1|Ta sẽ xé xác ngươi ra thành trăm mảnh",
+                        "|-1|Ha ha ha" }, // text chat 2
+                new String[] {}, // text chat 3
+                60));
         this.zone = zone;
         this.boss = boss;
     }
@@ -109,4 +115,3 @@ public class NinjaClone extends Boss {
         this.dispose();
     }
 }
-

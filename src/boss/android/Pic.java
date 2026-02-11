@@ -1,5 +1,7 @@
 package boss.android;
 
+import java.util.List;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
@@ -10,7 +12,6 @@ import boss.BossesData;
 import consts.BossID;
 import consts.BossStatus;
 import item.Item;
-import java.util.List;
 import map.ItemMap;
 import player.Player;
 import services.ItemService;
@@ -32,17 +33,19 @@ public class Pic extends Boss {
         int quantity = Util.nextInt(20000, 30000);
         // Tạo itemMap cho item ID 190
         ItemMap itemMap = ItemMap.create(this.zone, drop, quantity, x, y, plKill.id);
-        Item item = ItemService.gI().createNewItem((short) drop);
+        // Item item = ItemService.gI().createNewItem((short) drop);
         Service.gI().dropItemMap(zone, itemMap);
 
         // 30% xác suất để rơi đồ
         if (Util.isTrue(10, 100)) {
-            int group = Util.nextInt(1, 100) <= 70 ? 0 : 1;  // 70% chọn Áo Quần Giày (group = 0), 30% chọn Găng Rada (group = 1)
+            int group = Util.nextInt(1, 100) <= 70 ? 0 : 1; // 70% chọn Áo Quần Giày (group = 0), 30% chọn Găng Rada
+                                                            // (group = 1)
 
             // Các vật phẩm rơi từ nhóm Áo Quần Giày và Găng Rada
             int[][] drops = {
-                {230, 231, 232, 234, 235, 236, 238, 239, 240, 242, 243, 244, 246, 247, 248, 250, 251, 252, 266, 267, 268, 270, 271, 272, 274, 275, 276}, // Áo Quần Giày
-                {254, 255, 256, 258, 259, 260, 262, 263, 264, 278, 279, 280} // Găng Rada
+                    { 230, 231, 232, 234, 235, 236, 238, 239, 240, 242, 243, 244, 246, 247, 248, 250, 251, 252, 266,
+                            267, 268, 270, 271, 272, 274, 275, 276 }, // Áo Quần Giày
+                    { 254, 255, 256, 258, 259, 260, 262, 263, 264, 278, 279, 280 } // Găng Rada
             };
 
             // Chọn vật phẩm ngẫu nhiên từ nhóm đã chọn
@@ -50,14 +53,14 @@ public class Pic extends Boss {
 
             // Tạo vật phẩm và thêm chỉ số shop
             ItemMap optionalItemMap = ItemMap.create(this.zone, dropOptional, 1, x, y, plKill.id);
-            Item optionalItem = ItemService.gI().createNewItem((short) dropOptional);
+            // Item optionalItem = ItemService.gI().createNewItem((short) dropOptional);
             List<Item.ItemOption> optionalOps = ItemService.gI().getListOptionItemShop((short) dropOptional);
             optionalOps.forEach(option -> option.param = (int) (option.param * Util.nextInt(100, 115) / 100.0));
             optionalItemMap.options.addAll(optionalOps);
 
             // Thêm chỉ số sao pha lê (80% từ 1-3 sao, 17% từ 4-5 sao, 3% sao 6)
             int rand = Util.nextInt(1, 100);
-            int value ;
+            int value;
             if (rand <= 80) {
                 value = Util.nextInt(1, 3); // 80% xác suất: sao từ 1 đến 3
             } else if (rand <= 97) {
@@ -73,11 +76,11 @@ public class Pic extends Boss {
 
         // 80% xác suất rơi ngọc rồng hoặc item cấp 2
         if (Util.isTrue(80, 100)) {
-            int[] dropItems = {16, 17, 1150, 1151, 1152, 1152, 1066, 1067, 1068, 1069, 1070, 1229};
+            int[] dropItems = { 16, 17, 1150, 1151, 1152, 1152, 1066, 1067, 1068, 1069, 1070, 1229 };
             int dropOptional = dropItems[Util.nextInt(0, dropItems.length - 1)];
             // Tạo và rơi vật phẩm ngọc rồng hoặc item cấp 2
             ItemMap optionalItemMap = ItemMap.create(this.zone, dropOptional, 1, x, y, plKill.id);
-            Item optionalItem = ItemService.gI().createNewItem((short) dropOptional);
+            // Item optionalItem = ItemService.gI().createNewItem((short) dropOptional);
             Service.gI().dropItemMap(zone, optionalItemMap);
         }
 
@@ -96,9 +99,10 @@ public class Pic extends Boss {
 
     @Override
     public void joinMap() {
-        super.joinMap(); //To change body of generated methods, choose Tools | Templates.
+        super.joinMap(); // To change body of generated methods, choose Tools | Templates.
         st = System.currentTimeMillis();
     }
+
     private long st;
 
     @Override
@@ -115,4 +119,3 @@ public class Pic extends Boss {
     }
 
 }
-

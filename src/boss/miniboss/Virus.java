@@ -1,18 +1,17 @@
 package boss.miniboss;
 
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import boss.Boss;
 import boss.BossData;
 import consts.BossID;
 import consts.BossStatus;
 import consts.ConstPlayer;
-import consts.ConstRatio;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.Map;
 import map.ItemMap;
 import player.Player;
 import server.Client;
-import services.EffectSkillService;
 import services.ItemTimeService;
 import services.Service;
 import services.SkillService;
@@ -28,14 +27,14 @@ public class Virus extends Boss {
         super(BossID.VIRUS, new BossData(
                 "Virus " + Util.nextInt(1, 49),
                 ConstPlayer.TRAI_DAT,
-                new short[]{651, 778, 779, -1, -1, -1},
+                new short[] { 651, 778, 779, -1, -1, -1 },
                 10,
-                new int[]{100},
-                new int[]{5, 7, 0, 14},
-                new int[][]{{Skill.DRAGON, 7, 1000}},
-                new String[]{}, // Text chat 1
-                new String[]{}, // Text chat 2
-                new String[]{},
+                new int[] { 100 },
+                new int[] { 5, 7, 0, 14 },
+                new int[][] { { Skill.DRAGON, 7, 1000 } },
+                new String[] {}, // Text chat 1
+                new String[] {}, // Text chat 2
+                new String[] {},
                 600));
     }
 
@@ -91,7 +90,8 @@ public class Virus extends Boss {
                     return;
                 }
 
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
 
                 if (Util.getDistance(this, pl) <= 40) {
                     SkillService.gI().useSkill(this, pl, null, -1, null);
@@ -143,11 +143,11 @@ public class Virus extends Boss {
     @Override
     public synchronized int injured(Player plAtt, long damage, boolean piercing, boolean isMobAttack) {
         if (!this.isDie()) {
-//       
+            //
             if (damage >= 500) {
                 damage = 500;
             }
-//            this.nPoint.dame = (int) damage / Util.nextInt(500, 1000);
+            // this.nPoint.dame = (int) damage / Util.nextInt(500, 1000);
             this.nPoint.subHP(damage);
             return (int) damage;
         } else {
@@ -156,4 +156,3 @@ public class Virus extends Boss {
     }
 
 }
-

@@ -1,26 +1,24 @@
 package boss.mabu_12H;
 
+import static consts.BossType.FINAL;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import boss.Boss;
-import consts.BossID;
-import consts.BossStatus;
 import boss.BossesData;
 import consts.AppearType;
-import static consts.BossType.FINAL;
-
+import consts.BossID;
+import consts.BossStatus;
 import player.Player;
 import services.EffectSkillService;
-import utils.Util;
-
 import services.TaskService;
 import services.map.ChangeMapService;
 import skill.Skill;
+import utils.Util;
 
 public class Drabura2 extends Boss {
 
@@ -146,4 +144,3 @@ public class Drabura2 extends Boss {
     }
 
 }
-

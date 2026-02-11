@@ -1,28 +1,27 @@
 package boss.mabu_12H;
 
+import static consts.BossType.FINAL;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import boss.Boss;
+import boss.BossesData;
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
-import static consts.BossType.FINAL;
 import consts.ConstPlayer;
 import player.Player;
-import services.Service;
-import utils.Util;
-
 import server.ServerNotify;
 import services.EffectSkillService;
+import services.Service;
 import services.SkillService;
 import services.TaskService;
 import skill.Skill;
 import utils.SkillUtil;
+import utils.Util;
 
 public class Yacon extends Boss {
 
@@ -53,7 +52,8 @@ public class Yacon extends Boss {
                 if (pl == null || pl.isDie()) {
                     return;
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 if (Util.canDoWithTime(this.lastTimeTanHinh, 10000) && Util.isTrue(5, 20)) {
                     if (SkillUtil.isUseSkillChuong(this)) {
                         this.moveTo(pl.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 200)),
@@ -74,7 +74,7 @@ public class Yacon extends Boss {
                 }
                 if (Util.canDoWithTime(this.lastTimeTanHinh, 30000)) {
                     if (Util.isTrue(1, 10)) {
-                        String[] chat = {"Mi đâu rồi", "Đồ ăn gian!"};
+                        String[] chat = { "Mi đâu rồi", "Đồ ăn gian!" };
                         Service.gI().chat(pl, chat[Util.nextInt(chat.length)]);
                         this.lastTimeTanHinh = System.currentTimeMillis();
                     }
@@ -150,4 +150,3 @@ public class Yacon extends Boss {
         this.changeStatus(BossStatus.AFK);
     }
 }
-

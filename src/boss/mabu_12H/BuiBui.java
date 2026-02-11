@@ -1,26 +1,24 @@
 package boss.mabu_12H;
 
+import static consts.BossType.FINAL;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import boss.Boss;
+import boss.BossesData;
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
-import static consts.BossType.FINAL;
-
 import player.Player;
-import services.Service;
-import utils.Util;
-
 import server.ServerNotify;
 import services.EffectSkillService;
+import services.Service;
 import services.TaskService;
 import skill.Skill;
+import utils.Util;
 
 public class BuiBui extends Boss {
 
@@ -108,4 +106,3 @@ public class BuiBui extends Boss {
     }
 
 }
-

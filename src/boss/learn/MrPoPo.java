@@ -1,16 +1,17 @@
 package boss.learn;
 
+import static consts.BossType.PHOBAN;
+
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
-import static consts.BossType.PHOBAN;
 import player.Player;
 import services.map.ChangeMapService;
 import utils.Util;
@@ -64,14 +65,15 @@ public class MrPoPo extends TrainingBoss {
     @Override
     public void bayLungTung() {
         if (Util.canDoWithTime(lastTimeBay, 3000)) {
-            goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)), this.location.y + Util.getOne(-100, 10), false);
+            goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)),
+                    this.location.y + Util.getOne(-100, 10), false);
             lastTimeBay = System.currentTimeMillis();
         }
         if (Util.canDoWithTime(lastTimeBay2, 4000)) {
-            goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)), this.location.y + Util.getOne(-100, 10), false);
+            goToXY(playerAtt.location.x + (Util.getOne(-1, 1) * Util.nextInt(20, 80)),
+                    this.location.y + Util.getOne(-100, 10), false);
             lastTimeBay2 = System.currentTimeMillis();
         }
     }
 
 }
-

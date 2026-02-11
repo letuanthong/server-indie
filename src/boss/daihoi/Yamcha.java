@@ -1,15 +1,16 @@
 package boss.daihoi;
 
+import static consts.BossType.PHOBAN;
+
+import boss.BossesData;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
-import boss.BossesData;
-import static consts.BossType.PHOBAN;
 import player.Player;
 
 public class Yamcha extends The23rdMartialArtCongress {
@@ -19,4 +20,3 @@ public class Yamcha extends The23rdMartialArtCongress {
         this.playerAtt = player;
     }
 }
-

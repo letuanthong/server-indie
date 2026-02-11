@@ -1,28 +1,27 @@
 package boss.mabu_12H;
 
+import static consts.BossType.FINAL;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import boss.Boss;
+import boss.BossesData;
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
-import static consts.BossType.FINAL;
 import consts.ConstPlayer;
 import player.Player;
-import services.Service;
-import utils.Util;
-
 import server.ServerNotify;
 import services.EffectSkillService;
+import services.Service;
 import services.SkillService;
 import services.TaskService;
 import skill.Skill;
 import utils.SkillUtil;
+import utils.Util;
 
 public class BuiBui2 extends Boss {
 
@@ -66,7 +65,8 @@ public class BuiBui2 extends Boss {
                 if (pl == null || pl.isDie()) {
                     return;
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 if (Util.getDistance(this, pl) <= this.getRangeCanAttackWithSkillSelect()) {
                     if (Util.isTrue(5, 20)) {
                         if (SkillUtil.isUseSkillChuong(this)) {
@@ -129,7 +129,7 @@ public class BuiBui2 extends Boss {
         if (Util.canDoWithTime(lastTimeAfk, 60000)) {
             Service.gI().hsChar(this, this.nPoint.hpMax, this.nPoint.mpMax);
             this.changeStatus(BossStatus.CHAT_S);
-//            this.changeToTypePK();
+            // this.changeToTypePK();
         }
     }
 
@@ -188,4 +188,3 @@ public class BuiBui2 extends Boss {
     }
 
 }
-

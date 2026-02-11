@@ -1,26 +1,28 @@
 package boss.randoc;
 
+import static consts.BossType.PHOBANCDRD;
+
+import boss.Boss;
+import boss.BossData;
+import clan.Clan;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import consts.BossID;
 import consts.BossStatus;
 import consts.ConstPlayer;
 import managers.boss.SnakeWayManager;
-import boss.*;
-import static consts.BossType.PHOBANCDRD;
-import clan.Clan;
 import map.ItemMap;
 import map.Zone;
 import player.Player;
-import skill.Skill;
 import services.Service;
 import services.SkillService;
 import services.map.ChangeMapService;
+import skill.Skill;
 import utils.SkillUtil;
 import utils.Util;
 
@@ -34,18 +36,17 @@ public class NADIC extends Boss {
         super(PHOBANCDRD, BossID.NADIC, new BossData(
                 "Nađíc",
                 ConstPlayer.XAYDA,
-                new short[]{648, 649, 650, -1, -1, -1},
+                new short[] { 648, 649, 650, -1, -1, -1 },
                 ((10000 + dame)),
-                new int[]{((500000 + hp))},
-                new int[]{144},
-                new int[][]{
-                    {Skill.GALICK, 7, 1000},
-                    {Skill.TAI_TAO_NANG_LUONG, 5, 10000},},//skill
-                new String[]{},
-                new String[]{},
-                new String[]{"|-1|Sếp hãy giết nó, trả thù cho em!"},
-                60
-        ));
+                new int[] { ((500000 + hp)) },
+                new int[] { 144 },
+                new int[][] {
+                        { Skill.GALICK, 7, 1000 },
+                        { Skill.TAI_TAO_NANG_LUONG, 5, 10000 }, }, // skill
+                new String[] {},
+                new String[] {},
+                new String[] { "|-1|Sếp hãy giết nó, trả thù cho em!" },
+                60));
         this.zone = zone;
         this.clan = clan;
     }
@@ -80,7 +81,7 @@ public class NADIC extends Boss {
     public void die(Player plKill) {
         for (Boss boss : clan.ConDuongRanDoc.bosses) {
             if (boss.id == BossID.CADICH) {
-                boss.moveTo(boss.location.x + this.location.x > boss.location.x ? - 100 : 100, this.location.y);
+                boss.moveTo(boss.location.x + this.location.x > boss.location.x ? -100 : 100, this.location.y);
                 break;
             }
         }
@@ -102,7 +103,8 @@ public class NADIC extends Boss {
 
     @Override
     public void attack() {
-        if (!this.effectSkill.isCharging && Util.canDoWithTime(this.lastTimeAttack, 100) && this.typePk == ConstPlayer.PK_ALL) {
+        if (!this.effectSkill.isCharging && Util.canDoWithTime(this.lastTimeAttack, 100)
+                && this.typePk == ConstPlayer.PK_ALL) {
             this.lastTimeAttack = System.currentTimeMillis();
             try {
                 Player pl = getPlayerAttack();
@@ -138,4 +140,3 @@ public class NADIC extends Boss {
         }
     }
 }
-

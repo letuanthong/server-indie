@@ -1,5 +1,9 @@
 package boss.event.newyear;
 
+import static consts.BossType.TET_EVENT;
+
+import boss.Boss;
+import boss.BossesData;
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
@@ -8,8 +12,6 @@ package boss.event.newyear;
 import consts.BossID;
 import consts.BossStatus;
 import managers.boss.BossManager;
-import boss.*;
-import static consts.BossType.TET_EVENT;
 import player.Player;
 import server.Client;
 import services.EffectSkillService;
@@ -56,7 +58,8 @@ public class LanCon extends Boss {
                     zoneid++;
                 }
                 // Check trong khu có boss sẽ chuyển sang khu n + 1
-                while (zoneid < this.zone.map.zones.size() && BossManager.gI().checkBosses(this.zone.map.zones.get(zoneid), BossID.ONG_GIA_NOEL)) {
+                while (zoneid < this.zone.map.zones.size()
+                        && BossManager.gI().checkBosses(this.zone.map.zones.get(zoneid), BossID.ONG_GIA_NOEL)) {
                     zoneid++;
                 }
                 if (zoneid < this.zone.map.zones.size()) {
@@ -65,8 +68,9 @@ public class LanCon extends Boss {
                     this.leaveMapNew();
                     return;
                 }
-                ChangeMapService.gI().changeMap(this, this.zone, Util.nextInt(100, 500), this.zone.map.yPhysicInTop(this.location.x,
-                        this.location.y - 24));
+                ChangeMapService.gI().changeMap(this, this.zone, Util.nextInt(100, 500),
+                        this.zone.map.yPhysicInTop(this.location.x,
+                                this.location.y - 24));
                 this.changeStatus(BossStatus.CHAT_S);
                 st = System.currentTimeMillis();
                 timeLeave = Util.nextInt(100000, 300000);
@@ -88,7 +92,8 @@ public class LanCon extends Boss {
         if (!Util.canDoWithTime(this.lastTimeChatM, this.timeChatM)) {
             return;
         }
-        String textChat = this.data[this.currentLevel].getTextM()[Util.nextInt(0, this.data[this.currentLevel].getTextM().length - 1)];
+        String textChat = this.data[this.currentLevel].getTextM()[Util.nextInt(0,
+                this.data[this.currentLevel].getTextM().length - 1)];
         int prefix = Integer.parseInt(textChat.substring(1, textChat.lastIndexOf("|")));
         textChat = textChat.substring(textChat.lastIndexOf("|") + 1);
         this.chat(prefix, textChat);
@@ -184,45 +189,45 @@ public class LanCon extends Boss {
     }
 
     @Override
-public synchronized int injured(Player plAtt, long damage, boolean piercing, boolean isMobAttack) {
-    if (!this.isDie()) {
-        if (!piercing && Util.isTrue(100, 1000)) {
-            this.chat("Xí hụt");
-            return 0;
-        }
-        damage = this.nPoint.subDameInjureWithDeff(damage);
-        if (!piercing && effectSkill.isShielding) {
-            if (damage > nPoint.hpMax) {
-                EffectSkillService.gI().breakShield(this);
+    public synchronized int injured(Player plAtt, long damage, boolean piercing, boolean isMobAttack) {
+        if (!this.isDie()) {
+            if (!piercing && Util.isTrue(100, 1000)) {
+                this.chat("Xí hụt");
+                return 0;
             }
-            damage = 1;
-        }
-        if (damage > 500_000) {
-            damage = 500_000;
-        }
+            damage = this.nPoint.subDameInjureWithDeff(damage);
+            if (!piercing && effectSkill.isShielding) {
+                if (damage > nPoint.hpMax) {
+                    EffectSkillService.gI().breakShield(this);
+                }
+                damage = 1;
+            }
+            if (damage > 500_000) {
+                damage = 500_000;
+            }
 
-        // Kiểm tra nếu damage >= HP hoặc người chơi chat "thang"
-        if (damage >= this.nPoint.hp || isPlayerChatThang(plAtt)) {
-            this.changeToTypeNonPK();
-            this.playerId = Math.abs(plAtt.id);
-            Service.gI().chat(plAtt, "Đi thôi lân con!");
-            this.nPoint.hp = this.nPoint.hpMax;
-            this.changeStatus(BossStatus.AFK);
+            // Kiểm tra nếu damage >= HP hoặc người chơi chat "thang"
+            if (damage >= this.nPoint.hp || isPlayerChatThang(plAtt)) {
+                this.changeToTypeNonPK();
+                this.playerId = Math.abs(plAtt.id);
+                Service.gI().chat(plAtt, "Đi thôi lân con!");
+                this.nPoint.hp = this.nPoint.hpMax;
+                this.changeStatus(BossStatus.AFK);
+                return 0;
+            }
+            this.nPoint.subHP(damage);
+            return (int) damage;
+        } else {
             return 0;
         }
-        this.nPoint.subHP(damage);
-        return (int) damage;
-    } else {
-        return 0;
     }
-}
-private boolean isPlayerChatThang(Player plAtt) {   
-    String lastChat = plAtt.getLastChatMessage();  
-    return lastChat != null && lastChat.toLowerCase().contains("thang");
-}
+
+    private boolean isPlayerChatThang(Player plAtt) {
+        String lastChat = plAtt.getLastChatMessage();
+        return lastChat != null && lastChat.toLowerCase().contains("thang");
+    }
 
     @Override
     public void reward(Player plKill) {
     }
 }
-

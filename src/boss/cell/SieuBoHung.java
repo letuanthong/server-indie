@@ -1,36 +1,36 @@
 package boss.cell;
 
+import java.util.List;
+
+import boss.Boss;
+import boss.BossesData;
+import consts.BossID;
+import consts.BossStatus;
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 import consts.ConstPlayer;
-import boss.Boss;
-import consts.BossID;
-import consts.BossStatus;
-import boss.BossesData;
 import item.Item;
-import item.Item.ItemOption;
-import java.util.List;
 import map.ItemMap;
 import player.Player;
 import services.EffectSkillService;
 import services.ItemService;
-import services.RewardService;
 import services.Service;
 import services.TaskService;
-import utils.Util;
 import services.player.PlayerService;
+import utils.Util;
 
 public class SieuBoHung extends Boss {
 
     private long st;
     public boolean callCellCon;
-    private long lastTimeHapThu;
-    private int timeHapThu;
+    // private long lastTimeHapThu;
+    // private int timeHapThu;
 
-    private final String text[] = {"Thưa quý vị và các bạn, đây đúng là trận đấu trời long đất lở", "Vượt xa mọi dự đoán của chúng tôi", "Eo ơi toàn thân lão Xên bốc cháy kìa"};
+    private final String text[] = { "Thưa quý vị và các bạn, đây đúng là trận đấu trời long đất lở",
+            "Vượt xa mọi dự đoán của chúng tôi", "Eo ơi toàn thân lão Xên bốc cháy kìa" };
     private long lastTimeChat;
     private long lastTimeMove;
     private int indexChat = 0;
@@ -93,23 +93,23 @@ public class SieuBoHung extends Boss {
         int quantity = Util.nextInt(20000, 30000);
         // Tạo itemMap cho item ID 190
         ItemMap itemMap = ItemMap.create(this.zone, drop, quantity, x, y, plKill.id);
-        Item item = ItemService.gI().createNewItem((short) drop);
         Service.gI().dropItemMap(zone, itemMap);
 
         // 30% xác suất để rơi đồ
         if (Util.isTrue(30, 100)) {
-            int group = Util.nextInt(1, 100) <= 70 ? 0 : 1;  // 70% chọn Áo Quần Giày (group = 0), 30% chọn Găng Rada (group = 1)
+            int group = Util.nextInt(1, 100) <= 70 ? 0 : 1; // 70% chọn Áo Quần Giày (group = 0), 30% chọn Găng Rada
+                                                            // (group = 1)
 
             // Các vật phẩm rơi từ nhóm Áo Quần Giày và Găng Rada
             int[][] drops = {
-                {230, 231, 232, 234, 235, 236, 238, 239, 240, 242, 243, 244, 246, 247, 248, 250, 251, 252, 266, 267, 268, 270, 271, 272, 274, 275, 276}, // Áo Quần Giày
-                {254, 255, 256, 258, 259, 260, 262, 263, 264, 278, 279, 280} // Găng Rada
+                    { 230, 231, 232, 234, 235, 236, 238, 239, 240, 242, 243, 244, 246, 247, 248, 250, 251, 252, 266,
+                            267, 268, 270, 271, 272, 274, 275, 276 }, // Áo Quần Giày
+                    { 254, 255, 256, 258, 259, 260, 262, 263, 264, 278, 279, 280 } // Găng Rada
             };
             // Chọn vật phẩm ngẫu nhiên từ nhóm đã chọn
             int dropOptional = drops[group][Util.nextInt(0, drops[group].length - 1)];
             // Tạo vật phẩm và thêm chỉ số shop
             ItemMap optionalItemMap = ItemMap.create(this.zone, dropOptional, 1, x, y, plKill.id);
-            Item optionalItem = ItemService.gI().createNewItem((short) dropOptional);
             List<Item.ItemOption> optionalOps = ItemService.gI().getListOptionItemShop((short) dropOptional);
             optionalOps.forEach(option -> option.param = (int) (option.param * Util.nextInt(100, 115) / 100.0));
             optionalItemMap.options.addAll(optionalOps);
@@ -129,15 +129,13 @@ public class SieuBoHung extends Boss {
         }
         // 80% xác suất rơi ngọc rồng hoặc item cấp 2
         if (Util.isTrue(80, 100)) {
-            int[] dropItems = {15, 1150, 1151, 1152, 1152, 1066, 1067, 1068, 1069, 1070, 1229};
+            int[] dropItems = { 15, 1150, 1151, 1152, 1152, 1066, 1067, 1068, 1069, 1070, 1229 };
             int dropOptional = dropItems[Util.nextInt(0, dropItems.length - 1)];
             // Tạo và rơi vật phẩm ngọc rồng hoặc item cấp 2
             ItemMap optionalItemMap = ItemMap.create(this.zone, dropOptional, Util.nextInt(1, 3), x, y, plKill.id);
-            Item optionalItem = ItemService.gI().createNewItem((short) dropOptional);
             Service.gI().dropItemMap(zone, optionalItemMap);
         }
-      
-        
+
         TaskService.gI().checkDoneTaskKillBoss(plKill, this);
     }
 
@@ -149,49 +147,48 @@ public class SieuBoHung extends Boss {
         this.attack();
     }
 
-   @Override
-public synchronized int injured(Player plAtt, long damage, boolean piercing, boolean isMobAttack) {
-    if (prepareBom) {
-        return 0;
-    }
-    
-    // Nếu chưa gọi cellCon và damage đủ lớn, luôn gọi cellCon mà không làm giảm dame
-    if (!this.callCellCon && damage >= this.nPoint.hp) {
-        this.callCellCon();  // Gọi luôn callCellCon mà không kiểm tra lại xác suất
-        return 0;  
-    }
-    
-    // Nếu không chết
-    if (!this.isDie()) {
-        if (!piercing && Util.isTrue(this.nPoint.tlNeDon, 1000)) {
-            this.chat("Xí hụt");
+    @Override
+    public synchronized int injured(Player plAtt, long damage, boolean piercing, boolean isMobAttack) {
+        if (prepareBom) {
             return 0;
         }
-        
-    
-        damage = this.nPoint.subDameInjureWithDeff(damage / 3);      
-      
-        if (!piercing && effectSkill.isShielding) {
-            if (damage > nPoint.hpMax) {
-                EffectSkillService.gI().breakShield(this);
-            }
-            damage = damage / 4;  // Giảm dame xuống 1/4 nếu có khiên
-        }        
-        // Trừ máu
-        this.nPoint.subHP(damage);
-        
-        // Kiểm tra xem đã chết chưa
-        if (isDie()) {
-            setBom(plAtt);
-            return 0;
-        }
-        
-        return (int) damage;
-    } else {
-        return 0;  // Nếu đã chết, không làm gì thêm
-    }
-}
 
+        // Nếu chưa gọi cellCon và damage đủ lớn, luôn gọi cellCon mà không làm giảm
+        // dame
+        if (!this.callCellCon && damage >= this.nPoint.hp) {
+            this.callCellCon(); // Gọi luôn callCellCon mà không kiểm tra lại xác suất
+            return 0;
+        }
+
+        // Nếu không chết
+        if (!this.isDie()) {
+            if (!piercing && Util.isTrue(this.nPoint.tlNeDon, 1000)) {
+                this.chat("Xí hụt");
+                return 0;
+            }
+
+            damage = this.nPoint.subDameInjureWithDeff(damage / 3);
+
+            if (!piercing && effectSkill.isShielding) {
+                if (damage > nPoint.hpMax) {
+                    EffectSkillService.gI().breakShield(this);
+                }
+                damage = damage / 4; // Giảm dame xuống 1/4 nếu có khiên
+            }
+            // Trừ máu
+            this.nPoint.subHP(damage);
+
+            // Kiểm tra xem đã chết chưa
+            if (isDie()) {
+                setBom(plAtt);
+                return 0;
+            }
+
+            return (int) damage;
+        } else {
+            return 0; // Nếu đã chết, không làm gì thêm
+        }
+    }
 
     @Override
     public void joinMap() {
@@ -242,4 +239,3 @@ public synchronized int injured(Player plAtt, long damage, boolean piercing, boo
     }
 
 }
-

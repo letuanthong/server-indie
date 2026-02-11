@@ -9,6 +9,5 @@ package boss.jiren;
  * @author Administrator
  */
 public class Jiren {
-    
-}
 
+}

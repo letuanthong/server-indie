@@ -1,29 +1,28 @@
 package boss.mabu_12H;
 
+import static consts.BossType.FINAL;
+
 /*
  * @Author: dev1sme
  * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
  * @Collab: ???
  */
 
-
 import boss.Boss;
+import boss.BossesData;
 import consts.BossID;
 import consts.BossStatus;
-import boss.BossesData;
-import static consts.BossType.FINAL;
 import consts.ConstPlayer;
 import player.Player;
+import server.ServerNotify;
 import services.EffectSkillService;
 import services.Service;
-import utils.Util;
-
-import server.ServerNotify;
-import services.player.PlayerService;
 import services.SkillService;
 import services.TaskService;
 import services.map.ChangeMapService;
+import services.player.PlayerService;
 import utils.SkillUtil;
+import utils.Util;
 
 public class Drabura3 extends Boss {
 
@@ -44,8 +43,9 @@ public class Drabura3 extends Boss {
         this.lastTimeJoin = System.currentTimeMillis();
         this.zone = this.parentBoss.zoneFinal;
         ChangeMapService.gI().changeMap(this, this.zone, Util.nextInt(300, 400), 336);
-//        ChangeMapService.gI().changeMap(this, this.zone,
-//                this.parentBoss.location.x + Util.nextInt(-100, 100), this.parentBoss.location.y);
+        // ChangeMapService.gI().changeMap(this, this.zone,
+        // this.parentBoss.location.x + Util.nextInt(-100, 100),
+        // this.parentBoss.location.y);
         Service.gI().changeFlag(this, 10);
         this.changeStatus(BossStatus.CHAT_S);
     }
@@ -138,7 +138,8 @@ public class Drabura3 extends Boss {
                 if (pl == null || pl.isDie()) {
                     return;
                 }
-                this.playerSkill.skillSelect = this.playerSkill.skills.get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
+                this.playerSkill.skillSelect = this.playerSkill.skills
+                        .get(Util.nextInt(0, this.playerSkill.skills.size() - 1));
                 if (Util.getDistance(this, pl) <= this.getRangeCanAttackWithSkillSelect()) {
                     if (Util.isTrue(5, 20)) {
                         if (SkillUtil.isUseSkillChuong(this)) {
@@ -181,4 +182,3 @@ public class Drabura3 extends Boss {
     }
 
 }
-
