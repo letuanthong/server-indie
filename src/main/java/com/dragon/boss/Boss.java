@@ -13,6 +13,8 @@ import com.dragon.consts.BossStatus;
 import com.dragon.consts.BossType;
 import com.dragon.consts.ConstPlayer;
 import com.dragon.core.interfaces.IBoss;
+import com.dragon.core.network.Message;
+import com.dragon.core.server.ServerNotify;
 import com.dragon.managers.boss.BossManager;
 import com.dragon.managers.boss.BrolyManager;
 import com.dragon.managers.boss.ChristmasEventManager;
@@ -30,10 +32,9 @@ import com.dragon.managers.boss.TrungThuEventManager;
 import com.dragon.managers.boss.YardartManager;
 import com.dragon.model.map.Zone;
 import com.dragon.model.mob.Mob;
-import com.dragon.core.network.Message;
 import com.dragon.model.player.Pet;
 import com.dragon.model.player.Player;
-import com.dragon.core.server.ServerNotify;
+import com.dragon.model.skill.Skill;
 import com.dragon.services.EffectSkillService;
 import com.dragon.services.Service;
 import com.dragon.services.SkillService;
@@ -41,7 +42,6 @@ import com.dragon.services.TaskService;
 import com.dragon.services.map.ChangeMapService;
 import com.dragon.services.map.MapService;
 import com.dragon.services.player.PlayerService;
-import com.dragon.model.skill.Skill;
 import com.dragon.utils.Logger;
 import com.dragon.utils.SkillUtil;
 import com.dragon.utils.Util;
@@ -335,7 +335,8 @@ public class Boss extends Player implements IBoss {
         switch (this.bossStatus) {
             case CHAT_S, AFK, ACTIVE ->
                 this.autoLeaveMap();
-            default -> throw new IllegalArgumentException("Unexpected value: " + this.bossStatus);
+            default -> {
+            }
         }
         switch (this.bossStatus) {
             case REST ->

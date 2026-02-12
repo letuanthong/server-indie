@@ -1,6 +1,7 @@
 # Build outputs
 /dist/
 /build/
+/bin/
 *.class
 *.jar
 *.war
@@ -43,6 +44,10 @@ logs/
 
 # Backups
 backups/
+src_backup/
+
+# Docker local data
+local/data/
 
 # Docs
 /docs
