@@ -7,6 +7,7 @@ package com.dragon.boss;
  */
 
 import com.dragon.consts.AppearType;
+
 import lombok.Data;
 
 @Data

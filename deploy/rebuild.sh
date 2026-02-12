@@ -94,6 +94,8 @@ fi
 echo ""
 echo "[5/5] Khởi động server..."
 if systemctl is-enabled --quiet dragonserver 2>/dev/null; then
+    sudo chmod +x /home/gameserver/server-indie/deploy/*.sh
+    sleep 1
     sudo systemctl start dragonserver
     sleep 3
     echo ""

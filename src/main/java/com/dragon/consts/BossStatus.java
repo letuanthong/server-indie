@@ -6,7 +6,6 @@ package com.dragon.consts;
  * @Collab: ???
  */
 
-
 public enum BossStatus {
     REST,
     RESPAWN,
@@ -18,4 +17,3 @@ public enum BossStatus {
     LEAVE_MAP,
     AFK
 }
-

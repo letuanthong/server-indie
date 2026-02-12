@@ -18,9 +18,9 @@ import com.dragon.managers.boss.TreasureUnderSeaManager;
 import com.dragon.model.map.ItemMap;
 import com.dragon.model.map.Zone;
 import com.dragon.model.player.Player;
+import com.dragon.model.skill.Skill;
 import com.dragon.services.Service;
 import com.dragon.services.map.ChangeMapService;
-import com.dragon.model.skill.Skill;
 import com.dragon.utils.Util;
 
 public class TrungUyXanhLo extends Boss {

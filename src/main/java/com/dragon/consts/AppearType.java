@@ -6,7 +6,6 @@ package com.dragon.consts;
  * @Collab: ???
  */
 
-
 public enum AppearType {
 
     DEFAULT_APPEAR,
@@ -15,4 +14,3 @@ public enum AppearType {
     CALL_BY_ANOTHER
 
 }
-
