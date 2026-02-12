@@ -1,0 +1,51 @@
+package com.dragon.core.database.daos;
+
+/*
+ * @Author: dev1sme
+ * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
+ * @Collab: ???
+ */
+
+
+import com.dragon.core.data.AlyraManager;
+
+import org.json.simple.JSONArray;
+
+import com.dragon.model.player.Player;
+import com.dragon.utils.Logger;
+
+public class TraningDAO {
+
+    @SuppressWarnings("unchecked")
+    public static void updatePlayer(Player player) {
+        if (player != null && player.idMark.isLoadedAllDataPlayer()) {
+            try {
+                JSONArray dataArray = new JSONArray();
+                dataArray.add(player.levelLuyenTap);
+                dataArray.add(player.dangKyTapTuDong);
+                dataArray.add(player.mapIdDangTapTuDong);
+                dataArray.add(player.tnsmLuyenTap);
+                if (player.isOffline) {
+                    dataArray.add(player.lastTimeOffline);
+                } else {
+                    dataArray.add(System.currentTimeMillis());
+                }
+                dataArray.add(player.traning.getTop());
+                dataArray.add(player.traning.getTime());
+                dataArray.add(player.traning.getLastTime());
+                dataArray.add(player.traning.getLastTop());
+                dataArray.add(player.traning.getLastRewardTime());
+
+                String dataLuyenTap = dataArray.toJSONString();
+                dataArray.clear();
+
+                String query = "UPDATE player SET data_luyentap = ? WHERE id = ?";
+                AlyraManager.executeUpdate(query, dataLuyenTap, player.id);
+            } catch (Exception e) {
+                Logger.logException(TraningDAO.class, e);
+            }
+        }
+    }
+
+}
+

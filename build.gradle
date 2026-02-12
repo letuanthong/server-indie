@@ -11,23 +11,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
-// Cấu hình source directory giống như project Ant cũ
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src']
-        }
-        resources {
-            srcDirs = ['src']
-            exclude '**/*.java'
-        }
-    }
-    test {
-        java {
-            srcDirs = ['test']
-        }
-    }
-}
+// Sử dụng cấu trúc Gradle chuẩn: src/main/java/, src/main/resources/
 
 repositories {
     mavenCentral()
@@ -51,8 +35,8 @@ dependencies {
     
     // Logging
     implementation 'log4j:log4j:1.2.17'
-    implementation 'org.slf4j:slf4j-api:2.0.0-alpha1'
-    implementation 'org.slf4j:slf4j-simple:2.0.0-alpha1'
+    implementation 'org.slf4j:slf4j-api:2.0.16'
+    implementation 'org.slf4j:slf4j-simple:2.0.16'
     
     // Utils
     implementation 'commons-lang:commons-lang:2.6'
@@ -66,7 +50,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'server.ServerManager'
+    mainClass = 'com.dragon.core.server.ServerManager'
 }
 
 tasks.withType(JavaCompile) {
@@ -77,7 +61,7 @@ tasks.withType(JavaCompile) {
 jar {
     manifest {
         attributes(
-            'Main-Class': 'server.ServerManager',
+            'Main-Class': 'com.dragon.core.server.ServerManager',
             'Implementation-Title': project.name,
             'Implementation-Version': project.version
         )
@@ -98,8 +82,10 @@ task copyDependencies(type: Copy) {
 
 // Task chạy server với memory settings và encoding UTF-8
 task runServer(type: JavaExec) {
-    mainClass = 'server.ServerManager'
+    mainClass = 'com.dragon.core.server.ServerManager'
     classpath = sourceSets.main.runtimeClasspath
+    workingDir = projectDir
+    standardInput = System.in
     jvmArgs = [
         '-Xms512m', 
         '-Xmx2g',

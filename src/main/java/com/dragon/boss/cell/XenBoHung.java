@@ -1,0 +1,150 @@
+package com.dragon.boss.cell;
+
+import java.util.List;
+
+import com.dragon.boss.Boss;
+import com.dragon.boss.BossesData;
+import com.dragon.consts.BossID;
+/*
+ * @Author: dev1sme
+ * @Description: Ngọc Rồng - Server Chuẩn Teamobi 
+ * @Collab: ???
+ */
+import com.dragon.consts.ConstPlayer;
+import com.dragon.model.item.Item;
+import com.dragon.model.map.ItemMap;
+import com.dragon.model.player.Player;
+import com.dragon.services.EffectSkillService;
+import com.dragon.services.ItemService;
+import com.dragon.services.Service;
+import com.dragon.services.TaskService;
+import com.dragon.services.map.ChangeMapService;
+import com.dragon.services.player.PlayerService;
+import com.dragon.utils.Util;
+
+public class XenBoHung extends Boss {
+
+    private long lastTimeHapThu;
+    private int timeHapThu;
+
+    public XenBoHung() throws Exception {
+        super(BossID.XEN_BO_HUNG, BossesData.XEN_BO_HUNG_1, BossesData.XEN_BO_HUNG_2, BossesData.XEN_BO_HUNG_3);
+    }
+
+    @Override
+    public void reward(Player plKill) {
+        int x = this.location.x;
+        int y = this.zone.map.yPhysicInTop(x, this.location.y - 24);
+        int drop = 190; // 100% rơi item ID 190
+        int quantity = Util.nextInt(20000, 30000);
+        // Tạo itemMap cho item ID 190
+        ItemMap itemMap = ItemMap.create(this.zone, drop, quantity, x, y, plKill.id);
+        Service.gI().dropItemMap(zone, itemMap);
+
+        // 30% xác suất để rơi đồ
+        if (Util.isTrue(20, 100)) {
+            int group = Util.nextInt(1, 100) <= 70 ? 0 : 1; // 70% chọn Áo Quần Giày (group = 0), 30% chọn Găng Rada
+                                                            // (group = 1)
+
+            // Các vật phẩm rơi từ nhóm Áo Quần Giày và Găng Rada
+            int[][] drops = {
+                    { 230, 231, 232, 234, 235, 236, 238, 239, 240, 242, 243, 244, 246, 247, 248, 250, 251, 252, 266,
+                            267, 268, 270, 271, 272, 274, 275, 276 }, // Áo Quần Giày
+                    { 254, 255, 256, 258, 259, 260, 262, 263, 264, 278, 279, 280 } // Găng Rada
+            };
+
+            // Chọn vật phẩm ngẫu nhiên từ nhóm đã chọn
+            int dropOptional = drops[group][Util.nextInt(0, drops[group].length - 1)];
+
+            // Tạo vật phẩm và thêm chỉ số shop
+            ItemMap optionalItemMap = ItemMap.create(this.zone, dropOptional, 1, x, y, plKill.id);
+            List<Item.ItemOption> optionalOps = ItemService.gI().getListOptionItemShop((short) dropOptional);
+            optionalOps.forEach(option -> option.param = (int) (option.param * Util.nextInt(100, 115) / 100.0));
+            optionalItemMap.options.addAll(optionalOps);
+
+            // Thêm chỉ số sao pha lê (80% từ 1-3 sao, 17% từ 4-5 sao, 3% sao 6)
+            int rand = Util.nextInt(1, 100);
+            int value = 0;
+            if (rand <= 80) {
+                value = Util.nextInt(1, 3); // 80% xác suất: sao từ 1 đến 3
+            } else if (rand <= 97) {
+                value = Util.nextInt(4, 5); // 17% xác suất: sao từ 4 đến 5
+            } else {
+                value = 6; // 3% xác suất: sao 6
+            }
+            optionalItemMap.options.add(new Item.ItemOption(107, value));
+
+            // Drop vật phẩm tùy chọn xuống bản đồ
+            Service.gI().dropItemMap(zone, optionalItemMap);
+        }
+
+        // 80% xác suất rơi ngọc rồng hoặc item cấp 2
+        if (Util.isTrue(80, 100)) {
+            int[] dropItems = { 16, 17, 1150, 1151, 1152, 1152, 1066, 1067, 1068, 1069, 1070, 1229 };
+            int dropOptional = dropItems[Util.nextInt(0, dropItems.length - 1)];
+            // Tạo và rơi vật phẩm ngọc rồng hoặc item cấp 2
+            ItemMap optionalItemMap = ItemMap.create(this.zone, dropOptional, Util.nextInt(1, 3), x, y, plKill.id);
+            Service.gI().dropItemMap(zone, optionalItemMap);
+        }
+
+        TaskService.gI().checkDoneTaskKillBoss(plKill, this);
+    }
+
+    @Override
+    public void active() {
+        if (this.typePk == ConstPlayer.NON_PK) {
+            this.changeToTypePK();
+        }
+        this.hapThu();
+        this.attack();
+    }
+
+    private void hapThu() {
+        if (!Util.canDoWithTime(this.lastTimeHapThu, this.timeHapThu) || !Util.isTrue(1, 100)) {
+            return;
+        }
+
+        Player pl = this.zone.getRandomPlayerInMap();
+        if (pl == null || pl.isDie()) {
+            return;
+        }
+        ChangeMapService.gI().changeMapYardrat(this, this.zone, pl.location.x, pl.location.y);
+        this.nPoint.dameg += (pl.nPoint.dame * 5 / 100);
+        this.nPoint.hpg += (pl.nPoint.hp * 2 / 100);
+        this.nPoint.critg++;
+        this.nPoint.calPoint();
+        PlayerService.gI().hoiPhuc(this, pl.nPoint.hp, 0);
+        pl.injured(null, pl.nPoint.hpMax, true, false);
+        Service.gI().sendThongBao(pl, "Bạn vừa bị " + this.name + " hấp thu!");
+        this.chat(2, "Ui cha cha, kinh dị quá. " + pl.name + " vừa bị tên " + this.name + " nuốt chửng kìa!!!");
+        this.chat("Haha, ngọt lắm đấy " + pl.name + "..");
+        this.lastTimeHapThu = System.currentTimeMillis();
+        this.timeHapThu = Util.nextInt(10000, 20000);
+    }
+
+    @Override
+    public synchronized int injured(Player plAtt, long damage, boolean piercing, boolean isMobAttack) {
+        if (!this.isDie()) {
+            if (!piercing && Util.isTrue(this.nPoint.tlNeDon, 1000)) {
+                this.chat("Xí hụt");
+                return 0;
+            }
+            damage = this.nPoint.subDameInjureWithDeff(damage / 2);
+            if (!piercing && effectSkill.isShielding) {
+                if (damage > nPoint.hpMax) {
+                    EffectSkillService.gI().breakShield(this);
+                }
+                damage = damage / 4;
+            }
+            this.nPoint.subHP(damage);
+            if (isDie()) {
+                this.setDie(plAtt);
+                die(plAtt);
+            }
+            return (int) damage;
+        } else {
+            return 0;
+        }
+    }
+
+}

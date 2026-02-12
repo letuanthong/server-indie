@@ -66,10 +66,13 @@ sudo mkdir -p "$DEPLOY_DIR"
 sudo rsync -av --delete \
     --exclude='.git/' \
     --exclude='build/' \
+    --exclude='bin/' \
     --exclude='.gradle/' \
     --exclude='.env' \
     --exclude='config/server.properties' \
     --exclude='logs/' \
+    --exclude='src_backup/' \
+    --exclude='migrate.py' \
     "$CODE_SOURCE/" "$DEPLOY_DIR/"
 sudo chown -R "$GAME_USER:$GAME_USER" "$DEPLOY_DIR"
 echo "  → Rsync hoàn tất"

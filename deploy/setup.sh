@@ -202,7 +202,8 @@ log_info "=== Bước 6/8: Copy project và build ==="
 # Copy project sang thư mục game user (nếu chưa ở đúng chỗ)
 if [ "$PROJECT_DIR" != "$INSTALL_DIR" ]; then
     mkdir -p "$INSTALL_DIR"
-    rsync -a --exclude='.git' --exclude='build' --exclude='.gradle' \
+    rsync -a --exclude='.git' --exclude='build' --exclude='bin' \
+        --exclude='.gradle' --exclude='src_backup' --exclude='migrate.py' \
         "$PROJECT_DIR/" "$INSTALL_DIR/"
     log_ok "Đã copy project sang $INSTALL_DIR"
 else
