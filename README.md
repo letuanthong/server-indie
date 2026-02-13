@@ -1,6 +1,6 @@
 # server-indie
 
-Game server NRO - Java 21, MySQL, NIO Socket.
+Game server [secret] - Java 21, MySQL, NIO Socket.
 
 ---
 
