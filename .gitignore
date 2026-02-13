@@ -48,6 +48,8 @@ src_backup/
 
 # Docker local data
 local/data/*
+# NHƯNG giữ lại .gitkeep
+!local/data/.gitkeep
 
 # Docs
 /docs
