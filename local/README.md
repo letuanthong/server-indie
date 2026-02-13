@@ -63,8 +63,8 @@ docker compose exec mariadb mysqldump -uroot whis_1 > backup.sql
 ## Đường dẫn Data
 
 - Database files: `local/data/mariadb/`
-- Config: `docker/mariadb.cnf` (mount read-only)
-- Init scripts: `sql/whis_1.sql`, `sql/whis_2.sql`
+- Config: `local/data/mariadb.cnf` (mount read-only)
+- Init scripts: `./sql/00_init.sql`, `./sql/01_whis_1.sql`, `./sql/02_whis_2.sql`
 
 ## Ghi chú
 
