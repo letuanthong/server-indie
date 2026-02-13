@@ -47,7 +47,7 @@ backups/
 src_backup/
 
 # Docker local data
-local/data/
+local/data/*
 
 # Docs
 /docs
