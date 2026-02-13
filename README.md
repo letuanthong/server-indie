@@ -41,14 +41,15 @@ sudo systemctl restart dragonserver
 
 ## Quản lý Server
 
-| Lệnh | Mô tả |
-|-------|--------|
-| `sudo systemctl start dragonserver` | Khởi động |
-| `sudo systemctl stop dragonserver` | Dừng |
-| `sudo systemctl restart dragonserver` | Khởi động lại |
-| `sudo systemctl status dragonserver` | Xem trạng thái |
-| `sudo journalctl -u dragonserver -f` | Xem log realtime |
-| `sudo journalctl -u dragonserver --since "1 hour ago"` | Log 1 giờ trước |
+| Lệnh                                                   | Mô tả                      |
+| ------------------------------------------------------ | -------------------------- |
+| `sudo systemctl start dragonserver`                    | Khởi động                  |
+| `sudo systemctl stop dragonserver`                     | Dừng                       |
+| `sudo systemctl restart dragonserver`                  | Khởi động lại              |
+| `sudo systemctl status dragonserver`                   | Xem trạng thái             |
+| `sudo journalctl -u dragonserver -f`                   | Xem log realtime           |
+| `sudo journalctl -u dragonserver -f -o cat`            | Xem log realtime (kèm màu) |
+| `sudo journalctl -u dragonserver --since "1 hour ago"` | Log 1 giờ trước            |
 
 ---
 
@@ -105,39 +106,39 @@ server-indie/
 
 ## Cấu hình .env
 
-| Biến | Mặc định | Mô tả |
-|------|----------|-------|
-| `DB_NAME` | `whis_1` | Database player |
-| `DB_NAME_DATA` | `whis_2` | Database game data |
-| `DB_USER` | `dragonserver` | MySQL user |
-| `DB_PASS` | `DragonServer@2025` | MySQL password |
-| `SERVER_PORT` | `14445` | Port game (TCP) |
-| `GAME_USER` | `gameserver` | Linux user chạy server |
-| `JAVA_XMS` | `1g` | JVM min memory |
-| `JAVA_XMX` | `2g` | JVM max memory |
-| `BACKUP_DIR` | `/home/gameserver/backups` | Thư mục backup |
-| `KEEP_DAYS` | `7` | Giữ backup bao nhiêu ngày |
+| Biến           | Mặc định                   | Mô tả                     |
+| -------------- | -------------------------- | ------------------------- |
+| `DB_NAME`      | `whis_1`                   | Database player           |
+| `DB_NAME_DATA` | `whis_2`                   | Database game data        |
+| `DB_USER`      | `dragonserver`             | MySQL user                |
+| `DB_PASS`      | `DragonServer@2025`        | MySQL password            |
+| `SERVER_PORT`  | `14445`                    | Port game (TCP)           |
+| `GAME_USER`    | `gameserver`               | Linux user chạy server    |
+| `JAVA_XMS`     | `1g`                       | JVM min memory            |
+| `JAVA_XMX`     | `2g`                       | JVM max memory            |
+| `BACKUP_DIR`   | `/home/gameserver/backups` | Thư mục backup            |
+| `KEEP_DAYS`    | `7`                        | Giữ backup bao nhiêu ngày |
 
 ### JVM Memory theo RAM server
 
 | RAM Server | `JAVA_XMS` | `JAVA_XMX` |
-|-----------|-----------|-----------|
-| 2GB | `512m` | `1g` |
-| 4GB | `1g` | `2g` |
-| 8GB | `2g` | `4g` |
-| 16GB+ | `4g` | `8g` |
+| ---------- | ---------- | ---------- |
+| 2GB        | `512m`     | `1g`       |
+| 4GB        | `1g`       | `2g`       |
+| 8GB        | `2g`       | `4g`       |
+| 16GB+      | `4g`       | `8g`       |
 
 ---
 
 ## Yêu cầu hệ thống
 
-| Thành phần | Yêu cầu |
-|-----------|---------|
-| OS | Debian 12 (Bookworm) |
-| CPU | 2+ cores |
-| RAM | 2GB+ (khuyến nghị 4GB) |
-| Disk | 5GB+ (SSD khuyến nghị) |
-| Port | 14445/tcp mở |
+| Thành phần | Yêu cầu                |
+| ---------- | ---------------------- |
+| OS         | Debian 12 (Bookworm)   |
+| CPU        | 2+ cores               |
+| RAM        | 2GB+ (khuyến nghị 4GB) |
+| Disk       | 5GB+ (SSD khuyến nghị) |
+| Port       | 14445/tcp mở           |
 
 > `setup.sh` tự động cài Java 21, MariaDB, tạo database, build JAR, cấu hình firewall.
 
@@ -184,25 +185,38 @@ sudo systemctl start dragonserver
 
 ## Tại sao chạy trực tiếp (không Docker)?
 
-| Lý do | Giải thích |
-|-------|------------|
-| **Latency thấp** | NIO Socket cần latency thấp nhất — Docker thêm network overhead |
-| **I/O nhanh** | Thư mục `data/` có hàng nghìn file — native I/O nhanh hơn Docker volume |
-| **JVM tuning** | Truy cập trực tiếp RAM/CPU, GC tuning chính xác |
-| **Đơn giản** | Single-process Java, không cần container orchestration |
-| **Debug dễ** | journalctl, htop, jstack — trực tiếp trên host |
+| Lý do            | Giải thích                                                              |
+| ---------------- | ----------------------------------------------------------------------- |
+| **Latency thấp** | NIO Socket cần latency thấp nhất — Docker thêm network overhead         |
+| **I/O nhanh**    | Thư mục `data/` có hàng nghìn file — native I/O nhanh hơn Docker volume |
+| **JVM tuning**   | Truy cập trực tiếp RAM/CPU, GC tuning chính xác                         |
+| **Đơn giản**     | Single-process Java, không cần container orchestration                  |
+| **Debug dễ**     | journalctl, htop, jstack — trực tiếp trên host                          |
 
 ---
 
 ## Thông tin kỹ thuật
 
-| Thông tin | Giá trị |
-|-----------|---------|
-| Java | 21 (Eclipse Temurin) |
-| Build | Gradle (fat JAR) |
-| Database | MySQL/MariaDB x 2 (`whis_1`, `whis_2`) |
-| Connection Pool | HikariCP |
-| Network | Java NIO Selector |
-| Port | 14445/tcp |
-| Main Class | `server.ServerManager` |
-| GC | G1GC (target pause < 50ms) |
+| Thông tin       | Giá trị                                |
+| --------------- | -------------------------------------- |
+| Java            | 21 (Eclipse Temurin)                   |
+| Build           | Gradle (fat JAR)                       |
+| Database        | MySQL/MariaDB x 2 (`whis_1`, `whis_2`) |
+| Connection Pool | HikariCP                               |
+| Network         | Java NIO Selector                      |
+| Port            | 14445/tcp                              |
+| Main Class      | `server.ServerManager`                 |
+| GC              | G1GC (target pause < 50ms)             |
+
+## 👤 Author
+
+<div align="center">
+  <a href="https://github.com/dev1sme">
+    <img src="https://github-readme-stats.vercel.app/api?username=dev1sme&show_icons=true&theme=dark" alt="GitHub Stats" />
+  </a>
+</div>
+
+### Connect with me:
+
+[![GitHub](https://img.shields.io/badge/GitHub-black?style=for-the-badge&logo=github)](https://github.com/dev1sme)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/dev1sme)
