@@ -12,16 +12,17 @@ import java.util.List;
 import com.dragon.consts.ConstMap;
 import com.dragon.consts.ConstMob;
 import com.dragon.consts.ConstTask;
-import com.dragon.model.item.Item;
-import com.dragon.model.map.ItemMap;
-import com.dragon.model.map.Zone;
 import com.dragon.core.network.Message;
-import com.dragon.model.player.Location;
-import com.dragon.model.player.Pet;
-import com.dragon.model.player.Player;
 import com.dragon.core.server.Maintenance;
 import com.dragon.core.server.Manager;
 import com.dragon.core.server.ServerNotify;
+import com.dragon.model.item.Item;
+import com.dragon.model.map.ItemMap;
+import com.dragon.model.map.Zone;
+import com.dragon.model.player.Location;
+import com.dragon.model.player.Pet;
+import com.dragon.model.player.Player;
+import com.dragon.model.skill.Skill;
 import com.dragon.services.AchievementService;
 import com.dragon.services.ItemService;
 import com.dragon.services.Service;
@@ -30,7 +31,6 @@ import com.dragon.services.dungeon.TrainingService;
 import com.dragon.services.map.ItemMapService;
 import com.dragon.services.map.MapService;
 import com.dragon.services.player.InventoryService;
-import com.dragon.model.skill.Skill;
 import com.dragon.utils.Logger;
 import com.dragon.utils.TimeUtil;
 import com.dragon.utils.Util;
@@ -219,6 +219,10 @@ public class Mob {
         }
         if (pl.zone.map.mapId == 122 || pl.zone.map.mapId == 123 || pl.zone.map.mapId == 124) {
             tiemNang *= 2;
+        }
+        // thonk thêm giới hạn tiềm năng
+        if (this.maxTiemNang > 0 && tiemNang > this.maxTiemNang) {
+            tiemNang = this.maxTiemNang;
         }
         return tiemNang;
     }

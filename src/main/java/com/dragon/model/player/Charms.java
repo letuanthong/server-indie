@@ -8,10 +8,7 @@ package com.dragon.model.player;
 
 public class Charms {
 
-    private Player player;
-
     public Charms(Player player) {
-        this.player = player;
     }
 
     public long tdTriTue;
@@ -142,6 +139,5 @@ public class Charms {
     }
 
     public void dispose() {
-        this.player = null;
     }
 }
